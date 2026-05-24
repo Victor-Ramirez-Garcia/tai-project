@@ -1,2 +1,3 @@
 .venv/
 high-level/gemini/
+high-level/__pycache__/

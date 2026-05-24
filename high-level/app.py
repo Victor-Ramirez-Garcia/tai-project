@@ -1,42 +1,14 @@
 import time
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from constants import (
+    BASE_DIR, LEETCODE_PROBLEMS, CONSTRAINTS, SITES, LOCATOR,
+    SELECTORS
+)
 
-BASE_DIR = Path(__file__).resolve().parent
+TRIALS = 3 # number of trials to run
+WAIT_FOR_NEW_BROWSER = 20 # time (in seconds) to wait for a new browser
 
-LEETCODE_PROBLEMS = [
-    {
-        "problem": """Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0. Assume the environment does not allow you to store 64-bit integers (signed or unsigned).""",
-        "level": "medium",
-        "id": "7"
-    },
-    {
-        "problem": """Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets.""",
-        "level": "medium",
-        "id": "15"
-    }
-]
-
-CONSTRAINTS = [
-    {
-        "prompt": "Only provide the code in Python.",
-        "ext": "py"
-    }
-]
-
-REPHRASE_CONSTRAINT = "Rephrase this problem that contains real life context"
-
-LOCATOR = 'div[contenteditable="true"][role="textbox"]'
-
-SITES = {
-    "gemini": {"site": "https://gemini.google.com/app"}
-}
-
-SELECTORS = [
-    'code[data-test-id="code-content"]',
-]
-
-WAIT_FOR_NEW_BROWSER = 20
 
 def prework():
     """
@@ -49,15 +21,15 @@ def prework():
             for model, _ in SITES.items(): # for each model (e.g. gemini, openai)
                 leet[model] = 1 # init trial counter
                 # get path to leetcode problem directory
-                LEET_DIR = f"{leet['level']}_{leet['id']}"
-                CODE_ROOT = BASE_DIR / model / LEET_DIR
+                CODE_ROOT = BASE_DIR / model / leet['level'] / leet['id'] / constraint["ext"]
                 CODE_ROOT.mkdir(parents=True, exist_ok=True) # create directory if dne
+                FILENAME = f"trial_{leet[model]}.{ext}"
 
                 # set trial counter to next available file
-                while ((CODE_ROOT / f"trial_{leet[model]}.{ext}").exists()):
+                while ((CODE_ROOT / FILENAME).exists()):
                     leet[model] += 1
+                    FILENAME = f"trial_{leet[model]}.{ext}"
     return None
-
 
 
 def get_generated_code(page, timeout=60000):
@@ -76,26 +48,32 @@ def get_generated_code(page, timeout=60000):
         raise TimeoutError("No code block found.")
     return locator.first.inner_text().strip()
 
+
 def save_code(code, leet, model, ext):
     """
-    Saves the code to the leetcode problem's directory and increments trial counter.
+    Saves the code to the leetcode problem's directory and sets trial
+    counter to next available file.
     """
     # get path to leetcode problem directory
-    LEET_DIR = f"{leet['level']}_{leet['id']}"
-    FILE = f"trial_{leet[model]}.{ext}"
-    CODE_ROOT = BASE_DIR / model / LEET_DIR / FILE
-    CODE_ROOT.parent.mkdir(parents=True, exist_ok=True)
+    FILENAME = f"trial_{leet[model]}.{ext}"
+    CODE_ROOT = BASE_DIR / model / leet['level'] / leet['id'] / ext
+    CODE_ROOT.mkdir(parents=True, exist_ok=True)
 
     # save code to file
-    with open(CODE_ROOT, 'w') as f:
+    with open(CODE_ROOT / FILENAME, 'w') as f:
         f.write(code)
 
-    leet[model] += 1 # increment trial counter for the particular model and leetcode problem
+    # set trial counter to next available file
+    while ((CODE_ROOT / FILENAME).exists()):
+        leet[model] += 1
+        FILENAME = f"trial_{leet[model]}.{ext}"
+
     return None
+
 
 def main():
     with sync_playwright() as p:
-        prework()
+        prework() # initialize trial counter's
 
         for leet in LEETCODE_PROBLEMS: # for each leetcode problem
             browser = p.chromium.launch(headless=True) # create new headless browser (browser that does not pop up)
@@ -127,4 +105,9 @@ def main():
             print(f"completion generations for problem #{leet["id"]} (wait for {WAIT_FOR_NEW_BROWSER} seconds)")
             time.sleep(WAIT_FOR_NEW_BROWSER)
 
-main()
+
+if __name__ == "__main__":
+    trial = 0
+    while (trial < TRIALS):
+        main()
+        trial += 1
