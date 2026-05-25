@@ -5,7 +5,7 @@ from constants import (
     BASE_DIR, SITES, LOCATOR, SELECTORS
 )
 
-TRIALS = 3 # number of trials to run
+TRIALS = 1 # number of trials to run
 WAIT_FOR_NEW_BROWSER = 20 # time (in seconds) to wait for a new browser
 
 PROMPT_PATH = BASE_DIR / "prompt.json"
