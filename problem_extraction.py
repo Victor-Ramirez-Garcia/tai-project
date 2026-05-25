@@ -2,7 +2,7 @@ import requests
 import json
 from bs4 import BeautifulSoup
 
-def get_leetcode_problem_structured(url, target_lang='python3'):
+def get_leetcode_problem_structured(url):
     slug = url.rstrip('/').split('/')[-1]
     api_url = "https://leetcode.com/graphql"
     
@@ -12,9 +12,7 @@ def get_leetcode_problem_structured(url, target_lang='python3'):
             question(titleSlug: $titleSlug) {
                 questionId
                 title
-                difficulty
                 content
-                topicTags { name }
                 codeSnippets { langSlug code }
             }
         }
@@ -27,9 +25,11 @@ def get_leetcode_problem_structured(url, target_lang='python3'):
     
     if "data" in data and data["data"].get("question"):
         q = data["data"]["question"]
-        soup = BeautifulSoup(q['content'], 'html.parser')
+        # Use a string replace to clean up non-breaking spaces immediately
+        content_html = q['content'].replace('\u00a0', ' ')
+        soup = BeautifulSoup(content_html, 'html.parser')
         
-        # 1. Extract Question Body (text before first example)
+        # 1. Extract Question Body
         question_text = ""
         for element in soup.children:
             if element.name == 'p' and "Example" in element.get_text():
@@ -37,32 +37,34 @@ def get_leetcode_problem_structured(url, target_lang='python3'):
             question_text += element.get_text() + "\n"
             
         # 2. Extract Examples
-        examples = []
-        for strong in soup.find_all('strong', class_='example'):
-            pre = strong.find_next('pre')
-            if pre:
-                examples.append(pre.get_text().strip())
+        examples = [pre.get_text().strip() for pre in soup.find_all('pre')]
         
-        # Replace your current constraints extraction with this:
+        # 3. Extract Constraints (with improved superscript handling)
         constraints = []
         ul = soup.find('ul')
         if ul:
             for li in ul.find_all('li'):
-                # This preserves the power-of-ten notation by converting <sup> tags
+                # Convert <sup> tags to '^' for math readability
                 for sup in li.find_all('sup'):
                     sup.insert_before('^')
                 constraints.append(li.get_text().strip())
-
+            
+        # 4. Extract Snippets
+        snippets = {s['langSlug']: s['code'] for s in q['codeSnippets']}
+        
         return {
             "id": q["questionId"],
             "title": q["title"],
             "question": question_text.strip(),
             "examples": examples,
             "constraints": constraints,
-            "starter_code": next((s['code'] for s in q['codeSnippets'] if s['langSlug'] == target_lang), "")
+            "starter_code": {
+                "python": snippets.get('python3', 'Not available'),
+                "cpp": snippets.get('cpp', 'Not available')
+            }
         }
     return None
 
-# Usage
+# --- Testing ---
 url = "https://leetcode.com/problems/two-sum/"
 print(json.dumps(get_leetcode_problem_structured(url), indent=4))
