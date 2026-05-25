@@ -6,9 +6,9 @@ from constants import (
 )
 
 TRIALS = 1 # number of trials to run
-WAIT_FOR_NEW_BROWSER = 20 # time (in seconds) to wait for a new browser
+WAIT_FOR_NEW_BROWSER = 10 # time (in seconds) to wait for a new browser
 
-PROMPT_PATH = BASE_DIR / "prompt.json"
+PROMPT_PATH = BASE_DIR / "prompts" / "prompts.json"
 
 def load_prompts() -> dict:
     """
@@ -36,13 +36,13 @@ def set_file_counters() -> dict:
     for prompt in prompts: # for each leetcode problem
         prompt['file_counter'] = 1
         # get path to leetcode problem directory
-        CODE_ROOT = BASE_DIR / "generated_code" / prompt["id"] / prompt["file_extension"]
-        FILENAME = f"program_{prompt['file_counter']}.{prompt['file_extension']}"
+        CODE_ROOT = BASE_DIR / "generated_code" / prompt["leetcode-problem-id"] / prompt["language"]
+        FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
         
         # set file counter to next available file
         while ((CODE_ROOT / FILENAME).exists()):
             prompt['file_counter'] += 1
-            FILENAME = f"program_{prompt['file_counter']}.{prompt['file_extension']}"
+            FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
     return prompts
 
 
@@ -89,8 +89,8 @@ def save_code(code, prompt) -> None:
     counter to next available file.
     """
     # get path to leetcode problem directory
-    FILENAME = f"program_{prompt['file_counter']}.{prompt['file_extension']}"
-    CODE_ROOT = BASE_DIR / "generated_code" / prompt["id"] / prompt["file_extension"]
+    FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
+    CODE_ROOT = BASE_DIR / "generated_code" / prompt["leetcode-problem-id"] / prompt["language"]
     CODE_ROOT.mkdir(parents=True, exist_ok=True)
 
     # save code to file
@@ -103,7 +103,7 @@ def save_code(code, prompt) -> None:
     # set trial counter to next available file
     while ((CODE_ROOT / FILENAME).exists()):
         prompt["file_counter"] += 1
-        FILENAME = f"program_{prompt['file_counter']}.{prompt['file_extension']}"
+        FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
 
 
 def main():
@@ -124,7 +124,7 @@ def main():
 
             # close browser and wait x seconds
             browser.close()
-            print(f"completion generations for problem #{prompt["id"]} (wait for {WAIT_FOR_NEW_BROWSER} seconds)")
+            print(f"completion generations for problem #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_BROWSER} seconds)")
             time.sleep(WAIT_FOR_NEW_BROWSER)
     save_prompts(prompts)
 
