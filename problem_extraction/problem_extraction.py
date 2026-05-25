@@ -48,6 +48,8 @@ def get_leetcode_problem_structured(url):
             question(titleSlug: $titleSlug) {
                 questionId
                 title
+                difficulty
+                topicTags { name } 
                 content
                 codeSnippets { langSlug code }
             }
@@ -88,9 +90,13 @@ def get_leetcode_problem_structured(url):
         # 4. Extract Snippets
         snippets = {s['langSlug']: s['code'] for s in q['codeSnippets']}
         
+        tags = [tag['name'] for tag in q.get('topicTags', [])]
+
         return {
             "id": q["questionId"],
             "title": q["title"],
+            "difficulty": q["difficulty"],
+            "tags": tags, 
             "question": clean_text(question_text),
             "examples": [clean_text(ex) for ex in examples],
             "constraints": [clean_text(c) for c in constraints],

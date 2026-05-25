@@ -2,6 +2,11 @@
     {
         "id": "1",
         "title": "Two Sum",
+        "difficulty": "Easy",
+        "tags": [
+            "Array",
+            "Hash Table"
+        ],
         "question": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
         "examples": [
             "Input: nums = [2,7,11,15], target = 9\nOutput: [0,1]\nExplanation: Because nums[0] + nums[1] == 9, we return [0, 1].",
@@ -22,6 +27,12 @@
     {
         "id": "2",
         "title": "Add Two Numbers",
+        "difficulty": "Medium",
+        "tags": [
+            "Linked List",
+            "Math",
+            "Recursion"
+        ],
         "question": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself.",
         "examples": [
             "Input: l1 = [2,4,3], l2 = [5,6,4]\nOutput: [7,0,8]\nExplanation: 342 + 465 = 807.",
@@ -41,6 +52,12 @@
     {
         "id": "3",
         "title": "Longest Substring Without Repeating Characters",
+        "difficulty": "Medium",
+        "tags": [
+            "Hash Table",
+            "String",
+            "Sliding Window"
+        ],
         "question": "Given a string s, find the length of the longest substring without duplicate characters.",
         "examples": [
             "Input: s = \"abcabcbb\"\nOutput: 3\nExplanation: The answer is \"abc\", with the length of 3. Note that \"bca\" and \"cab\" are also correct answers.",
@@ -57,211 +74,14 @@
         }
     },
     {
-        "id": "20",
-        "title": "Valid Parentheses",
-        "question": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\nAn input string is valid if:\nOpen brackets must be closed by the same type of brackets.\nOpen brackets must be closed in the correct order.\nEvery close bracket has a corresponding open bracket of the same type.",
-        "examples": [],
-        "constraints": [
-            "1 <= s.length <= 10^4",
-            "s consists of parentheses only '()[]{}'."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def isValid(self, s: str) -> bool:\n        ",
-            "cpp": "class Solution {\npublic:\n    bool isValid(string s) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "21",
-        "title": "Merge Two Sorted Lists",
-        "question": "You are given the heads of two sorted linked lists list1 and list2.\nMerge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\nReturn the head of the merged linked list.",
-        "examples": [
-            "Input: list1 = [1,2,4], list2 = [1,3,4]\nOutput: [1,1,2,3,4,4]",
-            "Input: list1 = [], list2 = []\nOutput: []",
-            "Input: list1 = [], list2 = [0]\nOutput: [0]"
-        ],
-        "constraints": [
-            "The number of nodes in both lists is in the range [0, 50].",
-            "-100 <= Node.val <= 100",
-            "Both list1 and list2 are sorted in non-decreasing order."
-        ],
-        "starter_code": {
-            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:\n        ",
-            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "121",
-        "title": "Best Time to Buy and Sell Stock",
-        "question": "You are given an array prices where prices[i] is the price of a given stock on the ith day.\nYou want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.\nReturn the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.",
-        "examples": [
-            "Input: prices = [7,1,5,3,6,4]\nOutput: 5\nExplanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.\nNote that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.",
-            "Input: prices = [7,6,4,3,1]\nOutput: 0\nExplanation: In this case, no transactions are done and the max profit = 0."
-        ],
-        "constraints": [
-            "1 <= prices.length <= 10^5",
-            "0 <= prices[i] <= 10^4"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int maxProfit(vector<int>& prices) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "238",
-        "title": "Product of Array Except Self",
-        "question": "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].\nThe product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.\nYou must write an algorithm that runs in O(n) time and without using the division operation.",
-        "examples": [
-            "Input: nums = [1,2,3,4]\nOutput: [24,12,8,6]",
-            "Input: nums = [-1,1,0,-3,3]\nOutput: [0,0,9,0,0]"
-        ],
-        "constraints": [
-            "2 <= nums.length <= 10^5",
-            "-30 <= nums[i] <= 30",
-            "The input is generated such that answer[i] is guaranteed to fit in a 32-bit integer."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def productExceptSelf(self, nums: List[int]) -> List[int]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<int> productExceptSelf(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "53",
-        "title": "Maximum Subarray",
-        "question": "Given an integer array nums, find the subarray with the largest sum, and return its sum.",
-        "examples": [
-            "Input: nums = [-2,1,-3,4,-1,2,1,-5,4]\nOutput: 6\nExplanation: The subarray [4,-1,2,1] has the largest sum 6.",
-            "Input: nums = [1]\nOutput: 1\nExplanation: The subarray [1] has the largest sum 1.",
-            "Input: nums = [5,4,-1,7,8]\nOutput: 23\nExplanation: The subarray [5,4,-1,7,8] has the largest sum 23."
-        ],
-        "constraints": [
-            "1 <= nums.length <= 10^5",
-            "-10^4 <= nums[i] <= 10^4"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int maxSubArray(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "206",
-        "title": "Reverse Linked List",
-        "question": "Given the head of a singly linked list, reverse the list, and return the reversed list.",
-        "examples": [
-            "Input: head = [1,2,3,4,5]\nOutput: [5,4,3,2,1]",
-            "Input: head = [1,2]\nOutput: [2,1]",
-            "Input: head = []\nOutput: []"
-        ],
-        "constraints": [
-            "The number of nodes in the list is the range [0, 5000].",
-            "-5000 <= Node.val <= 5000"
-        ],
-        "starter_code": {
-            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
-            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* reverseList(ListNode* head) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "70",
-        "title": "Climbing Stairs",
-        "question": "You are climbing a staircase. It takes n steps to reach the top.\nEach time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
-        "examples": [
-            "Input: n = 2\nOutput: 2\nExplanation: There are two ways to climb to the top.\n1. 1 step + 1 step\n2. 2 steps",
-            "Input: n = 3\nOutput: 3\nExplanation: There are three ways to climb to the top.\n1. 1 step + 1 step + 1 step\n2. 1 step + 2 steps\n3. 2 steps + 1 step"
-        ],
-        "constraints": [
-            "1 <= n <= 45"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int climbStairs(int n) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "200",
-        "title": "Number of Islands",
-        "question": "Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.\nAn island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.",
-        "examples": [
-            "Input: grid = [\n [\"1\",\"1\",\"1\",\"1\",\"0\"],\n [\"1\",\"1\",\"0\",\"1\",\"0\"],\n [\"1\",\"1\",\"0\",\"0\",\"0\"],\n [\"0\",\"0\",\"0\",\"0\",\"0\"]\n]\nOutput: 1",
-            "Input: grid = [\n [\"1\",\"1\",\"0\",\"0\",\"0\"],\n [\"1\",\"1\",\"0\",\"0\",\"0\"],\n [\"0\",\"0\",\"1\",\"0\",\"0\"],\n [\"0\",\"0\",\"0\",\"1\",\"1\"]\n]\nOutput: 3"
-        ],
-        "constraints": [
-            "m == grid.length",
-            "n == grid[i].length",
-            "1 <= m, n <= 300",
-            "grid[i][j] is '0' or '1'."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def numIslands(self, grid: List[List[str]]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int numIslands(vector<vector<char>>& grid) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "15",
-        "title": "3Sum",
-        "question": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.\nNotice that the solution set must not contain duplicate triplets.",
-        "examples": [
-            "Input: nums = [-1,0,1,2,-1,-4]\nOutput: [[-1,-1,2],[-1,0,1]]\nExplanation: \nnums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.\nnums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.\nnums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.\nThe distinct triplets are [-1,0,1] and [-1,-1,2].\nNotice that the order of the output and the order of the triplets does not matter.",
-            "Input: nums = [0,1,1]\nOutput: []\nExplanation: The only possible triplet does not sum up to 0.",
-            "Input: nums = [0,0,0]\nOutput: [[0,0,0]]\nExplanation: The only possible triplet sums up to 0."
-        ],
-        "constraints": [
-            "3 <= nums.length <= 3000",
-            "-10^5 <= nums[i] <= 10^5"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def threeSum(self, nums: list[int]) -> list[list[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> threeSum(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "11",
-        "title": "Container With Most Water",
-        "question": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).\nFind two lines that together with the x-axis form a container, such that the container contains the most water.\nReturn the maximum amount of water a container can store.\nNotice that you may not slant the container.",
-        "examples": [
-            "Input: height = [1,8,6,2,5,4,8,3,7]\nOutput: 49\nExplanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.",
-            "Input: height = [1,1]\nOutput: 1"
-        ],
-        "constraints": [
-            "n == height.length",
-            "2 <= n <= 10^5",
-            "0 <= height[i] <= 10^4"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def maxArea(self, height: List[int]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int maxArea(vector<int>& height) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "242",
-        "title": "Valid Anagram",
-        "question": "Given two strings s and t, return true if t is an anagram of s, and false otherwise.",
-        "examples": [],
-        "constraints": [
-            "1 <= s.length, t.length <= 5 * 10^4",
-            "s and t consist of lowercase English letters."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def isAnagram(self, s: str, t: str) -> bool:\n        ",
-            "cpp": "class Solution {\npublic:\n    bool isAnagram(string s, string t) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "217",
-        "title": "Contains Duplicate",
-        "question": "Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.",
-        "examples": [],
-        "constraints": [
-            "1 <= nums.length <= 10^5",
-            "-10^9 <= nums[i] <= 10^9"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def containsDuplicate(self, nums: List[int]) -> bool:\n        ",
-            "cpp": "class Solution {\npublic:\n    bool containsDuplicate(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
         "id": "4",
         "title": "Median of Two Sorted Arrays",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Binary Search",
+            "Divide and Conquer"
+        ],
         "question": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.\nThe overall run time complexity should be O(log (m+n)).",
         "examples": [
             "Input: nums1 = [1,3], nums2 = [2]\nOutput: 2.00000\nExplanation: merged array = [1,2,3] and median is 2.",
@@ -283,6 +103,12 @@
     {
         "id": "5",
         "title": "Longest Palindromic Substring",
+        "difficulty": "Medium",
+        "tags": [
+            "Two Pointers",
+            "String",
+            "Dynamic Programming"
+        ],
         "question": "Given a string s, return the longest palindromic substring in s.",
         "examples": [
             "Input: s = \"babad\"\nOutput: \"bab\"\nExplanation: \"aba\" is also a valid answer.",
@@ -300,6 +126,10 @@
     {
         "id": "6",
         "title": "Zigzag Conversion",
+        "difficulty": "Medium",
+        "tags": [
+            "String"
+        ],
         "question": "The string \"PAYPALISHIRING\" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)\nP A H N\nA P L S I I G\nY I R\nAnd then read line by line: \"PAHNAPLSIIGYIR\"\nWrite the code that will take a string and make this conversion given a number of rows:\nstring convert(string s, int numRows);",
         "examples": [
             "P A H N\nA P L S I I G\nY I R",
@@ -321,6 +151,10 @@
     {
         "id": "7",
         "title": "Reverse Integer",
+        "difficulty": "Medium",
+        "tags": [
+            "Math"
+        ],
         "question": "Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.\nAssume the environment does not allow you to store 64-bit integers (signed or unsigned).",
         "examples": [
             "Input: x = 123\nOutput: 321",
@@ -338,6 +172,10 @@
     {
         "id": "8",
         "title": "String to Integer (atoi)",
+        "difficulty": "Medium",
+        "tags": [
+            "String"
+        ],
         "question": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.\nThe algorithm for myAtoi(string s) is as follows:\nWhitespace: Ignore any leading whitespace (\" \").\nSignedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity if neither present.\nConversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.\nRounding: If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then round the integer to remain in the range. Specifically, integers less than -231 should be rounded to -231, and integers greater than 231 - 1 should be rounded to 231 - 1.\nReturn the integer as the final result.",
         "examples": [
             "The underlined characters are what is read in and the caret is the current reader position.\nStep 1: \"42\" (no characters read because there is no leading whitespace)\n ^\nStep 2: \"42\" (no characters read because there is neither a '-' nor '+')\n ^\nStep 3: \"42\" (\"42\" is read in)\n ^",
@@ -357,6 +195,10 @@
     {
         "id": "9",
         "title": "Palindrome Number",
+        "difficulty": "Easy",
+        "tags": [
+            "Math"
+        ],
         "question": "Given an integer x, return true if x is a palindrome, and false otherwise.",
         "examples": [
             "Input: x = 121\nOutput: true\nExplanation: 121 reads as 121 from left to right and from right to left.",
@@ -374,6 +216,12 @@
     {
         "id": "10",
         "title": "Regular Expression Matching",
+        "difficulty": "Hard",
+        "tags": [
+            "String",
+            "Dynamic Programming",
+            "Recursion"
+        ],
         "question": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:\n'.' Matches any single character.\u200b\u200b\u200b\u200b\n'*' Matches zero or more of the preceding element.\nReturn a boolean indicating whether the matching covers the entire input string (not partial).",
         "examples": [
             "Input: s = \"aa\", p = \"a\"\nOutput: false\nExplanation: \"a\" does not match the entire string \"aa\".",
@@ -390,8 +238,38 @@
         }
     },
     {
+        "id": "11",
+        "title": "Container With Most Water",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Two Pointers",
+            "Greedy"
+        ],
+        "question": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).\nFind two lines that together with the x-axis form a container, such that the container contains the most water.\nReturn the maximum amount of water a container can store.\nNotice that you may not slant the container.",
+        "examples": [
+            "Input: height = [1,8,6,2,5,4,8,3,7]\nOutput: 49\nExplanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.",
+            "Input: height = [1,1]\nOutput: 1"
+        ],
+        "constraints": [
+            "n == height.length",
+            "2 <= n <= 10^5",
+            "0 <= height[i] <= 10^4"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def maxArea(self, height: List[int]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int maxArea(vector<int>& height) {\n        \n    }\n};"
+        }
+    },
+    {
         "id": "12",
         "title": "Integer to Roman",
+        "difficulty": "Medium",
+        "tags": [
+            "Hash Table",
+            "Math",
+            "String"
+        ],
         "question": "Seven different symbols represent Roman numerals with the following values:\nSymbol\nValue\nI\n1\nV\n5\nX\n10\nL\n50\nC\n100\nD\n500\nM\n1000\nRoman numerals are formed by appending the conversions of decimal place values from highest to lowest. Converting a decimal place value into a Roman numeral has the following rules:\nIf the value does not start with 4 or 9, select the symbol of the maximal value that can be subtracted from the input, append that symbol to the result, subtract its value, and convert the remainder to a Roman numeral.\nIf the value starts with 4 or 9 use the subtractive form representing one symbol subtracted from the following symbol, for example, 4 is 1 (I) less than 5 (V): IV and 9 is 1 (I) less than 10 (X): IX. Only the following subtractive forms are used: 4 (IV), 9 (IX), 40 (XL), 90 (XC), 400 (CD) and 900 (CM).\nOnly powers of 10 (I, X, C, M) can be appended consecutively at most 3 times to represent multiples of 10. You cannot append 5 (V), 50 (L), or 500 (D) multiple times. If you need to append a symbol 4 times use the subtractive form.\nGiven an integer, convert it to a Roman numeral.",
         "examples": [
             "3000 = MMM as 1000 (M) + 1000 (M) + 1000 (M)\n 700 = DCC as 500 (D) + 100 (C) + 100 (C)\n 40 = XL as 10 (X) less of 50 (L)\n 9 = IX as 1 (I) less of 10 (X)\nNote: 49 is not 1 (I) less of 50 (L) because the conversion is based on decimal places",
@@ -411,6 +289,12 @@
     {
         "id": "13",
         "title": "Roman to Integer",
+        "difficulty": "Easy",
+        "tags": [
+            "Hash Table",
+            "Math",
+            "String"
+        ],
         "question": "Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.\nSymbol Value\nI 1\nV 5\nX 10\nL 50\nC 100\nD 500\nM 1000\nFor example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.\nRoman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:\nI can be placed before V (5) and X (10) to make 4 and 9. \nX can be placed before L (50) and C (100) to make 40 and 90. \nC can be placed before D (500) and M (1000) to make 400 and 900.\nGiven a roman numeral, convert it to an integer.",
         "examples": [
             "Symbol Value\nI 1\nV 5\nX 10\nL 50\nC 100\nD 500\nM 1000",
@@ -431,6 +315,12 @@
     {
         "id": "14",
         "title": "Longest Common Prefix",
+        "difficulty": "Easy",
+        "tags": [
+            "Array",
+            "String",
+            "Trie"
+        ],
         "question": "Write a function to find the longest common prefix string amongst an array of strings.\nIf there is no common prefix, return an empty string \"\".",
         "examples": [
             "Input: strs = [\"flower\",\"flow\",\"flight\"]\nOutput: \"fl\"",
@@ -447,8 +337,38 @@
         }
     },
     {
+        "id": "15",
+        "title": "3Sum",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Two Pointers",
+            "Sorting"
+        ],
+        "question": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.\nNotice that the solution set must not contain duplicate triplets.",
+        "examples": [
+            "Input: nums = [-1,0,1,2,-1,-4]\nOutput: [[-1,-1,2],[-1,0,1]]\nExplanation: \nnums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.\nnums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.\nnums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.\nThe distinct triplets are [-1,0,1] and [-1,-1,2].\nNotice that the order of the output and the order of the triplets does not matter.",
+            "Input: nums = [0,1,1]\nOutput: []\nExplanation: The only possible triplet does not sum up to 0.",
+            "Input: nums = [0,0,0]\nOutput: [[0,0,0]]\nExplanation: The only possible triplet sums up to 0."
+        ],
+        "constraints": [
+            "3 <= nums.length <= 3000",
+            "-10^5 <= nums[i] <= 10^5"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def threeSum(self, nums: list[int]) -> list[list[int]]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<vector<int>> threeSum(vector<int>& nums) {\n        \n    }\n};"
+        }
+    },
+    {
         "id": "16",
         "title": "3Sum Closest",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Two Pointers",
+            "Sorting"
+        ],
         "question": "Given an integer array nums of length n and an integer target, find three integers at distinct indices in nums such that the sum is closest to target.\nReturn the sum of the three integers.\nYou may assume that each input would have exactly one solution.",
         "examples": [
             "Input: nums = [-1,2,1,-4], target = 1\nOutput: 2\nExplanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).",
@@ -467,6 +387,12 @@
     {
         "id": "17",
         "title": "Letter Combinations of a Phone Number",
+        "difficulty": "Medium",
+        "tags": [
+            "Hash Table",
+            "String",
+            "Backtracking"
+        ],
         "question": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.\nA mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.",
         "examples": [
             "Input: digits = \"23\"\nOutput: [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
@@ -484,6 +410,12 @@
     {
         "id": "18",
         "title": "4Sum",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Two Pointers",
+            "Sorting"
+        ],
         "question": "Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:\n0 <= a, b, c, d < n\na, b, c, and d are distinct.\nnums[a] + nums[b] + nums[c] + nums[d] == target\nYou may return the answer in any order.",
         "examples": [
             "Input: nums = [1,0,-1,0,-2,2], target = 0\nOutput: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]",
@@ -502,6 +434,11 @@
     {
         "id": "19",
         "title": "Remove Nth Node From End of List",
+        "difficulty": "Medium",
+        "tags": [
+            "Linked List",
+            "Two Pointers"
+        ],
         "question": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
         "examples": [
             "Input: head = [1,2,3,4,5], n = 2\nOutput: [1,2,3,5]",
@@ -520,8 +457,57 @@
         }
     },
     {
+        "id": "20",
+        "title": "Valid Parentheses",
+        "difficulty": "Easy",
+        "tags": [
+            "String",
+            "Stack"
+        ],
+        "question": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\nAn input string is valid if:\nOpen brackets must be closed by the same type of brackets.\nOpen brackets must be closed in the correct order.\nEvery close bracket has a corresponding open bracket of the same type.",
+        "examples": [],
+        "constraints": [
+            "1 <= s.length <= 10^4",
+            "s consists of parentheses only '()[]{}'."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def isValid(self, s: str) -> bool:\n        ",
+            "cpp": "class Solution {\npublic:\n    bool isValid(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "21",
+        "title": "Merge Two Sorted Lists",
+        "difficulty": "Easy",
+        "tags": [
+            "Linked List",
+            "Recursion"
+        ],
+        "question": "You are given the heads of two sorted linked lists list1 and list2.\nMerge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\nReturn the head of the merged linked list.",
+        "examples": [
+            "Input: list1 = [1,2,4], list2 = [1,3,4]\nOutput: [1,1,2,3,4,4]",
+            "Input: list1 = [], list2 = []\nOutput: []",
+            "Input: list1 = [], list2 = [0]\nOutput: [0]"
+        ],
+        "constraints": [
+            "The number of nodes in both lists is in the range [0, 50].",
+            "-100 <= Node.val <= 100",
+            "Both list1 and list2 are sorted in non-decreasing order."
+        ],
+        "starter_code": {
+            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:\n        ",
+            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n        \n    }\n};"
+        }
+    },
+    {
         "id": "22",
         "title": "Generate Parentheses",
+        "difficulty": "Medium",
+        "tags": [
+            "String",
+            "Dynamic Programming",
+            "Backtracking"
+        ],
         "question": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
         "examples": [
             "Input: n = 3\nOutput: [\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]",
@@ -538,6 +524,13 @@
     {
         "id": "23",
         "title": "Merge k Sorted Lists",
+        "difficulty": "Hard",
+        "tags": [
+            "Linked List",
+            "Divide and Conquer",
+            "Heap (Priority Queue)",
+            "Merge Sort"
+        ],
         "question": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.\nMerge all the linked-lists into one sorted linked-list and return it.",
         "examples": [
             "Input: lists = [[1,4,5],[1,3,4],[2,6]]\nOutput: [1,1,2,3,4,4,5,6]\nExplanation: The linked-lists are:\n[\n 1->4->5,\n 1->3->4,\n 2->6\n]\nmerging them into one sorted linked list:\n1->1->2->3->4->4->5->6",
@@ -560,6 +553,11 @@
     {
         "id": "24",
         "title": "Swap Nodes in Pairs",
+        "difficulty": "Medium",
+        "tags": [
+            "Linked List",
+            "Recursion"
+        ],
         "question": "Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)",
         "examples": [],
         "constraints": [
@@ -574,6 +572,11 @@
     {
         "id": "25",
         "title": "Reverse Nodes in k-Group",
+        "difficulty": "Hard",
+        "tags": [
+            "Linked List",
+            "Recursion"
+        ],
         "question": "Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.\nk is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.\nYou may not alter the values in the list's nodes, only nodes themselves may be changed.",
         "examples": [
             "Input: head = [1,2,3,4,5], k = 2\nOutput: [2,1,4,3,5]",
@@ -592,6 +595,11 @@
     {
         "id": "26",
         "title": "Remove Duplicates from Sorted Array",
+        "difficulty": "Easy",
+        "tags": [
+            "Array",
+            "Two Pointers"
+        ],
         "question": "Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.\nConsider the number of unique elements in nums to be k\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b. After removing duplicates, return the number of unique elements k.\nThe first k elements of nums should contain the unique numbers in sorted order. The remaining elements beyond index k - 1 can be ignored.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint[] expectedNums = [...]; // The expected answer with correct length\nint k = removeDuplicates(nums); // Calls your implementation\nassert k == expectedNums.length;\nfor (int i = 0; i < k; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted.",
         "examples": [
             "int[] nums = [...]; // Input array\nint[] expectedNums = [...]; // The expected answer with correct length\nint k = removeDuplicates(nums); // Calls your implementation\nassert k == expectedNums.length;\nfor (int i = 0; i < k; i++) {\n assert nums[i] == expectedNums[i];\n}",
@@ -611,6 +619,11 @@
     {
         "id": "27",
         "title": "Remove Element",
+        "difficulty": "Easy",
+        "tags": [
+            "Array",
+            "Two Pointers"
+        ],
         "question": "Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.\nConsider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:\nChange the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.\nReturn k.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint val = ...; // Value to remove\nint[] expectedNums = [...]; // The expected answer with correct length.\n // It is sorted with no values equaling val.\nint k = removeElement(nums, val); // Calls your implementation\nassert k == expectedNums.length;\nsort(nums, 0, k); // Sort the first k elements of nums\nfor (int i = 0; i < actualLength; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted.",
         "examples": [
             "int[] nums = [...]; // Input array\nint val = ...; // Value to remove\nint[] expectedNums = [...]; // The expected answer with correct length.\n // It is sorted with no values equaling val.\nint k = removeElement(nums, val); // Calls your implementation\nassert k == expectedNums.length;\nsort(nums, 0, k); // Sort the first k elements of nums\nfor (int i = 0; i < actualLength; i++) {\n assert nums[i] == expectedNums[i];\n}",
@@ -629,6 +642,12 @@
     {
         "id": "28",
         "title": "Find the Index of the First Occurrence in a String",
+        "difficulty": "Easy",
+        "tags": [
+            "Two Pointers",
+            "String",
+            "String Matching"
+        ],
         "question": "Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.",
         "examples": [
             "Input: haystack = \"sadbutsad\", needle = \"sad\"\nOutput: 0\nExplanation: \"sad\" occurs at index 0 and 6.\nThe first occurrence is at index 0, so we return 0.",
@@ -646,6 +665,11 @@
     {
         "id": "29",
         "title": "Divide Two Integers",
+        "difficulty": "Medium",
+        "tags": [
+            "Math",
+            "Bit Manipulation"
+        ],
         "question": "Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.\nThe integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.\nReturn the quotient after dividing dividend by divisor.\nNote: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [\u2212231, 231 \u2212 1]. For this problem, if the quotient is strictly greater than 231 - 1, then return 231 - 1, and if the quotient is strictly less than -231, then return -231.",
         "examples": [
             "Input: dividend = 10, divisor = 3\nOutput: 3\nExplanation: 10/3 = 3.33333.. which is truncated to 3.",
@@ -663,6 +687,12 @@
     {
         "id": "30",
         "title": "Substring with Concatenation of All Words",
+        "difficulty": "Hard",
+        "tags": [
+            "Hash Table",
+            "String",
+            "Sliding Window"
+        ],
         "question": "You are given a string s and an array of strings words. All the strings of words are of the same length.\nA concatenated string is a string that exactly contains all the strings of any permutation of words concatenated.\nFor example, if words = [\"ab\",\"cd\",\"ef\"], then \"abcdef\", \"abefcd\", \"cdabef\", \"cdefab\", \"efabcd\", and \"efcdab\" are all concatenated strings. \"acdbef\" is not a concatenated string because it is not the concatenation of any permutation of words.\nReturn an array of the starting indices of all the concatenated substrings in s. You can return the answer in any order.",
         "examples": [],
         "constraints": [
@@ -676,6 +706,11 @@
     {
         "id": "31",
         "title": "Next Permutation",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Two Pointers"
+        ],
         "question": "A permutation of an array of integers is an arrangement of its members into a sequence or linear order.\nFor example, for arr = [1,2,3], the following are all the permutations of arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].\nThe next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).\nFor example, the next permutation of arr = [1,2,3] is [1,3,2].\nSimilarly, the next permutation of arr = [2,3,1] is [3,1,2].\nWhile the next permutation of arr = [3,2,1] is [1,2,3] because [3,2,1] does not have a lexicographical larger rearrangement.\nGiven an array of integers nums, find the next permutation of nums.\nThe replacement must be in place and use only constant extra memory.",
         "examples": [
             "Input: nums = [1,2,3]\nOutput: [1,3,2]",
@@ -693,6 +728,12 @@
     {
         "id": "32",
         "title": "Longest Valid Parentheses",
+        "difficulty": "Hard",
+        "tags": [
+            "String",
+            "Dynamic Programming",
+            "Stack"
+        ],
         "question": "Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
         "examples": [
             "Input: s = \"(()\"\nOutput: 2\nExplanation: The longest valid parentheses substring is \"()\".",
@@ -711,6 +752,11 @@
     {
         "id": "33",
         "title": "Search in Rotated Sorted Array",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Binary Search"
+        ],
         "question": "There is an integer array nums sorted in ascending order (with distinct values).\nPrior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].\nGiven the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\nYou must write an algorithm with O(log n) runtime complexity.",
         "examples": [
             "Input: nums = [4,5,6,7,0,1,2], target = 0\nOutput: 4",
@@ -732,6 +778,11 @@
     {
         "id": "35",
         "title": "Search Insert Position",
+        "difficulty": "Easy",
+        "tags": [
+            "Array",
+            "Binary Search"
+        ],
         "question": "Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.\nYou must write an algorithm with O(log n) runtime complexity.",
         "examples": [
             "Input: nums = [1,3,5,6], target = 5\nOutput: 2",
@@ -752,6 +803,12 @@
     {
         "id": "36",
         "title": "Valid Sudoku",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Hash Table",
+            "Matrix"
+        ],
         "question": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:\nEach row must contain the digits 1-9 without repetition.\nEach column must contain the digits 1-9 without repetition.\nEach of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.\nNote:\nA Sudoku board (partially filled) could be valid but is not necessarily solvable.\nOnly the filled cells need to be validated according to the mentioned rules.",
         "examples": [
             "Input: board = \n[[\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"]\n,[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"]\n,[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"]\n,[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"]\n,[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"]\n,[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"]\n,[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"]\n,[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"]\n,[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]\nOutput: true",
@@ -769,6 +826,13 @@
     {
         "id": "37",
         "title": "Sudoku Solver",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Hash Table",
+            "Backtracking",
+            "Matrix"
+        ],
         "question": "Write a program to solve a Sudoku puzzle by filling the empty cells.\nA sudoku solution must satisfy all of the following rules:\nEach of the digits 1-9 must occur exactly once in each row.\nEach of the digits 1-9 must occur exactly once in each column.\nEach of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.\nThe '.' character indicates empty cells.",
         "examples": [
             "Input: board = [[\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"],[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"],[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"],[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"],[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"],[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"],[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"],[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"],[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]\nOutput: [[\"5\",\"3\",\"4\",\"6\",\"7\",\"8\",\"9\",\"1\",\"2\"],[\"6\",\"7\",\"2\",\"1\",\"9\",\"5\",\"3\",\"4\",\"8\"],[\"1\",\"9\",\"8\",\"3\",\"4\",\"2\",\"5\",\"6\",\"7\"],[\"8\",\"5\",\"9\",\"7\",\"6\",\"1\",\"4\",\"2\",\"3\"],[\"4\",\"2\",\"6\",\"8\",\"5\",\"3\",\"7\",\"9\",\"1\"],[\"7\",\"1\",\"3\",\"9\",\"2\",\"4\",\"8\",\"5\",\"6\"],[\"9\",\"6\",\"1\",\"5\",\"3\",\"7\",\"2\",\"8\",\"4\"],[\"2\",\"8\",\"7\",\"4\",\"1\",\"9\",\"6\",\"3\",\"5\"],[\"3\",\"4\",\"5\",\"2\",\"8\",\"6\",\"1\",\"7\",\"9\"]]\nExplanation: The input board is shown above and the only valid solution is shown below:"
@@ -787,6 +851,10 @@
     {
         "id": "38",
         "title": "Count and Say",
+        "difficulty": "Medium",
+        "tags": [
+            "String"
+        ],
         "question": "The count-and-say sequence is a sequence of digit strings defined by the recursive formula:\ncountAndSay(1) = \"1\"\ncountAndSay(n) is the run-length encoding of countAndSay(n - 1).\nRun-length encoding (RLE) is a string compression method that works by replacing consecutive identical characters (repeated 2 or more times) with the concatenation of the character and the number marking the count of the characters (length of the run). For example, to compress the string \"3322251\" we replace \"33\" with \"23\", replace \"222\" with \"32\", replace \"5\" with \"15\" and replace \"1\" with \"11\". Thus the compressed string becomes \"23321511\".\nGiven a positive integer n, return the nth element of the count-and-say sequence.",
         "examples": [
             "countAndSay(1) = \"1\"\ncountAndSay(2) = RLE of \"1\" = \"11\"\ncountAndSay(3) = RLE of \"11\" = \"21\"\ncountAndSay(4) = RLE of \"21\" = \"1211\""
@@ -803,6 +871,11 @@
     {
         "id": "39",
         "title": "Combination Sum",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Backtracking"
+        ],
         "question": "Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.\nThe same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.\nThe test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.",
         "examples": [
             "Input: candidates = [2,3,6,7], target = 7\nOutput: [[2,2,3],[7]]\nExplanation:\n2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.\n7 is a candidate, and 7 = 7.\nThese are the only two combinations.",
@@ -823,6 +896,11 @@
     {
         "id": "40",
         "title": "Combination Sum II",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Backtracking"
+        ],
         "question": "Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.\nEach number in candidates may only be used once in the combination.\nNote: The solution set must not contain duplicate combinations.",
         "examples": [
             "Input: candidates = [10,1,2,7,6,1,5], target = 8\nOutput: \n[\n[1,1,6],\n[1,2,5],\n[1,7],\n[2,6]\n]",
@@ -841,6 +919,11 @@
     {
         "id": "41",
         "title": "First Missing Positive",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Hash Table"
+        ],
         "question": "Given an unsorted integer array nums. Return the smallest positive integer that is not present in nums.\nYou must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space.",
         "examples": [
             "Input: nums = [1,2,0]\nOutput: 3\nExplanation: The numbers in the range [1,2] are all in the array.",
@@ -859,6 +942,14 @@
     {
         "id": "42",
         "title": "Trapping Rain Water",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Two Pointers",
+            "Dynamic Programming",
+            "Stack",
+            "Monotonic Stack"
+        ],
         "question": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
         "examples": [
             "Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]\nOutput: 6\nExplanation: The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.",
@@ -877,6 +968,12 @@
     {
         "id": "43",
         "title": "Multiply Strings",
+        "difficulty": "Medium",
+        "tags": [
+            "Math",
+            "String",
+            "Simulation"
+        ],
         "question": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.\nNote: You must not use any built-in BigInteger library or convert the inputs to integer directly.",
         "examples": [
             "Input: num1 = \"2\", num2 = \"3\"\nOutput: \"6\"",
@@ -895,6 +992,13 @@
     {
         "id": "44",
         "title": "Wildcard Matching",
+        "difficulty": "Hard",
+        "tags": [
+            "String",
+            "Dynamic Programming",
+            "Greedy",
+            "Recursion"
+        ],
         "question": "Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:\n'?' Matches any single character.\n'*' Matches any sequence of characters (including the empty sequence).\nThe matching should cover the entire input string (not partial).",
         "examples": [
             "Input: s = \"aa\", p = \"a\"\nOutput: false\nExplanation: \"a\" does not match the entire string \"aa\".",
@@ -913,6 +1017,12 @@
     {
         "id": "45",
         "title": "Jump Game II",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Dynamic Programming",
+            "Greedy"
+        ],
         "question": "You are given a 0-indexed array of integers nums of length n. You are initially positioned at index 0.\nEach element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at index i, you can jump to any index (i + j) where:\n0 <= j <= nums[i] and\ni + j < n\nReturn the minimum number of jumps to reach index n - 1. The test cases are generated such that you can reach index n - 1.",
         "examples": [
             "Input: nums = [2,3,1,1,4]\nOutput: 2\nExplanation: The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.",
@@ -930,6 +1040,11 @@
     {
         "id": "46",
         "title": "Permutations",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Backtracking"
+        ],
         "question": "Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.",
         "examples": [
             "Input: nums = [1,2,3]\nOutput: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]",
@@ -949,6 +1064,12 @@
     {
         "id": "47",
         "title": "Permutations II",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Backtracking",
+            "Sorting"
+        ],
         "question": "Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.",
         "examples": [
             "Input: nums = [1,1,2]\nOutput:\n[[1,1,2],\n [1,2,1],\n [2,1,1]]",
@@ -966,6 +1087,12 @@
     {
         "id": "48",
         "title": "Rotate Image",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Math",
+            "Matrix"
+        ],
         "question": "You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).\nYou have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.",
         "examples": [
             "Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]\nOutput: [[7,4,1],[8,5,2],[9,6,3]]",
@@ -984,6 +1111,13 @@
     {
         "id": "49",
         "title": "Group Anagrams",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Hash Table",
+            "String",
+            "Sorting"
+        ],
         "question": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.",
         "examples": [],
         "constraints": [
@@ -999,6 +1133,11 @@
     {
         "id": "50",
         "title": "Pow(x, n)",
+        "difficulty": "Medium",
+        "tags": [
+            "Math",
+            "Recursion"
+        ],
         "question": "Implement pow(x, n), which calculates x raised to the power n (i.e., xn).",
         "examples": [
             "Input: x = 2.00000, n = 10\nOutput: 1024.00000",
@@ -1020,6 +1159,11 @@
     {
         "id": "51",
         "title": "N-Queens",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Backtracking"
+        ],
         "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.\nEach solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively.",
         "examples": [
             "Input: n = 4\nOutput: [[\".Q..\",\"...Q\",\"Q...\",\"..Q.\"],[\"..Q.\",\"Q...\",\"...Q\",\".Q..\"]]\nExplanation: There exist two distinct solutions to the 4-queens puzzle as shown above",
@@ -1036,6 +1180,10 @@
     {
         "id": "52",
         "title": "N-Queens II",
+        "difficulty": "Hard",
+        "tags": [
+            "Backtracking"
+        ],
         "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return the number of distinct solutions to the n-queens puzzle.",
         "examples": [
             "Input: n = 4\nOutput: 2\nExplanation: There are two distinct solutions to the 4-queens puzzle as shown.",
@@ -1050,8 +1198,38 @@
         }
     },
     {
+        "id": "53",
+        "title": "Maximum Subarray",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Divide and Conquer",
+            "Dynamic Programming"
+        ],
+        "question": "Given an integer array nums, find the subarray with the largest sum, and return its sum.",
+        "examples": [
+            "Input: nums = [-2,1,-3,4,-1,2,1,-5,4]\nOutput: 6\nExplanation: The subarray [4,-1,2,1] has the largest sum 6.",
+            "Input: nums = [1]\nOutput: 1\nExplanation: The subarray [1] has the largest sum 1.",
+            "Input: nums = [5,4,-1,7,8]\nOutput: 23\nExplanation: The subarray [5,4,-1,7,8] has the largest sum 23."
+        ],
+        "constraints": [
+            "1 <= nums.length <= 10^5",
+            "-10^4 <= nums[i] <= 10^4"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int maxSubArray(vector<int>& nums) {\n        \n    }\n};"
+        }
+    },
+    {
         "id": "54",
         "title": "Spiral Matrix",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Matrix",
+            "Simulation"
+        ],
         "question": "Given an m x n matrix, return all elements of the matrix in spiral order.",
         "examples": [
             "Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]\nOutput: [1,2,3,6,9,8,7,4,5]",
@@ -1071,6 +1249,12 @@
     {
         "id": "55",
         "title": "Jump Game",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Dynamic Programming",
+            "Greedy"
+        ],
         "question": "You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.\nReturn true if you can reach the last index, or false otherwise.",
         "examples": [
             "Input: nums = [2,3,1,1,4]\nOutput: true\nExplanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.",
@@ -1088,6 +1272,11 @@
     {
         "id": "56",
         "title": "Merge Intervals",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Sorting"
+        ],
         "question": "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
         "examples": [
             "Input: intervals = [[1,3],[2,6],[8,10],[15,18]]\nOutput: [[1,6],[8,10],[15,18]]\nExplanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].",
@@ -1107,6 +1296,10 @@
     {
         "id": "57",
         "title": "Insert Interval",
+        "difficulty": "Medium",
+        "tags": [
+            "Array"
+        ],
         "question": "You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starti. You are also given an interval newInterval = [start, end] that represents the start and end of another interval.\nInsert newInterval into intervals such that intervals is still sorted in ascending order by starti and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary).\nReturn intervals after the insertion.\nNote that you don't need to modify intervals in-place. You can make a new array and return it.",
         "examples": [
             "Input: intervals = [[1,3],[6,9]], newInterval = [2,5]\nOutput: [[1,5],[6,9]]",
@@ -1128,6 +1321,10 @@
     {
         "id": "58",
         "title": "Length of Last Word",
+        "difficulty": "Easy",
+        "tags": [
+            "String"
+        ],
         "question": "Given a string s consisting of words and spaces, return the length of the last word in the string.\nA word is a maximal substring consisting of non-space characters only.",
         "examples": [
             "Input: s = \"Hello World\"\nOutput: 5\nExplanation: The last word is \"World\" with length 5.",
@@ -1147,6 +1344,12 @@
     {
         "id": "59",
         "title": "Spiral Matrix II",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Matrix",
+            "Simulation"
+        ],
         "question": "Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.",
         "examples": [
             "Input: n = 3\nOutput: [[1,2,3],[8,9,4],[7,6,5]]",
@@ -1163,6 +1366,11 @@
     {
         "id": "60",
         "title": "Permutation Sequence",
+        "difficulty": "Hard",
+        "tags": [
+            "Math",
+            "Recursion"
+        ],
         "question": "The set [1, 2, 3, ..., n] contains a total of n! unique permutations.\nBy listing and labeling all of the permutations in order, we get the following sequence for n = 3:\n\"123\"\n\"132\"\n\"213\"\n\"231\"\n\"312\"\n\"321\"\nGiven n and k, return the kth permutation sequence.",
         "examples": [
             "Input: n = 3, k = 3\nOutput: \"213\"",
