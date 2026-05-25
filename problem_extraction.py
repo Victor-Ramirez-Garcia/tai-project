@@ -111,12 +111,11 @@ def clean_text(text):
     return text.strip()
 
 # --- Usage Example ---
-urls = [
-    "https://leetcode.com/problems/two-sum/",
-    "https://leetcode.com/problems/add-two-numbers/"
-]
 
-for url in urls:
+with open("urls.txt", "r") as f:
+    problem_urls = [line.strip() for line in f if line.strip()]
+
+for url in problem_urls:
     data = get_leetcode_problem_structured(url)
     if data:
         save_to_library(data)
