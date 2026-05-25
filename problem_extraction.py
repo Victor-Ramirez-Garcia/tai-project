@@ -1,4 +1,5 @@
 import requests
+import re
 import json
 from bs4 import BeautifulSoup
 
@@ -55,15 +56,24 @@ def get_leetcode_problem_structured(url):
         return {
             "id": q["questionId"],
             "title": q["title"],
-            "question": question_text.strip(),
-            "examples": examples,
-            "constraints": constraints,
+            "question": clean_text(question_text),
+            "examples": [clean_text(ex) for ex in examples],
+            "constraints": [clean_text(c) for c in constraints],
             "starter_code": {
                 "python": snippets.get('python3', 'Not available'),
                 "cpp": snippets.get('cpp', 'Not available')
             }
-        }
+    }
     return None
+
+def clean_text(text):
+    """Normalize whitespace and remove non-breaking spaces."""
+    # Replace non-breaking space with normal space
+    text = text.replace('\u00a0', ' ')
+    # Replace multiple newlines or spaces with single ones
+    text = re.sub(r'\n+', '\n', text)
+    text = re.sub(r' +', ' ', text)
+    return text.strip()
 
 # --- Testing ---
 url = "https://leetcode.com/problems/two-sum/"
