@@ -1,11 +1,10 @@
 import requests
 import json
 
-def get_leetcode_problem_extended(url):
+def get_leetcode_problem_cleaned(url, target_lang='python3'):
     slug = url.rstrip('/').split('/')[-1]
     api_url = "https://leetcode.com/graphql"
     
-    # Added codeSnippets to the query
     query = {
         "query": """
         query getQuestionDetail($titleSlug: String!) {
@@ -16,7 +15,6 @@ def get_leetcode_problem_extended(url):
                 content
                 topicTags { name }
                 codeSnippets {
-                    lang
                     langSlug
                     code
                 }
@@ -29,10 +27,32 @@ def get_leetcode_problem_extended(url):
     response = requests.post(api_url, json=query)
     data = response.json()
     
-    return data  # Debug: Print the raw API response
+    # Check if data exists and is valid
+    if "data" in data and data["data"].get("question"):
+        q = data["data"]["question"]
+        
+        # Extract and format the specific code snippet
+        snippet = next(
+            (s['code'] for s in q['codeSnippets'] if s['langSlug'] == target_lang), 
+            "Snippet not found"
+        )
+        
+        # Create a cleaned dictionary
+        cleaned_data = {
+            "id": q["questionId"],
+            "title": q["title"],
+            "difficulty": q["difficulty"],
+            "tags": [tag["name"] for tag in q["topicTags"]],
+            "content": q["content"],
+            "starter_code": snippet
+        }
+        return cleaned_data
+    return None
 
-# --- Example Usage ---
+# --- Usage ---
 url = "https://leetcode.com/problems/two-sum/"
+problem = get_leetcode_problem_cleaned(url)
 
-problem_data = get_leetcode_problem_extended(url)
-print(json.dumps(problem_data, indent=4))
+if problem:
+    # This prints the dictionary in a "pretty" readable format
+    print(json.dumps(problem, indent=4))
