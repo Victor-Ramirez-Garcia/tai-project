@@ -43,12 +43,16 @@ def get_leetcode_problem_structured(url, target_lang='python3'):
             if pre:
                 examples.append(pre.get_text().strip())
         
-        # 3. Extract Constraints
+        # Replace your current constraints extraction with this:
         constraints = []
         ul = soup.find('ul')
         if ul:
-            constraints = [li.get_text().strip() for li in ul.find_all('li')]
-            
+            for li in ul.find_all('li'):
+                # This preserves the power-of-ten notation by converting <sup> tags
+                for sup in li.find_all('sup'):
+                    sup.insert_before('^')
+                constraints.append(li.get_text().strip())
+
         return {
             "id": q["questionId"],
             "title": q["title"],
