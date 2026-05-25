@@ -1,7 +1,8 @@
 import requests
 import json
+from bs4 import BeautifulSoup
 
-def get_leetcode_problem_cleaned(url, target_lang='python3'):
+def get_leetcode_problem_structured(url, target_lang='python3'):
     slug = url.rstrip('/').split('/')[-1]
     api_url = "https://leetcode.com/graphql"
     
@@ -14,10 +15,7 @@ def get_leetcode_problem_cleaned(url, target_lang='python3'):
                 difficulty
                 content
                 topicTags { name }
-                codeSnippets {
-                    langSlug
-                    code
-                }
+                codeSnippets { langSlug code }
             }
         }
         """,
@@ -27,32 +25,40 @@ def get_leetcode_problem_cleaned(url, target_lang='python3'):
     response = requests.post(api_url, json=query)
     data = response.json()
     
-    # Check if data exists and is valid
     if "data" in data and data["data"].get("question"):
         q = data["data"]["question"]
+        soup = BeautifulSoup(q['content'], 'html.parser')
         
-        # Extract and format the specific code snippet
-        snippet = next(
-            (s['code'] for s in q['codeSnippets'] if s['langSlug'] == target_lang), 
-            "Snippet not found"
-        )
+        # 1. Extract Question Body (text before first example)
+        question_text = ""
+        for element in soup.children:
+            if element.name == 'p' and "Example" in element.get_text():
+                break
+            question_text += element.get_text() + "\n"
+            
+        # 2. Extract Examples
+        examples = []
+        for strong in soup.find_all('strong', class_='example'):
+            pre = strong.find_next('pre')
+            if pre:
+                examples.append(pre.get_text().strip())
         
-        # Create a cleaned dictionary
-        cleaned_data = {
+        # 3. Extract Constraints
+        constraints = []
+        ul = soup.find('ul')
+        if ul:
+            constraints = [li.get_text().strip() for li in ul.find_all('li')]
+            
+        return {
             "id": q["questionId"],
             "title": q["title"],
-            "difficulty": q["difficulty"],
-            "tags": [tag["name"] for tag in q["topicTags"]],
-            "content": q["content"],
-            "starter_code": snippet
+            "question": question_text.strip(),
+            "examples": examples,
+            "constraints": constraints,
+            "starter_code": next((s['code'] for s in q['codeSnippets'] if s['langSlug'] == target_lang), "")
         }
-        return cleaned_data
     return None
 
-# --- Usage ---
+# Usage
 url = "https://leetcode.com/problems/two-sum/"
-problem = get_leetcode_problem_cleaned(url)
-
-if problem:
-    # This prints the dictionary in a "pretty" readable format
-    print(json.dumps(problem, indent=4))
+print(json.dumps(get_leetcode_problem_structured(url), indent=4))
