@@ -41,6 +41,11 @@ def process_problems(input_filename, output_filename) -> int:
 
         # Loop through each language to create an entry
         for lang in starter_code.keys():
+            if lang == "python":
+                lang = "py" # adjust for leetcode's language slug
+            if lang not in ["py", "cpp"]:
+                print(f"Skipping unsupported language '{lang}' for ID: {entry.get('id')}")
+                continue
             prompt = {
                 "llm_instruction": LLM_INSTRUCTION,
                 "question": entry.get("question"),
