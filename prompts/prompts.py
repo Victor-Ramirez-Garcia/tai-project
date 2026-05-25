@@ -41,15 +41,19 @@ def process_problems(input_filename, output_filename) -> int:
 
         # Loop through each language to create an entry
         for lang in starter_code.keys():
-            output_list.append({
-                "id": entry.get("id"),
-                "title": entry.get("title"),
+            prompt = {
                 "llm_instruction": LLM_INSTRUCTION,
-                "language": lang,
                 "question": entry.get("question"),
+                "starter_code": starter_code.get(lang, ""),
                 "examples": entry.get("examples", []),
                 "constraints": entry.get("constraints", []),
-                "starter_code": starter_code.get(lang, "")
+            }
+            output_list.append({
+                "leetcode-problem-id": entry.get("id"),
+                "language": lang,
+                "prompt": prompt,
+                "generated_program_paths": [],
+	            "file_counter": 0,
             })
         
     # 4. Save the final list as a valid JSON array
