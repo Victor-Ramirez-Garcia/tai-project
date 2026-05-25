@@ -13,17 +13,19 @@ playwright install
 
 **NOTE**: Playwright needs Python to be 3.8+
 
+### File Structure
+```
+generated_code/ # shown after running high-level/app.py
+    (leetcode problem number)/
+        py/
+        cpp/
+```
+
 ## high-level/
 ### File Structure
 ```
 constants.py # contains constants
 app.py # generates and saves code
-testing.py # tests code
-gemini/ # shown after running app.py
-    medium/
-        (leetcode problem number)/
-            py/
-                trial_#.py
 ```
 
 ### constants.py: The constants
@@ -45,11 +47,13 @@ gemini/ # shown after running app.py
 - `SELECTOR`: List of HTML elements that are used to select the generated code for parsing and saving to a new file
 
 ### app.py: Running the program
-DEFINITIONS
-- contraint: Additional context that is attached to the leetcode problem to specify anything. The constraint also contains the file extension (e.g. py, cpp) which is used to specify the type of file.
+- `TRIALS`: Number of trials to run
+- `WAIT_FOR_NEW_BROWSER`: time (in seconds) to wait for a new browser to open
+    - **NOTE**: a browser opens for each prompt
+- `PROMPT_PATH`: path to prompts.json
 
 PROCESS
-1. initializes the trial counter for a leetcode problem to the next available file. The purpose is to auto-save the generated code.
+1. initializes the file counter for a leetcode problem to the next available file. The purpose is to auto-save the generated code.
 2. For each leetcode problem, the program follows the format below:
     - Opens a headless Chrome browser
     - Creates a browser context that doesn't share cookies/cache
@@ -70,26 +74,6 @@ PROCESS
     - Press Enter
     - Gets and saves the generated code to the next available file
     - Closes page and clear cookies
-
-### testing.py: Testing the generated code
-DEFINITIONS
-- contraint: Additional context that is attached to the leetcode problem to specify anything. The constraint also contains the file extension (e.g. py, cpp) which is used to specify the type of file.
-- trial: generated program for a particular leetcode problem.
-
-PROCESS
-1. For each leetcode problem, the program follows the format below:
-    - Go to Step 2
-2. For each contraint:
-    - Go to Step 3
-3. For each model:
-    - Go to Step 4
-    - After Step 4 is completed:
-        - Display the results
-4. For each trial:
-    - Run tests. Each test increments either the `passed` field or the `failed` failed for a particular error category. The tests that are currently shown include
-        - CLASS NAME NOT FOUND (runtime execution)
-        - METHOD NOT FOUND (runtime execution)
-        - TEST OUTPUT DOES NOT MATCH EXPECTED OUTPUT (functional correctness)
 
 ## low-level/
 Currently Empty.
