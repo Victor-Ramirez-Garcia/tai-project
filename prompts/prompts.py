@@ -41,22 +41,27 @@ def process_problems(input_filename, output_filename) -> int:
 
         # Loop through each language to create an entry
         for lang in starter_code.keys():
-            if lang == "python":
-                lang = "py" # adjust for leetcode's language slug
-            if lang not in ["py", "cpp"]:
+            lang_slug = lang.lower()
+            if lang_slug == "python":
+                lang_slug = "py" # adjust for leetcode's language slug
+            
+            if lang_slug not in ["py", "cpp"]:
                 print(f"Skipping unsupported language '{lang}' for ID: {entry.get('id')}")
                 continue
-            prompt = {
-                "llm_instruction": LLM_INSTRUCTION,
-                "question": entry.get("question"),
-                "starter_code": starter_code.get(lang, ""),
-                "examples": entry.get("examples", []),
-                "constraints": entry.get("constraints", []),
-            }
+
+            # Use a single f-string to handle the entire prompt construction
+            prompt_text = (
+                f"{LLM_INSTRUCTION}\n\n"
+                f"PROBLEM STATEMENT:\n{entry.get('question')}\n\n"
+                f"EXAMPLES:\n{chr(10).join(entry.get('examples', []))}\n\n"
+                f"CONSTRAINTS:\n{chr(10).join(entry.get('constraints', []))}\n\n"
+                f"STARTER CODE ({lang_slug.upper()}):\n{starter_code.get(lang, '')}"
+            )
+
             output_list.append({
                 "leetcode-problem-id": entry.get("id"),
-                "language": lang,
-                "prompt": prompt,
+                "language": lang_slug,
+                "prompt": prompt_text,
                 "generated_program_paths": [],
 	            "file_counter": 0,
             })
