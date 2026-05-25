@@ -3,6 +3,27 @@ import json
 PROBLEMS_FILE_LOCATION = "../problem_extraction/leetcode_library.json"
 PROMPT_FILE_LOCATION = "prompts.json"
 
+# Instructions for the Gemini LLM to follow when generating the solution 
+# for each of the LeetCode problem prompts. 
+LLM_INSTRUCTION = """
+You are an expert competitive programmer and software engineer. Your task is to provide the 
+optimal implementation for the provided LeetCode problem in the specified programming language.
+
+STRICT GUIDELINES:
+1. IMPLEMENTATION: Complete the provided 'starter_code' exactly. Do not rename classes or function 
+   signatures, as the solution must be compatible with standard LeetCode test runners.
+2. EFFICIENCY: Prioritize the most optimal Time and Space complexity. Explain your choice of 
+   algorithm (e.g., Two Pointers, Sliding Window, DP) if necessary within comments.
+3. CONSTRAINTS & EDGE CASES: Ensure your code handles all provided 'constraints' and edge cases 
+   (e.g., empty inputs, negative numbers, or integer overflows).
+4. STYLE: Write idiomatic code. For C++, use modern standards (C++17/20) and appropriate STL 
+   containers. For Python, use type hints as provided in the starter code.
+5. FORMATTING: Return ONLY the code inside the class structure. Do not include markdown 
+   explanations before or after the code block. The output must be ready to be parsed as a 
+   raw string and placed directly into an IDE.
+6. COMMENTS: Include concise comments explaining the core logic, especially for non-trivial parts.
+"""
+
 def process_problems(input_filename, output_filename) -> int:
     # 1. Load the entire input file (must be a valid JSON array)
     with open(input_filename, "r", encoding="utf-8") as f:
@@ -22,8 +43,12 @@ def process_problems(input_filename, output_filename) -> int:
         for lang in starter_code.keys():
             output_list.append({
                 "id": entry.get("id"),
+                "title": entry.get("title"),
+                "llm_instruction": LLM_INSTRUCTION,
                 "language": lang,
                 "question": entry.get("question"),
+                "examples": entry.get("examples", []),
+                "constraints": entry.get("constraints", []),
                 "starter_code": starter_code.get(lang, "")
             })
         
