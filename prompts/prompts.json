@@ -1,238 +1,710 @@
 [
     {
-        "leetcode-problem-id": "1",
-        "question": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order."
+        "id": "1",
+        "language": "python",
+        "question": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
+        "starter_code": "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        "
     },
     {
-        "leetcode-problem-id": "2",
-        "question": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself."
+        "id": "1",
+        "language": "cpp",
+        "question": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
+        "starter_code": "class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "3",
-        "question": "Given a string s, find the length of the longest substring without duplicate characters."
+        "id": "2",
+        "language": "python",
+        "question": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself.",
+        "starter_code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:\n        "
     },
     {
-        "leetcode-problem-id": "4",
-        "question": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.\nThe overall run time complexity should be O(log (m+n))."
+        "id": "2",
+        "language": "cpp",
+        "question": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself.",
+        "starter_code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "5",
-        "question": "Given a string s, return the longest palindromic substring in s."
+        "id": "3",
+        "language": "python",
+        "question": "Given a string s, find the length of the longest substring without duplicate characters.",
+        "starter_code": "class Solution:\n    def lengthOfLongestSubstring(self, s: str) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "6",
-        "question": "The string \"PAYPALISHIRING\" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)\nP A H N\nA P L S I I G\nY I R\nAnd then read line by line: \"PAHNAPLSIIGYIR\"\nWrite the code that will take a string and make this conversion given a number of rows:\nstring convert(string s, int numRows);"
+        "id": "3",
+        "language": "cpp",
+        "question": "Given a string s, find the length of the longest substring without duplicate characters.",
+        "starter_code": "class Solution {\npublic:\n    int lengthOfLongestSubstring(string s) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "7",
-        "question": "Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.\nAssume the environment does not allow you to store 64-bit integers (signed or unsigned)."
+        "id": "4",
+        "language": "python",
+        "question": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.\nThe overall run time complexity should be O(log (m+n)).",
+        "starter_code": "class Solution:\n    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:\n        "
     },
     {
-        "leetcode-problem-id": "8",
-        "question": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.\nThe algorithm for myAtoi(string s) is as follows:\nWhitespace: Ignore any leading whitespace (\" \").\nSignedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity if neither present.\nConversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.\nRounding: If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then round the integer to remain in the range. Specifically, integers less than -231 should be rounded to -231, and integers greater than 231 - 1 should be rounded to 231 - 1.\nReturn the integer as the final result."
+        "id": "4",
+        "language": "cpp",
+        "question": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.\nThe overall run time complexity should be O(log (m+n)).",
+        "starter_code": "class Solution {\npublic:\n    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "9",
-        "question": "Given an integer x, return true if x is a palindrome, and false otherwise."
+        "id": "5",
+        "language": "python",
+        "question": "Given a string s, return the longest palindromic substring in s.",
+        "starter_code": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        "
     },
     {
-        "leetcode-problem-id": "10",
-        "question": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:\n'.' Matches any single character.\u200b\u200b\u200b\u200b\n'*' Matches zero or more of the preceding element.\nReturn a boolean indicating whether the matching covers the entire input string (not partial)."
+        "id": "5",
+        "language": "cpp",
+        "question": "Given a string s, return the longest palindromic substring in s.",
+        "starter_code": "class Solution {\npublic:\n    string longestPalindrome(string s) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "11",
-        "question": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).\nFind two lines that together with the x-axis form a container, such that the container contains the most water.\nReturn the maximum amount of water a container can store.\nNotice that you may not slant the container."
+        "id": "6",
+        "language": "python",
+        "question": "The string \"PAYPALISHIRING\" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)\nP A H N\nA P L S I I G\nY I R\nAnd then read line by line: \"PAHNAPLSIIGYIR\"\nWrite the code that will take a string and make this conversion given a number of rows:\nstring convert(string s, int numRows);",
+        "starter_code": "class Solution:\n    def convert(self, s: str, numRows: int) -> str:\n        "
     },
     {
-        "leetcode-problem-id": "12",
-        "question": "Seven different symbols represent Roman numerals with the following values:\nSymbol\nValue\nI\n1\nV\n5\nX\n10\nL\n50\nC\n100\nD\n500\nM\n1000\nRoman numerals are formed by appending the conversions of decimal place values from highest to lowest. Converting a decimal place value into a Roman numeral has the following rules:\nIf the value does not start with 4 or 9, select the symbol of the maximal value that can be subtracted from the input, append that symbol to the result, subtract its value, and convert the remainder to a Roman numeral.\nIf the value starts with 4 or 9 use the subtractive form representing one symbol subtracted from the following symbol, for example, 4 is 1 (I) less than 5 (V): IV and 9 is 1 (I) less than 10 (X): IX. Only the following subtractive forms are used: 4 (IV), 9 (IX), 40 (XL), 90 (XC), 400 (CD) and 900 (CM).\nOnly powers of 10 (I, X, C, M) can be appended consecutively at most 3 times to represent multiples of 10. You cannot append 5 (V), 50 (L), or 500 (D) multiple times. If you need to append a symbol 4 times use the subtractive form.\nGiven an integer, convert it to a Roman numeral."
+        "id": "6",
+        "language": "cpp",
+        "question": "The string \"PAYPALISHIRING\" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)\nP A H N\nA P L S I I G\nY I R\nAnd then read line by line: \"PAHNAPLSIIGYIR\"\nWrite the code that will take a string and make this conversion given a number of rows:\nstring convert(string s, int numRows);",
+        "starter_code": "class Solution {\npublic:\n    string convert(string s, int numRows) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "13",
-        "question": "Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.\nSymbol Value\nI 1\nV 5\nX 10\nL 50\nC 100\nD 500\nM 1000\nFor example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.\nRoman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:\nI can be placed before V (5) and X (10) to make 4 and 9. \nX can be placed before L (50) and C (100) to make 40 and 90. \nC can be placed before D (500) and M (1000) to make 400 and 900.\nGiven a roman numeral, convert it to an integer."
+        "id": "7",
+        "language": "python",
+        "question": "Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.\nAssume the environment does not allow you to store 64-bit integers (signed or unsigned).",
+        "starter_code": "class Solution:\n    def reverse(self, x: int) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "14",
-        "question": "Write a function to find the longest common prefix string amongst an array of strings.\nIf there is no common prefix, return an empty string \"\"."
+        "id": "7",
+        "language": "cpp",
+        "question": "Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.\nAssume the environment does not allow you to store 64-bit integers (signed or unsigned).",
+        "starter_code": "class Solution {\npublic:\n    int reverse(int x) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "15",
-        "question": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.\nNotice that the solution set must not contain duplicate triplets."
+        "id": "8",
+        "language": "python",
+        "question": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.\nThe algorithm for myAtoi(string s) is as follows:\nWhitespace: Ignore any leading whitespace (\" \").\nSignedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity if neither present.\nConversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.\nRounding: If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then round the integer to remain in the range. Specifically, integers less than -231 should be rounded to -231, and integers greater than 231 - 1 should be rounded to 231 - 1.\nReturn the integer as the final result.",
+        "starter_code": "class Solution:\n    def myAtoi(self, s: str) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "16",
-        "question": "Given an integer array nums of length n and an integer target, find three integers at distinct indices in nums such that the sum is closest to target.\nReturn the sum of the three integers.\nYou may assume that each input would have exactly one solution."
+        "id": "8",
+        "language": "cpp",
+        "question": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.\nThe algorithm for myAtoi(string s) is as follows:\nWhitespace: Ignore any leading whitespace (\" \").\nSignedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity if neither present.\nConversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.\nRounding: If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then round the integer to remain in the range. Specifically, integers less than -231 should be rounded to -231, and integers greater than 231 - 1 should be rounded to 231 - 1.\nReturn the integer as the final result.",
+        "starter_code": "class Solution {\npublic:\n    int myAtoi(string s) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "17",
-        "question": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.\nA mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters."
+        "id": "9",
+        "language": "python",
+        "question": "Given an integer x, return true if x is a palindrome, and false otherwise.",
+        "starter_code": "class Solution:\n    def isPalindrome(self, x: int) -> bool:\n        "
     },
     {
-        "leetcode-problem-id": "18",
-        "question": "Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:\n0 <= a, b, c, d < n\na, b, c, and d are distinct.\nnums[a] + nums[b] + nums[c] + nums[d] == target\nYou may return the answer in any order."
+        "id": "9",
+        "language": "cpp",
+        "question": "Given an integer x, return true if x is a palindrome, and false otherwise.",
+        "starter_code": "class Solution {\npublic:\n    bool isPalindrome(int x) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "19",
-        "question": "Given the head of a linked list, remove the nth node from the end of the list and return its head."
+        "id": "10",
+        "language": "python",
+        "question": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:\n'.' Matches any single character.\u200b\u200b\u200b\u200b\n'*' Matches zero or more of the preceding element.\nReturn a boolean indicating whether the matching covers the entire input string (not partial).",
+        "starter_code": "class Solution:\n    def isMatch(self, s: str, p: str) -> bool:\n        "
     },
     {
-        "leetcode-problem-id": "20",
-        "question": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\nAn input string is valid if:\nOpen brackets must be closed by the same type of brackets.\nOpen brackets must be closed in the correct order.\nEvery close bracket has a corresponding open bracket of the same type."
+        "id": "10",
+        "language": "cpp",
+        "question": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:\n'.' Matches any single character.\u200b\u200b\u200b\u200b\n'*' Matches zero or more of the preceding element.\nReturn a boolean indicating whether the matching covers the entire input string (not partial).",
+        "starter_code": "class Solution {\npublic:\n    bool isMatch(string s, string p) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "21",
-        "question": "You are given the heads of two sorted linked lists list1 and list2.\nMerge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\nReturn the head of the merged linked list."
+        "id": "11",
+        "language": "python",
+        "question": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).\nFind two lines that together with the x-axis form a container, such that the container contains the most water.\nReturn the maximum amount of water a container can store.\nNotice that you may not slant the container.",
+        "starter_code": "class Solution:\n    def maxArea(self, height: List[int]) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "22",
-        "question": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses."
+        "id": "11",
+        "language": "cpp",
+        "question": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).\nFind two lines that together with the x-axis form a container, such that the container contains the most water.\nReturn the maximum amount of water a container can store.\nNotice that you may not slant the container.",
+        "starter_code": "class Solution {\npublic:\n    int maxArea(vector<int>& height) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "23",
-        "question": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.\nMerge all the linked-lists into one sorted linked-list and return it."
+        "id": "12",
+        "language": "python",
+        "question": "Seven different symbols represent Roman numerals with the following values:\nSymbol\nValue\nI\n1\nV\n5\nX\n10\nL\n50\nC\n100\nD\n500\nM\n1000\nRoman numerals are formed by appending the conversions of decimal place values from highest to lowest. Converting a decimal place value into a Roman numeral has the following rules:\nIf the value does not start with 4 or 9, select the symbol of the maximal value that can be subtracted from the input, append that symbol to the result, subtract its value, and convert the remainder to a Roman numeral.\nIf the value starts with 4 or 9 use the subtractive form representing one symbol subtracted from the following symbol, for example, 4 is 1 (I) less than 5 (V): IV and 9 is 1 (I) less than 10 (X): IX. Only the following subtractive forms are used: 4 (IV), 9 (IX), 40 (XL), 90 (XC), 400 (CD) and 900 (CM).\nOnly powers of 10 (I, X, C, M) can be appended consecutively at most 3 times to represent multiples of 10. You cannot append 5 (V), 50 (L), or 500 (D) multiple times. If you need to append a symbol 4 times use the subtractive form.\nGiven an integer, convert it to a Roman numeral.",
+        "starter_code": "class Solution:\n    def intToRoman(self, num: int) -> str:\n        "
     },
     {
-        "leetcode-problem-id": "24",
-        "question": "Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)"
+        "id": "12",
+        "language": "cpp",
+        "question": "Seven different symbols represent Roman numerals with the following values:\nSymbol\nValue\nI\n1\nV\n5\nX\n10\nL\n50\nC\n100\nD\n500\nM\n1000\nRoman numerals are formed by appending the conversions of decimal place values from highest to lowest. Converting a decimal place value into a Roman numeral has the following rules:\nIf the value does not start with 4 or 9, select the symbol of the maximal value that can be subtracted from the input, append that symbol to the result, subtract its value, and convert the remainder to a Roman numeral.\nIf the value starts with 4 or 9 use the subtractive form representing one symbol subtracted from the following symbol, for example, 4 is 1 (I) less than 5 (V): IV and 9 is 1 (I) less than 10 (X): IX. Only the following subtractive forms are used: 4 (IV), 9 (IX), 40 (XL), 90 (XC), 400 (CD) and 900 (CM).\nOnly powers of 10 (I, X, C, M) can be appended consecutively at most 3 times to represent multiples of 10. You cannot append 5 (V), 50 (L), or 500 (D) multiple times. If you need to append a symbol 4 times use the subtractive form.\nGiven an integer, convert it to a Roman numeral.",
+        "starter_code": "class Solution {\npublic:\n    string intToRoman(int num) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "25",
-        "question": "Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.\nk is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.\nYou may not alter the values in the list's nodes, only nodes themselves may be changed."
+        "id": "13",
+        "language": "python",
+        "question": "Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.\nSymbol Value\nI 1\nV 5\nX 10\nL 50\nC 100\nD 500\nM 1000\nFor example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.\nRoman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:\nI can be placed before V (5) and X (10) to make 4 and 9. \nX can be placed before L (50) and C (100) to make 40 and 90. \nC can be placed before D (500) and M (1000) to make 400 and 900.\nGiven a roman numeral, convert it to an integer.",
+        "starter_code": "class Solution:\n    def romanToInt(self, s: str) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "26",
-        "question": "Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.\nConsider the number of unique elements in nums to be k\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b. After removing duplicates, return the number of unique elements k.\nThe first k elements of nums should contain the unique numbers in sorted order. The remaining elements beyond index k - 1 can be ignored.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint[] expectedNums = [...]; // The expected answer with correct length\nint k = removeDuplicates(nums); // Calls your implementation\nassert k == expectedNums.length;\nfor (int i = 0; i < k; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted."
+        "id": "13",
+        "language": "cpp",
+        "question": "Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.\nSymbol Value\nI 1\nV 5\nX 10\nL 50\nC 100\nD 500\nM 1000\nFor example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.\nRoman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:\nI can be placed before V (5) and X (10) to make 4 and 9. \nX can be placed before L (50) and C (100) to make 40 and 90. \nC can be placed before D (500) and M (1000) to make 400 and 900.\nGiven a roman numeral, convert it to an integer.",
+        "starter_code": "class Solution {\npublic:\n    int romanToInt(string s) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "27",
-        "question": "Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.\nConsider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:\nChange the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.\nReturn k.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint val = ...; // Value to remove\nint[] expectedNums = [...]; // The expected answer with correct length.\n // It is sorted with no values equaling val.\nint k = removeElement(nums, val); // Calls your implementation\nassert k == expectedNums.length;\nsort(nums, 0, k); // Sort the first k elements of nums\nfor (int i = 0; i < actualLength; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted."
+        "id": "14",
+        "language": "python",
+        "question": "Write a function to find the longest common prefix string amongst an array of strings.\nIf there is no common prefix, return an empty string \"\".",
+        "starter_code": "class Solution:\n    def longestCommonPrefix(self, strs: List[str]) -> str:\n        "
     },
     {
-        "leetcode-problem-id": "28",
-        "question": "Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack."
+        "id": "14",
+        "language": "cpp",
+        "question": "Write a function to find the longest common prefix string amongst an array of strings.\nIf there is no common prefix, return an empty string \"\".",
+        "starter_code": "class Solution {\npublic:\n    string longestCommonPrefix(vector<string>& strs) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "29",
-        "question": "Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.\nThe integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.\nReturn the quotient after dividing dividend by divisor.\nNote: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [\u2212231, 231 \u2212 1]. For this problem, if the quotient is strictly greater than 231 - 1, then return 231 - 1, and if the quotient is strictly less than -231, then return -231."
+        "id": "15",
+        "language": "python",
+        "question": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.\nNotice that the solution set must not contain duplicate triplets.",
+        "starter_code": "class Solution:\n    def threeSum(self, nums: list[int]) -> list[list[int]]:\n        "
     },
     {
-        "leetcode-problem-id": "30",
-        "question": "You are given a string s and an array of strings words. All the strings of words are of the same length.\nA concatenated string is a string that exactly contains all the strings of any permutation of words concatenated.\nFor example, if words = [\"ab\",\"cd\",\"ef\"], then \"abcdef\", \"abefcd\", \"cdabef\", \"cdefab\", \"efabcd\", and \"efcdab\" are all concatenated strings. \"acdbef\" is not a concatenated string because it is not the concatenation of any permutation of words.\nReturn an array of the starting indices of all the concatenated substrings in s. You can return the answer in any order."
+        "id": "15",
+        "language": "cpp",
+        "question": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.\nNotice that the solution set must not contain duplicate triplets.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<int>> threeSum(vector<int>& nums) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "31",
-        "question": "A permutation of an array of integers is an arrangement of its members into a sequence or linear order.\nFor example, for arr = [1,2,3], the following are all the permutations of arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].\nThe next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).\nFor example, the next permutation of arr = [1,2,3] is [1,3,2].\nSimilarly, the next permutation of arr = [2,3,1] is [3,1,2].\nWhile the next permutation of arr = [3,2,1] is [1,2,3] because [3,2,1] does not have a lexicographical larger rearrangement.\nGiven an array of integers nums, find the next permutation of nums.\nThe replacement must be in place and use only constant extra memory."
+        "id": "16",
+        "language": "python",
+        "question": "Given an integer array nums of length n and an integer target, find three integers at distinct indices in nums such that the sum is closest to target.\nReturn the sum of the three integers.\nYou may assume that each input would have exactly one solution.",
+        "starter_code": "class Solution:\n    def threeSumClosest(self, nums: List[int], target: int) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "32",
-        "question": "Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring."
+        "id": "16",
+        "language": "cpp",
+        "question": "Given an integer array nums of length n and an integer target, find three integers at distinct indices in nums such that the sum is closest to target.\nReturn the sum of the three integers.\nYou may assume that each input would have exactly one solution.",
+        "starter_code": "class Solution {\npublic:\n    int threeSumClosest(vector<int>& nums, int target) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "33",
-        "question": "There is an integer array nums sorted in ascending order (with distinct values).\nPrior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].\nGiven the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\nYou must write an algorithm with O(log n) runtime complexity."
+        "id": "17",
+        "language": "python",
+        "question": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.\nA mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.",
+        "starter_code": "class Solution:\n    def letterCombinations(self, digits: str) -> List[str]:\n        "
     },
     {
-        "leetcode-problem-id": "35",
-        "question": "Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.\nYou must write an algorithm with O(log n) runtime complexity."
+        "id": "17",
+        "language": "cpp",
+        "question": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.\nA mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.",
+        "starter_code": "class Solution {\npublic:\n    vector<string> letterCombinations(string digits) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "36",
-        "question": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:\nEach row must contain the digits 1-9 without repetition.\nEach column must contain the digits 1-9 without repetition.\nEach of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.\nNote:\nA Sudoku board (partially filled) could be valid but is not necessarily solvable.\nOnly the filled cells need to be validated according to the mentioned rules."
+        "id": "18",
+        "language": "python",
+        "question": "Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:\n0 <= a, b, c, d < n\na, b, c, and d are distinct.\nnums[a] + nums[b] + nums[c] + nums[d] == target\nYou may return the answer in any order.",
+        "starter_code": "class Solution:\n    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:\n        "
     },
     {
-        "leetcode-problem-id": "37",
-        "question": "Write a program to solve a Sudoku puzzle by filling the empty cells.\nA sudoku solution must satisfy all of the following rules:\nEach of the digits 1-9 must occur exactly once in each row.\nEach of the digits 1-9 must occur exactly once in each column.\nEach of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.\nThe '.' character indicates empty cells."
+        "id": "18",
+        "language": "cpp",
+        "question": "Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:\n0 <= a, b, c, d < n\na, b, c, and d are distinct.\nnums[a] + nums[b] + nums[c] + nums[d] == target\nYou may return the answer in any order.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<int>> fourSum(vector<int>& nums, int target) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "38",
-        "question": "The count-and-say sequence is a sequence of digit strings defined by the recursive formula:\ncountAndSay(1) = \"1\"\ncountAndSay(n) is the run-length encoding of countAndSay(n - 1).\nRun-length encoding (RLE) is a string compression method that works by replacing consecutive identical characters (repeated 2 or more times) with the concatenation of the character and the number marking the count of the characters (length of the run). For example, to compress the string \"3322251\" we replace \"33\" with \"23\", replace \"222\" with \"32\", replace \"5\" with \"15\" and replace \"1\" with \"11\". Thus the compressed string becomes \"23321511\".\nGiven a positive integer n, return the nth element of the count-and-say sequence."
+        "id": "19",
+        "language": "python",
+        "question": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
+        "starter_code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:\n        "
     },
     {
-        "leetcode-problem-id": "39",
-        "question": "Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.\nThe same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.\nThe test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input."
+        "id": "19",
+        "language": "cpp",
+        "question": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
+        "starter_code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* removeNthFromEnd(ListNode* head, int n) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "40",
-        "question": "Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.\nEach number in candidates may only be used once in the combination.\nNote: The solution set must not contain duplicate combinations."
+        "id": "20",
+        "language": "python",
+        "question": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\nAn input string is valid if:\nOpen brackets must be closed by the same type of brackets.\nOpen brackets must be closed in the correct order.\nEvery close bracket has a corresponding open bracket of the same type.",
+        "starter_code": "class Solution:\n    def isValid(self, s: str) -> bool:\n        "
     },
     {
-        "leetcode-problem-id": "41",
-        "question": "Given an unsorted integer array nums. Return the smallest positive integer that is not present in nums.\nYou must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space."
+        "id": "20",
+        "language": "cpp",
+        "question": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\nAn input string is valid if:\nOpen brackets must be closed by the same type of brackets.\nOpen brackets must be closed in the correct order.\nEvery close bracket has a corresponding open bracket of the same type.",
+        "starter_code": "class Solution {\npublic:\n    bool isValid(string s) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "42",
-        "question": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining."
+        "id": "21",
+        "language": "python",
+        "question": "You are given the heads of two sorted linked lists list1 and list2.\nMerge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\nReturn the head of the merged linked list.",
+        "starter_code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:\n        "
     },
     {
-        "leetcode-problem-id": "43",
-        "question": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.\nNote: You must not use any built-in BigInteger library or convert the inputs to integer directly."
+        "id": "21",
+        "language": "cpp",
+        "question": "You are given the heads of two sorted linked lists list1 and list2.\nMerge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\nReturn the head of the merged linked list.",
+        "starter_code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "44",
-        "question": "Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:\n'?' Matches any single character.\n'*' Matches any sequence of characters (including the empty sequence).\nThe matching should cover the entire input string (not partial)."
+        "id": "22",
+        "language": "python",
+        "question": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+        "starter_code": "class Solution:\n    def generateParenthesis(self, n: int) -> List[str]:\n        "
     },
     {
-        "leetcode-problem-id": "45",
-        "question": "You are given a 0-indexed array of integers nums of length n. You are initially positioned at index 0.\nEach element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at index i, you can jump to any index (i + j) where:\n0 <= j <= nums[i] and\ni + j < n\nReturn the minimum number of jumps to reach index n - 1. The test cases are generated such that you can reach index n - 1."
+        "id": "22",
+        "language": "cpp",
+        "question": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+        "starter_code": "class Solution {\npublic:\n    vector<string> generateParenthesis(int n) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "46",
-        "question": "Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order."
+        "id": "23",
+        "language": "python",
+        "question": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.\nMerge all the linked-lists into one sorted linked-list and return it.",
+        "starter_code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:\n        "
     },
     {
-        "leetcode-problem-id": "47",
-        "question": "Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order."
+        "id": "23",
+        "language": "cpp",
+        "question": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.\nMerge all the linked-lists into one sorted linked-list and return it.",
+        "starter_code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeKLists(vector<ListNode*>& lists) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "48",
-        "question": "You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).\nYou have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation."
+        "id": "24",
+        "language": "python",
+        "question": "Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)",
+        "starter_code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        "
     },
     {
-        "leetcode-problem-id": "49",
-        "question": "Given an array of strings strs, group the anagrams together. You can return the answer in any order."
+        "id": "24",
+        "language": "cpp",
+        "question": "Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)",
+        "starter_code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* swapPairs(ListNode* head) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "50",
-        "question": "Implement pow(x, n), which calculates x raised to the power n (i.e., xn)."
+        "id": "25",
+        "language": "python",
+        "question": "Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.\nk is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.\nYou may not alter the values in the list's nodes, only nodes themselves may be changed.",
+        "starter_code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:\n        "
     },
     {
-        "leetcode-problem-id": "51",
-        "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.\nEach solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively."
+        "id": "25",
+        "language": "cpp",
+        "question": "Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.\nk is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.\nYou may not alter the values in the list's nodes, only nodes themselves may be changed.",
+        "starter_code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* reverseKGroup(ListNode* head, int k) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "52",
-        "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return the number of distinct solutions to the n-queens puzzle."
+        "id": "26",
+        "language": "python",
+        "question": "Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.\nConsider the number of unique elements in nums to be k\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b. After removing duplicates, return the number of unique elements k.\nThe first k elements of nums should contain the unique numbers in sorted order. The remaining elements beyond index k - 1 can be ignored.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint[] expectedNums = [...]; // The expected answer with correct length\nint k = removeDuplicates(nums); // Calls your implementation\nassert k == expectedNums.length;\nfor (int i = 0; i < k; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted.",
+        "starter_code": "class Solution:\n    def removeDuplicates(self, nums: List[int]) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "53",
-        "question": "Given an integer array nums, find the subarray with the largest sum, and return its sum."
+        "id": "26",
+        "language": "cpp",
+        "question": "Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.\nConsider the number of unique elements in nums to be k\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b. After removing duplicates, return the number of unique elements k.\nThe first k elements of nums should contain the unique numbers in sorted order. The remaining elements beyond index k - 1 can be ignored.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint[] expectedNums = [...]; // The expected answer with correct length\nint k = removeDuplicates(nums); // Calls your implementation\nassert k == expectedNums.length;\nfor (int i = 0; i < k; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted.",
+        "starter_code": "class Solution {\npublic:\n    int removeDuplicates(vector<int>& nums) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "54",
-        "question": "Given an m x n matrix, return all elements of the matrix in spiral order."
+        "id": "27",
+        "language": "python",
+        "question": "Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.\nConsider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:\nChange the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.\nReturn k.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint val = ...; // Value to remove\nint[] expectedNums = [...]; // The expected answer with correct length.\n // It is sorted with no values equaling val.\nint k = removeElement(nums, val); // Calls your implementation\nassert k == expectedNums.length;\nsort(nums, 0, k); // Sort the first k elements of nums\nfor (int i = 0; i < actualLength; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted.",
+        "starter_code": "class Solution:\n    def removeElement(self, nums: List[int], val: int) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "55",
-        "question": "You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.\nReturn true if you can reach the last index, or false otherwise."
+        "id": "27",
+        "language": "cpp",
+        "question": "Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.\nConsider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:\nChange the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.\nReturn k.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint val = ...; // Value to remove\nint[] expectedNums = [...]; // The expected answer with correct length.\n // It is sorted with no values equaling val.\nint k = removeElement(nums, val); // Calls your implementation\nassert k == expectedNums.length;\nsort(nums, 0, k); // Sort the first k elements of nums\nfor (int i = 0; i < actualLength; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted.",
+        "starter_code": "class Solution {\npublic:\n    int removeElement(vector<int>& nums, int val) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "56",
-        "question": "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input."
+        "id": "28",
+        "language": "python",
+        "question": "Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.",
+        "starter_code": "class Solution:\n    def strStr(self, haystack: str, needle: str) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "57",
-        "question": "You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starti. You are also given an interval newInterval = [start, end] that represents the start and end of another interval.\nInsert newInterval into intervals such that intervals is still sorted in ascending order by starti and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary).\nReturn intervals after the insertion.\nNote that you don't need to modify intervals in-place. You can make a new array and return it."
+        "id": "28",
+        "language": "cpp",
+        "question": "Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.",
+        "starter_code": "class Solution {\npublic:\n    int strStr(string haystack, string needle) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "58",
-        "question": "Given a string s consisting of words and spaces, return the length of the last word in the string.\nA word is a maximal substring consisting of non-space characters only."
+        "id": "29",
+        "language": "python",
+        "question": "Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.\nThe integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.\nReturn the quotient after dividing dividend by divisor.\nNote: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [\u2212231, 231 \u2212 1]. For this problem, if the quotient is strictly greater than 231 - 1, then return 231 - 1, and if the quotient is strictly less than -231, then return -231.",
+        "starter_code": "class Solution:\n    def divide(self, dividend: int, divisor: int) -> int:\n        "
     },
     {
-        "leetcode-problem-id": "59",
-        "question": "Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order."
+        "id": "29",
+        "language": "cpp",
+        "question": "Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.\nThe integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.\nReturn the quotient after dividing dividend by divisor.\nNote: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [\u2212231, 231 \u2212 1]. For this problem, if the quotient is strictly greater than 231 - 1, then return 231 - 1, and if the quotient is strictly less than -231, then return -231.",
+        "starter_code": "class Solution {\npublic:\n    int divide(int dividend, int divisor) {\n        \n    }\n};"
     },
     {
-        "leetcode-problem-id": "60",
-        "question": "The set [1, 2, 3, ..., n] contains a total of n! unique permutations.\nBy listing and labeling all of the permutations in order, we get the following sequence for n = 3:\n\"123\"\n\"132\"\n\"213\"\n\"231\"\n\"312\"\n\"321\"\nGiven n and k, return the kth permutation sequence."
+        "id": "30",
+        "language": "python",
+        "question": "You are given a string s and an array of strings words. All the strings of words are of the same length.\nA concatenated string is a string that exactly contains all the strings of any permutation of words concatenated.\nFor example, if words = [\"ab\",\"cd\",\"ef\"], then \"abcdef\", \"abefcd\", \"cdabef\", \"cdefab\", \"efabcd\", and \"efcdab\" are all concatenated strings. \"acdbef\" is not a concatenated string because it is not the concatenation of any permutation of words.\nReturn an array of the starting indices of all the concatenated substrings in s. You can return the answer in any order.",
+        "starter_code": "class Solution:\n    def findSubstring(self, s: str, words: List[str]) -> List[int]:\n        "
+    },
+    {
+        "id": "30",
+        "language": "cpp",
+        "question": "You are given a string s and an array of strings words. All the strings of words are of the same length.\nA concatenated string is a string that exactly contains all the strings of any permutation of words concatenated.\nFor example, if words = [\"ab\",\"cd\",\"ef\"], then \"abcdef\", \"abefcd\", \"cdabef\", \"cdefab\", \"efabcd\", and \"efcdab\" are all concatenated strings. \"acdbef\" is not a concatenated string because it is not the concatenation of any permutation of words.\nReturn an array of the starting indices of all the concatenated substrings in s. You can return the answer in any order.",
+        "starter_code": "class Solution {\npublic:\n    vector<int> findSubstring(string s, vector<string>& words) {\n        \n    }\n};"
+    },
+    {
+        "id": "31",
+        "language": "python",
+        "question": "A permutation of an array of integers is an arrangement of its members into a sequence or linear order.\nFor example, for arr = [1,2,3], the following are all the permutations of arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].\nThe next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).\nFor example, the next permutation of arr = [1,2,3] is [1,3,2].\nSimilarly, the next permutation of arr = [2,3,1] is [3,1,2].\nWhile the next permutation of arr = [3,2,1] is [1,2,3] because [3,2,1] does not have a lexicographical larger rearrangement.\nGiven an array of integers nums, find the next permutation of nums.\nThe replacement must be in place and use only constant extra memory.",
+        "starter_code": "class Solution:\n    def nextPermutation(self, nums: List[int]) -> None:\n        \"\"\"\n        Do not return anything, modify nums in-place instead.\n        \"\"\"\n        "
+    },
+    {
+        "id": "31",
+        "language": "cpp",
+        "question": "A permutation of an array of integers is an arrangement of its members into a sequence or linear order.\nFor example, for arr = [1,2,3], the following are all the permutations of arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].\nThe next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).\nFor example, the next permutation of arr = [1,2,3] is [1,3,2].\nSimilarly, the next permutation of arr = [2,3,1] is [3,1,2].\nWhile the next permutation of arr = [3,2,1] is [1,2,3] because [3,2,1] does not have a lexicographical larger rearrangement.\nGiven an array of integers nums, find the next permutation of nums.\nThe replacement must be in place and use only constant extra memory.",
+        "starter_code": "class Solution {\npublic:\n    void nextPermutation(vector<int>& nums) {\n        \n    }\n};"
+    },
+    {
+        "id": "32",
+        "language": "python",
+        "question": "Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
+        "starter_code": "class Solution:\n    def longestValidParentheses(self, s: str) -> int:\n        "
+    },
+    {
+        "id": "32",
+        "language": "cpp",
+        "question": "Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
+        "starter_code": "class Solution {\npublic:\n    int longestValidParentheses(string s) {\n        \n    }\n};"
+    },
+    {
+        "id": "33",
+        "language": "python",
+        "question": "There is an integer array nums sorted in ascending order (with distinct values).\nPrior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].\nGiven the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\nYou must write an algorithm with O(log n) runtime complexity.",
+        "starter_code": "class Solution:\n    def search(self, nums: List[int], target: int) -> int:\n        "
+    },
+    {
+        "id": "33",
+        "language": "cpp",
+        "question": "There is an integer array nums sorted in ascending order (with distinct values).\nPrior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].\nGiven the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\nYou must write an algorithm with O(log n) runtime complexity.",
+        "starter_code": "class Solution {\npublic:\n    int search(vector<int>& nums, int target) {\n        \n    }\n};"
+    },
+    {
+        "id": "35",
+        "language": "python",
+        "question": "Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.\nYou must write an algorithm with O(log n) runtime complexity.",
+        "starter_code": "class Solution:\n    def searchInsert(self, nums: List[int], target: int) -> int:\n        "
+    },
+    {
+        "id": "35",
+        "language": "cpp",
+        "question": "Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.\nYou must write an algorithm with O(log n) runtime complexity.",
+        "starter_code": "class Solution {\npublic:\n    int searchInsert(vector<int>& nums, int target) {\n        \n    }\n};"
+    },
+    {
+        "id": "36",
+        "language": "python",
+        "question": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:\nEach row must contain the digits 1-9 without repetition.\nEach column must contain the digits 1-9 without repetition.\nEach of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.\nNote:\nA Sudoku board (partially filled) could be valid but is not necessarily solvable.\nOnly the filled cells need to be validated according to the mentioned rules.",
+        "starter_code": "class Solution:\n    def isValidSudoku(self, board: List[List[str]]) -> bool:\n        "
+    },
+    {
+        "id": "36",
+        "language": "cpp",
+        "question": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:\nEach row must contain the digits 1-9 without repetition.\nEach column must contain the digits 1-9 without repetition.\nEach of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.\nNote:\nA Sudoku board (partially filled) could be valid but is not necessarily solvable.\nOnly the filled cells need to be validated according to the mentioned rules.",
+        "starter_code": "class Solution {\npublic:\n    bool isValidSudoku(vector<vector<char>>& board) {\n        \n    }\n};"
+    },
+    {
+        "id": "37",
+        "language": "python",
+        "question": "Write a program to solve a Sudoku puzzle by filling the empty cells.\nA sudoku solution must satisfy all of the following rules:\nEach of the digits 1-9 must occur exactly once in each row.\nEach of the digits 1-9 must occur exactly once in each column.\nEach of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.\nThe '.' character indicates empty cells.",
+        "starter_code": "class Solution:\n    def solveSudoku(self, board: List[List[str]]) -> None:\n        \"\"\"\n        Do not return anything, modify board in-place instead.\n        \"\"\"\n        "
+    },
+    {
+        "id": "37",
+        "language": "cpp",
+        "question": "Write a program to solve a Sudoku puzzle by filling the empty cells.\nA sudoku solution must satisfy all of the following rules:\nEach of the digits 1-9 must occur exactly once in each row.\nEach of the digits 1-9 must occur exactly once in each column.\nEach of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.\nThe '.' character indicates empty cells.",
+        "starter_code": "class Solution {\npublic:\n    void solveSudoku(vector<vector<char>>& board) {\n        \n    }\n};"
+    },
+    {
+        "id": "38",
+        "language": "python",
+        "question": "The count-and-say sequence is a sequence of digit strings defined by the recursive formula:\ncountAndSay(1) = \"1\"\ncountAndSay(n) is the run-length encoding of countAndSay(n - 1).\nRun-length encoding (RLE) is a string compression method that works by replacing consecutive identical characters (repeated 2 or more times) with the concatenation of the character and the number marking the count of the characters (length of the run). For example, to compress the string \"3322251\" we replace \"33\" with \"23\", replace \"222\" with \"32\", replace \"5\" with \"15\" and replace \"1\" with \"11\". Thus the compressed string becomes \"23321511\".\nGiven a positive integer n, return the nth element of the count-and-say sequence.",
+        "starter_code": "class Solution:\n    def countAndSay(self, n: int) -> str:\n        "
+    },
+    {
+        "id": "38",
+        "language": "cpp",
+        "question": "The count-and-say sequence is a sequence of digit strings defined by the recursive formula:\ncountAndSay(1) = \"1\"\ncountAndSay(n) is the run-length encoding of countAndSay(n - 1).\nRun-length encoding (RLE) is a string compression method that works by replacing consecutive identical characters (repeated 2 or more times) with the concatenation of the character and the number marking the count of the characters (length of the run). For example, to compress the string \"3322251\" we replace \"33\" with \"23\", replace \"222\" with \"32\", replace \"5\" with \"15\" and replace \"1\" with \"11\". Thus the compressed string becomes \"23321511\".\nGiven a positive integer n, return the nth element of the count-and-say sequence.",
+        "starter_code": "class Solution {\npublic:\n    string countAndSay(int n) {\n        \n    }\n};"
+    },
+    {
+        "id": "39",
+        "language": "python",
+        "question": "Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.\nThe same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.\nThe test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.",
+        "starter_code": "class Solution:\n    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:\n        "
+    },
+    {
+        "id": "39",
+        "language": "cpp",
+        "question": "Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.\nThe same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.\nThe test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {\n        \n    }\n};"
+    },
+    {
+        "id": "40",
+        "language": "python",
+        "question": "Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.\nEach number in candidates may only be used once in the combination.\nNote: The solution set must not contain duplicate combinations.",
+        "starter_code": "class Solution:\n    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:\n        "
+    },
+    {
+        "id": "40",
+        "language": "cpp",
+        "question": "Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.\nEach number in candidates may only be used once in the combination.\nNote: The solution set must not contain duplicate combinations.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {\n        \n    }\n};"
+    },
+    {
+        "id": "41",
+        "language": "python",
+        "question": "Given an unsorted integer array nums. Return the smallest positive integer that is not present in nums.\nYou must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space.",
+        "starter_code": "class Solution:\n    def firstMissingPositive(self, nums: List[int]) -> int:\n        "
+    },
+    {
+        "id": "41",
+        "language": "cpp",
+        "question": "Given an unsorted integer array nums. Return the smallest positive integer that is not present in nums.\nYou must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space.",
+        "starter_code": "class Solution {\npublic:\n    int firstMissingPositive(vector<int>& nums) {\n        \n    }\n};"
+    },
+    {
+        "id": "42",
+        "language": "python",
+        "question": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+        "starter_code": "class Solution:\n    def trap(self, height: List[int]) -> int:\n        "
+    },
+    {
+        "id": "42",
+        "language": "cpp",
+        "question": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+        "starter_code": "class Solution {\npublic:\n    int trap(vector<int>& height) {\n        \n    }\n};"
+    },
+    {
+        "id": "43",
+        "language": "python",
+        "question": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.\nNote: You must not use any built-in BigInteger library or convert the inputs to integer directly.",
+        "starter_code": "class Solution:\n    def multiply(self, num1: str, num2: str) -> str:\n        "
+    },
+    {
+        "id": "43",
+        "language": "cpp",
+        "question": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.\nNote: You must not use any built-in BigInteger library or convert the inputs to integer directly.",
+        "starter_code": "class Solution {\npublic:\n    string multiply(string num1, string num2) {\n        \n    }\n};"
+    },
+    {
+        "id": "44",
+        "language": "python",
+        "question": "Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:\n'?' Matches any single character.\n'*' Matches any sequence of characters (including the empty sequence).\nThe matching should cover the entire input string (not partial).",
+        "starter_code": "class Solution:\n    def isMatch(self, s: str, p: str) -> bool:\n        "
+    },
+    {
+        "id": "44",
+        "language": "cpp",
+        "question": "Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:\n'?' Matches any single character.\n'*' Matches any sequence of characters (including the empty sequence).\nThe matching should cover the entire input string (not partial).",
+        "starter_code": "class Solution {\npublic:\n    bool isMatch(string s, string p) {\n        \n    }\n};"
+    },
+    {
+        "id": "45",
+        "language": "python",
+        "question": "You are given a 0-indexed array of integers nums of length n. You are initially positioned at index 0.\nEach element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at index i, you can jump to any index (i + j) where:\n0 <= j <= nums[i] and\ni + j < n\nReturn the minimum number of jumps to reach index n - 1. The test cases are generated such that you can reach index n - 1.",
+        "starter_code": "class Solution:\n    def jump(self, nums: List[int]) -> int:\n        "
+    },
+    {
+        "id": "45",
+        "language": "cpp",
+        "question": "You are given a 0-indexed array of integers nums of length n. You are initially positioned at index 0.\nEach element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at index i, you can jump to any index (i + j) where:\n0 <= j <= nums[i] and\ni + j < n\nReturn the minimum number of jumps to reach index n - 1. The test cases are generated such that you can reach index n - 1.",
+        "starter_code": "class Solution {\npublic:\n    int jump(vector<int>& nums) {\n        \n    }\n};"
+    },
+    {
+        "id": "46",
+        "language": "python",
+        "question": "Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.",
+        "starter_code": "class Solution:\n    def permute(self, nums: List[int]) -> List[List[int]]:\n        "
+    },
+    {
+        "id": "46",
+        "language": "cpp",
+        "question": "Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<int>> permute(vector<int>& nums) {\n        \n    }\n};"
+    },
+    {
+        "id": "47",
+        "language": "python",
+        "question": "Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.",
+        "starter_code": "class Solution:\n    def permuteUnique(self, nums: List[int]) -> List[List[int]]:\n        "
+    },
+    {
+        "id": "47",
+        "language": "cpp",
+        "question": "Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<int>> permuteUnique(vector<int>& nums) {\n        \n    }\n};"
+    },
+    {
+        "id": "48",
+        "language": "python",
+        "question": "You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).\nYou have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.",
+        "starter_code": "class Solution:\n    def rotate(self, matrix: List[List[int]]) -> None:\n        \"\"\"\n        Do not return anything, modify matrix in-place instead.\n        \"\"\"\n        "
+    },
+    {
+        "id": "48",
+        "language": "cpp",
+        "question": "You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).\nYou have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.",
+        "starter_code": "class Solution {\npublic:\n    void rotate(vector<vector<int>>& matrix) {\n        \n    }\n};"
+    },
+    {
+        "id": "49",
+        "language": "python",
+        "question": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.",
+        "starter_code": "class Solution:\n    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:\n        "
+    },
+    {
+        "id": "49",
+        "language": "cpp",
+        "question": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<string>> groupAnagrams(vector<string>& strs) {\n        \n    }\n};"
+    },
+    {
+        "id": "50",
+        "language": "python",
+        "question": "Implement pow(x, n), which calculates x raised to the power n (i.e., xn).",
+        "starter_code": "class Solution:\n    def myPow(self, x: float, n: int) -> float:\n        "
+    },
+    {
+        "id": "50",
+        "language": "cpp",
+        "question": "Implement pow(x, n), which calculates x raised to the power n (i.e., xn).",
+        "starter_code": "class Solution {\npublic:\n    double myPow(double x, int n) {\n        \n    }\n};"
+    },
+    {
+        "id": "51",
+        "language": "python",
+        "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.\nEach solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively.",
+        "starter_code": "class Solution:\n    def solveNQueens(self, n: int) -> List[List[str]]:\n        "
+    },
+    {
+        "id": "51",
+        "language": "cpp",
+        "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.\nEach solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<string>> solveNQueens(int n) {\n        \n    }\n};"
+    },
+    {
+        "id": "52",
+        "language": "python",
+        "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return the number of distinct solutions to the n-queens puzzle.",
+        "starter_code": "class Solution:\n    def totalNQueens(self, n: int) -> int:\n        "
+    },
+    {
+        "id": "52",
+        "language": "cpp",
+        "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return the number of distinct solutions to the n-queens puzzle.",
+        "starter_code": "class Solution {\npublic:\n    int totalNQueens(int n) {\n        \n    }\n};"
+    },
+    {
+        "id": "53",
+        "language": "python",
+        "question": "Given an integer array nums, find the subarray with the largest sum, and return its sum.",
+        "starter_code": "class Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        "
+    },
+    {
+        "id": "53",
+        "language": "cpp",
+        "question": "Given an integer array nums, find the subarray with the largest sum, and return its sum.",
+        "starter_code": "class Solution {\npublic:\n    int maxSubArray(vector<int>& nums) {\n        \n    }\n};"
+    },
+    {
+        "id": "54",
+        "language": "python",
+        "question": "Given an m x n matrix, return all elements of the matrix in spiral order.",
+        "starter_code": "class Solution:\n    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:\n        "
+    },
+    {
+        "id": "54",
+        "language": "cpp",
+        "question": "Given an m x n matrix, return all elements of the matrix in spiral order.",
+        "starter_code": "class Solution {\npublic:\n    vector<int> spiralOrder(vector<vector<int>>& matrix) {\n        \n    }\n};"
+    },
+    {
+        "id": "55",
+        "language": "python",
+        "question": "You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.\nReturn true if you can reach the last index, or false otherwise.",
+        "starter_code": "class Solution:\n    def canJump(self, nums: List[int]) -> bool:\n        "
+    },
+    {
+        "id": "55",
+        "language": "cpp",
+        "question": "You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.\nReturn true if you can reach the last index, or false otherwise.",
+        "starter_code": "class Solution {\npublic:\n    bool canJump(vector<int>& nums) {\n        \n    }\n};"
+    },
+    {
+        "id": "56",
+        "language": "python",
+        "question": "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
+        "starter_code": "class Solution:\n    def merge(self, intervals: List[List[int]]) -> List[List[int]]:\n        "
+    },
+    {
+        "id": "56",
+        "language": "cpp",
+        "question": "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<int>> merge(vector<vector<int>>& intervals) {\n        \n    }\n};"
+    },
+    {
+        "id": "57",
+        "language": "python",
+        "question": "You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starti. You are also given an interval newInterval = [start, end] that represents the start and end of another interval.\nInsert newInterval into intervals such that intervals is still sorted in ascending order by starti and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary).\nReturn intervals after the insertion.\nNote that you don't need to modify intervals in-place. You can make a new array and return it.",
+        "starter_code": "class Solution:\n    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:\n        "
+    },
+    {
+        "id": "57",
+        "language": "cpp",
+        "question": "You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starti. You are also given an interval newInterval = [start, end] that represents the start and end of another interval.\nInsert newInterval into intervals such that intervals is still sorted in ascending order by starti and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary).\nReturn intervals after the insertion.\nNote that you don't need to modify intervals in-place. You can make a new array and return it.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {\n        \n    }\n};"
+    },
+    {
+        "id": "58",
+        "language": "python",
+        "question": "Given a string s consisting of words and spaces, return the length of the last word in the string.\nA word is a maximal substring consisting of non-space characters only.",
+        "starter_code": "class Solution:\n    def lengthOfLastWord(self, s: str) -> int:\n        "
+    },
+    {
+        "id": "58",
+        "language": "cpp",
+        "question": "Given a string s consisting of words and spaces, return the length of the last word in the string.\nA word is a maximal substring consisting of non-space characters only.",
+        "starter_code": "class Solution {\npublic:\n    int lengthOfLastWord(string s) {\n        \n    }\n};"
+    },
+    {
+        "id": "59",
+        "language": "python",
+        "question": "Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.",
+        "starter_code": "class Solution:\n    def generateMatrix(self, n: int) -> List[List[int]]:\n        "
+    },
+    {
+        "id": "59",
+        "language": "cpp",
+        "question": "Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.",
+        "starter_code": "class Solution {\npublic:\n    vector<vector<int>> generateMatrix(int n) {\n        \n    }\n};"
+    },
+    {
+        "id": "60",
+        "language": "python",
+        "question": "The set [1, 2, 3, ..., n] contains a total of n! unique permutations.\nBy listing and labeling all of the permutations in order, we get the following sequence for n = 3:\n\"123\"\n\"132\"\n\"213\"\n\"231\"\n\"312\"\n\"321\"\nGiven n and k, return the kth permutation sequence.",
+        "starter_code": "class Solution:\n    def getPermutation(self, n: int, k: int) -> str:\n        "
+    },
+    {
+        "id": "60",
+        "language": "cpp",
+        "question": "The set [1, 2, 3, ..., n] contains a total of n! unique permutations.\nBy listing and labeling all of the permutations in order, we get the following sequence for n = 3:\n\"123\"\n\"132\"\n\"213\"\n\"231\"\n\"312\"\n\"321\"\nGiven n and k, return the kth permutation sequence.",
+        "starter_code": "class Solution {\npublic:\n    string getPermutation(int n, int k) {\n        \n    }\n};"
     }
 ]

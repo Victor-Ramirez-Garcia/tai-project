@@ -16,13 +16,16 @@ def process_problems(input_filename, output_filename) -> int:
         # Here you can filter, transform, or log the data
         print(f"Processing ID: {entry.get('id')}")
         
-        simplified_entry = {
-            "leetcode-problem-id": entry.get("id"),
-            "question": entry.get("question"),
+        starter_code = entry.get("starter_code", {})
 
-        }
-        # Add to your output list
-        output_list.append(simplified_entry)
+        # Loop through each language to create an entry
+        for lang in starter_code.keys():
+            output_list.append({
+                "id": entry.get("id"),
+                "language": lang,
+                "question": entry.get("question"),
+                "starter_code": starter_code.get(lang, "")
+            })
         
     # 4. Save the final list as a valid JSON array
     with open(output_filename, "w", encoding="utf-8") as f:
