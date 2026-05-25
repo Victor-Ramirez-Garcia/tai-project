@@ -1,7 +1,42 @@
 import requests
 import re
+import os
+import datetime
 import json
 from bs4 import BeautifulSoup
+
+"""
+with open("leetcode_library.json", "r") as f:
+    my_problems = json.load(f)
+
+# You now have a list of dictionaries ready to iterate through!
+for problem in my_problems:
+    print(f"Working on: {problem['title']}")
+"""
+
+def save_to_library(problem_data, filename="leetcode_library.json"):
+    """
+    Appends a new problem to a JSON file. 
+    If the file exists, it loads it, appends the new entry, and saves it.
+    """
+    library = []
+    
+    # Load existing library if it exists
+    if os.path.exists(filename):
+        with open(filename, "r") as f:
+            try:
+                library = json.load(f)
+            except json.JSONDecodeError:
+                library = []
+    
+    # Check if problem is already in the library to avoid duplicates
+    if not any(p['id'] == problem_data['id'] for p in library):
+        library.append(problem_data)
+        with open(filename, "w") as f:
+            json.dump(library, f, indent=4)
+        print(f"Successfully added '{problem_data['title']}' to {filename}")
+    else:
+        print(f"Problem '{problem_data['title']}' is already in the library.")
 
 def get_leetcode_problem_structured(url):
     slug = url.rstrip('/').split('/')[-1]
@@ -75,6 +110,13 @@ def clean_text(text):
     text = re.sub(r' +', ' ', text)
     return text.strip()
 
-# --- Testing ---
-url = "https://leetcode.com/problems/two-sum/"
-print(json.dumps(get_leetcode_problem_structured(url), indent=4))
+# --- Usage Example ---
+urls = [
+    "https://leetcode.com/problems/two-sum/",
+    "https://leetcode.com/problems/add-two-numbers/"
+]
+
+for url in urls:
+    data = get_leetcode_problem_structured(url)
+    if data:
+        save_to_library(data)
