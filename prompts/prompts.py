@@ -1,23 +1,39 @@
 import json
 
 PROBLEMS_FILE_LOCATION = "../problem_extraction/leetcode_library.json"
-PROMPT_FILE_LOCATION = "prompts.txt"
+PROMPT_FILE_LOCATION = "prompts.json"
 
-def generate_prompts(json_filename, output_filename):
-    with open (json_filename, "r") as f:
-        problems = json.load(f)
+def process_problems(input_filename, output_filename) -> int:
+    # 1. Load the entire input file (must be a valid JSON array)
+    with open(input_filename, "r", encoding="utf-8") as f:
+        input_data = json.load(f) # This is now a list of objects
     
-    with open(output_filename, "w") as f:
-        for p in problems:
-            # 3. Format the text for the LLM
-            prompt = (
-                f"--- Problem ID: {p['id']} ---\n"
-                f"Question: {p['question']}\n\n"
-            )
-            f.write(prompt)
+    # 2. Initialize or load the output file
+    output_list = []
+    
+    # 3. Loop through each object
+    for entry in input_data:
+        # Here you can filter, transform, or log the data
+        print(f"Processing ID: {entry.get('id')}")
+        
+        simplified_entry = {
+            "leetcode-problem-id": entry.get("id"),
+            "question": entry.get("question"),
+
+        }
+        # Add to your output list
+        output_list.append(simplified_entry)
+        
+    # 4. Save the final list as a valid JSON array
+    with open(output_filename, "w", encoding="utf-8") as f:
+        json.dump(output_list, f, indent=4)
+        
+    return len(output_list)
 
 def main():
-    generate_prompts(PROBLEMS_FILE_LOCATION, PROMPT_FILE_LOCATION)
+    # Run the process
+    count = process_problems(PROBLEMS_FILE_LOCATION, PROMPT_FILE_LOCATION)
+    print(f"Finished. {count} objects written to {PROMPT_FILE_LOCATION}")
 
 if __name__ == "__main__":    
     main()
