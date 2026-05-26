@@ -97,7 +97,7 @@ cmake --build .
 # 4. Execute all tests and report results
 # ctest --output-on-failure
 # Ignore syntax errors during the unittest build
-cmake --build . -- -k # To not 
+cmake --build . -- -k 
 
 # Or  ./run_tests_401
 ```
