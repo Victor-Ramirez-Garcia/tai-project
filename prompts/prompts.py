@@ -5,7 +5,7 @@ PROMPT_FILE_LOCATION = "prompts.json"
 
 # Instructions for the Gemini LLM to follow when generating the solution 
 # for each of the LeetCode problem prompts. 
-LLM_INSTRUCTION = """
+LLM_INSTRUCTION_SOLUTION = """
 You are an expert competitive programmer and software engineer. Your task is to provide the 
 optimal implementation for the provided LeetCode problem in the specified programming language.
 
@@ -23,6 +23,28 @@ STRICT GUIDELINES:
    raw string and placed directly into an IDE.
 6. COMMENTS: Include concise comments explaining the core logic, especially for non-trivial parts.
 """
+
+LLM_INSTRUCTION_UNITTEST = """
+You are a Quality Assurance engineer expert in unit testing. Your task is to write a comprehensive 
+unit test file for the provided LeetCode problem.
+
+STRICT GUIDELINES:
+1. FRAMEWORK: 
+   - For C++, use the GoogleTest (gTest) framework. Ensure you include the necessary headers 
+     and define a 'main' function to run the tests.
+   - For Python, use the standard 'unittest' module. Create a class that inherits from 'unittest.TestCase'.
+2. COVERAGE: You must write test cases that cover:
+   - All 'examples' provided in the problem description.
+   - Key edge cases identified from the 'constraints' (e.g., minimum/maximum input sizes, empty inputs).
+3. INTEGRATION: Assume the user's solution is in a header file or the same file. Use proper assertions 
+   (e.g., EXPECT_EQ for gTest, self.assertEqual for unittest).
+4. FORMATTING: Return ONLY the code for the test file. Do not include markdown conversational filler. 
+   The output must be a raw code block ready to be saved as a test file (e.g., 'test_solution.cpp' 
+   or 'test_solution.py').
+5. CLARITY: Each test method should have a descriptive name reflecting the scenario being tested 
+   (e.g., 'test_empty_input', 'test_large_value_constraint').
+"""
+
 
 def process_problems(input_filename, output_filename) -> int:
     # 1. Load the entire input file (must be a valid JSON array)
@@ -50,8 +72,17 @@ def process_problems(input_filename, output_filename) -> int:
                 continue
 
             # Use a single f-string to handle the entire prompt construction
-            prompt_text = (
-                f"{LLM_INSTRUCTION}\n\n"
+            prompt_solution_text = (
+                f"{LLM_INSTRUCTION_SOLUTION}\n\n"
+                f"PROBLEM STATEMENT:\n{entry.get('question')}\n\n"
+                f"EXAMPLES:\n{chr(10).join(entry.get('examples', []))}\n\n"
+                f"CONSTRAINTS:\n{chr(10).join(entry.get('constraints', []))}\n\n"
+                f"STARTER CODE ({lang_slug.upper()}):\n{starter_code.get(lang, '')}"
+            )
+
+            # Use a single f-string to handle the entire prompt construction
+            prompt_unittest_text = (
+                f"{LLM_INSTRUCTION_UNITTEST}\n\n"
                 f"PROBLEM STATEMENT:\n{entry.get('question')}\n\n"
                 f"EXAMPLES:\n{chr(10).join(entry.get('examples', []))}\n\n"
                 f"CONSTRAINTS:\n{chr(10).join(entry.get('constraints', []))}\n\n"
@@ -61,7 +92,8 @@ def process_problems(input_filename, output_filename) -> int:
             output_list.append({
                 "leetcode-problem-id": entry.get("id"),
                 "language": lang_slug,
-                "prompt": prompt_text,
+                "prompt_solution": prompt_solution_text,
+                "prompt_unittest": prompt_unittest_text,
                 "generated_program_paths": [],
 	            "file_counter": 0,
             })
