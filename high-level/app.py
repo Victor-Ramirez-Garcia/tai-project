@@ -129,7 +129,7 @@ def save_code(code, prompt, is_unittest: bool) -> None:
         # get path to leetcode problem directory
         FILENAME = f"program_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
     else:
-        FILENAME = f"unittest_{prompt['leetcode-problem-id']}.{prompt['language']}"
+        FILENAME = f"test_unittest_{prompt['leetcode-problem-id']}.{prompt['language']}"
 
     # save code to file
     with open(CODE_ROOT / FILENAME, 'w') as f:
@@ -194,14 +194,14 @@ def main():
             generate_program(prompt, context, False) # generate program
 
             CODE_ROOT = BASE_DIR / "generated_code" / prompt["language"]
-            UNITTEST_FILENAME = f"unittest_{prompt['leetcode-problem-id']}.{prompt['language']}"
+            UNITTEST_FILENAME = f"test_unittest_{prompt['leetcode-problem-id']}.{prompt['language']}"
             # skip unittest if it exists (we only need one)
             if not (CODE_ROOT / UNITTEST_FILENAME).exists():
                 generate_program(prompt, context, True) # generate unittest
         # close context and browser, and save updated entries in prompts
         context.close()
         browser.close()
-        save_prompts(prompts)
+        #save_prompts(prompts)
 
 
 if __name__ == "__main__":
