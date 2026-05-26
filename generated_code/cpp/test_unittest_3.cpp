@@ -72,8 +72,3 @@ TEST_F(LongestSubstringTest, MaxLengthConstraintSimulation) {
     // Length is 26,000, within 5 * 10^4. Longest unique should be 26.
     EXPECT_EQ(sol.lengthOfLongestSubstring(s), 26);
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

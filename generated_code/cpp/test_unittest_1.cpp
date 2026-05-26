@@ -16,7 +16,6 @@ protected:
         EXPECT_EQ(result, expected);
     }
 };
-
 // Test Example 1: Standard case
 TEST_F(TwoSumTest, Example1_StandardCase) {
     vector<int> nums = {2, 7, 11, 15};
@@ -73,9 +72,4 @@ TEST_F(TwoSumTest, ElementsAtExtremeEnds) {
     int target = 3;
     vector<int> expected = {0, 9999};
     verify_result(solution.twoSum(nums, target), expected);
-}
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
 }

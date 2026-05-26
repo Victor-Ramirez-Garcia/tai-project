@@ -127,8 +127,3 @@ TEST_F(AddTwoNumbersTest, TestContinuousCarriesCreatesNewNode) {
     freeList(l2);
     freeList(result);
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
