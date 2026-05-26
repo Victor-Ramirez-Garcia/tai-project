@@ -1,78 +1,87 @@
 #include <gtest/gtest.h>
 #include <vector>
 #include <algorithm>
-#include "program_1_1.cpp"
+#include "solution_1_1.cpp" // Assuming ID is 1 based on the Two Sum problem ID
 
-using namespace std;
+// Helper function to compare vectors regardless of order since the problem states:
+// "You can return the answer in any order."
+void AssertVectorEqualsIgnoreOrder(std::vector<int> actual, std::vector<int> expected) {
+    std::sort(actual.begin(), actual.end());
+    std::sort(expected.begin(), expected.end());
+    EXPECT_EQ(actual, expected);
+}
 
-class TwoSumTest : public ::testing::Test {
-protected:
+// Test case for Example 1 from the problem description
+TEST(TwoSumTest, Example1) {
     Solution solution;
-
-    // Helper to sort indices since the problem allows any order
-    void verify_result(vector<int> result, vector<int> expected) {
-        sort(result.begin(), result.end());
-        sort(expected.begin(), expected.end());
-        EXPECT_EQ(result, expected);
-    }
-};
-
-// Test Example 1: Standard case
-TEST_F(TwoSumTest, Example1_StandardCase) {
-    vector<int> nums = {2, 7, 11, 15};
+    std::vector<int> nums = {2, 7, 11, 15};
     int target = 9;
-    vector<int> expected = {0, 1};
-    verify_result(solution.twoSum(nums, target), expected);
+    std::vector<int> expected = {0, 1};
+    AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
 }
 
-// Test Example 2: Elements are not at the beginning
-TEST_F(TwoSumTest, Example2_MiddleElements) {
-    vector<int> nums = {3, 2, 4};
+// Test case for Example 2 from the problem description
+TEST(TwoSumTest, Example2) {
+    Solution solution;
+    std::vector<int> nums = {3, 2, 4};
     int target = 6;
-    vector<int> expected = {1, 2};
-    verify_result(solution.twoSum(nums, target), expected);
+    std::vector<int> expected = {1, 2};
+    AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
 }
 
-// Test Example 3: Duplicate values
-TEST_F(TwoSumTest, Example3_DuplicateValues) {
-    vector<int> nums = {3, 3};
+// Test case for Example 3 from the problem description
+TEST(TwoSumTest, Example3) {
+    Solution solution;
+    std::vector<int> nums = {3, 3};
     int target = 6;
-    vector<int> expected = {0, 1};
-    verify_result(solution.twoSum(nums, target), expected);
+    std::vector<int> expected = {0, 1};
+    AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
 }
 
-// Test Edge Case: Minimum array length constraint (length = 2)
-TEST_F(TwoSumTest, Constraint_MinimumLength) {
-    vector<int> nums = {10, -10};
-    int target = 0;
-    vector<int> expected = {0, 1};
-    verify_result(solution.twoSum(nums, target), expected);
+// Edge case: Minimum allowed array length constraint (nums.length == 2)
+TEST(TwoSumTest, MinimumLengthConstraint) {
+    Solution solution;
+    std::vector<int> nums = {10, -5};
+    int target = 5;
+    std::vector<int> expected = {0, 1};
+    AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
 }
 
-// Test Edge Case: Large negative and positive values
-TEST_F(TwoSumTest, Constraint_LargeValues) {
-    vector<int> nums = {-1000000000, 1000000000, 0};
-    int target = 0;
-    vector<int> expected = {0, 1};
-    verify_result(solution.twoSum(nums, target), expected);
-}
-
-// Test Case: Target is reached by adding a positive and a negative number
-TEST_F(TwoSumTest, PositiveAndNegativeNumbers) {
-    vector<int> nums = {-1, -2, -3, -4, -5};
+// Edge case: Negative numbers in the input array and negative target
+TEST(TwoSumTest, NegativeNumbersAndTarget) {
+    Solution solution;
+    std::vector<int> nums = {-1, -2, -3, -4, -5};
     int target = -8;
-    vector<int> expected = {2, 4};
-    verify_result(solution.twoSum(nums, target), expected);
+    std::vector<int> expected = {2, 4}; // -3 + -5 = -8
+    AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
 }
 
-// Test Case: Solution elements are at the extreme ends of a large array
-TEST_F(TwoSumTest, ElementsAtExtremeEnds) {
-    vector<int> nums(10000, 0);
-    nums[0] = 1;
-    nums[9999] = 2;
-    int target = 3;
-    vector<int> expected = {0, 9999};
-    verify_result(solution.twoSum(nums, target), expected);
+// Edge case: Handling maximum and minimum constraint values (10^9 and -10^9)
+TEST(TwoSumTest, LargeValueConstraints) {
+    Solution solution;
+    std::vector<int> nums = {1000000000, -1000000000, 0, 5};
+    int target = 0;
+    std::vector<int> expected = {0, 1}; // 10^9 + (-10^9) = 0
+    AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
+}
+
+// Edge case: Target is zero with mixed positive and negative numbers
+TEST(TwoSumTest, TargetZeroWithMixedSigns) {
+    Solution solution;
+    std::vector<int> nums = {1, 2, 3, -2};
+    int target = 0;
+    std::vector<int> expected = {1, 3}; // 2 + (-2) = 0
+    AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
+}
+
+// Edge case: Elements that could add up to target but are the same index (must not use same element twice)
+// Ensure the code correctly finds distinct elements with identical values.
+TEST(TwoSumTest, DuplicateElementsSeparateIndices) {
+    Solution solution;
+    std::vector<int> nums = {1, 5, 3, 5, 9};
+    int target = 10;
+    std::vector<int> expected = {1, 3}; // The two 5s at indices 1 and 3
+    AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
 }
 
 int main(int argc, char **argv) {

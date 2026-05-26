@@ -1,17 +1,17 @@
 import unittest
 from typing import List, Optional
-from program_2_1 import Solution
+from solution_2_1 import Solution
 
-# Definition for singly-linked list (needed for test setup and verification)
+# Definition for singly-linked list.
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
 
 class TestAddTwoNumbers(unittest.TestCase):
-
+    
     def helper_create_linked_list(self, arr: List[int]) -> Optional[ListNode]:
-        """Helper method to convert a Python list into a ListNode linked list."""
+        """Helper method to convert a Python list into a linked list."""
         if not arr:
             return None
         dummy = ListNode(0)
@@ -22,78 +22,73 @@ class TestAddTwoNumbers(unittest.TestCase):
         return dummy.next
 
     def helper_linked_list_to_list(self, head: Optional[ListNode]) -> List[int]:
-        """Helper method to convert a ListNode linked list back into a Python list."""
-        arr = []
+        """Helper method to convert a linked list back into a Python list for easy assertion."""
+        result = []
         current = head
         while current:
-            arr.append(current.val)
+            result.append(current.val)
             current = current.next
-        return arr
-
-    def assert_linked_lists_equal(self, expected_arr: List[int], actual_head: Optional[ListNode]):
-        """Custom assertion to verify the result linked list matches the expected array."""
-        actual_arr = self.helper_linked_list_to_list(actual_head)
-        self.assertEqual(actual_arr, expected_arr, f"Expected {expected_arr}, but got {actual_arr}")
+        return result
 
     def test_example_1(self):
-        """Test Example 1: l1 = [2,4,3], l2 = [5,6,4] -> Output: [7,0,8]"""
+        """Test standard case with same lengths and a mid-carry (342 + 465 = 807)."""
         sol = Solution()
         l1 = self.helper_create_linked_list([2, 4, 3])
         l2 = self.helper_create_linked_list([5, 6, 4])
         result = sol.addTwoNumbers(l1, l2)
-        self.assert_linked_lists_equal([7, 0, 8], result)
+        self.assertEqual(self.helper_linked_list_to_list(result), [7, 0, 8])
 
     def test_example_2(self):
-        """Test Example 2: l1 = [0], l2 = [0] -> Output: [0]"""
+        """Test standard case with single-element zero lists (0 + 0 = 0)."""
         sol = Solution()
         l1 = self.helper_create_linked_list([0])
         l2 = self.helper_create_linked_list([0])
         result = sol.addTwoNumbers(l1, l2)
-        self.assert_linked_lists_equal([0], result)
+        self.assertEqual(self.helper_linked_list_to_list(result), [0])
 
     def test_example_3(self):
-        """Test Example 3: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9] -> Output: [8,9,9,9,0,0,0,1]"""
+        """Test asymmetric lengths with cascading carries (9999999 + 9999 = 10009998)."""
         sol = Solution()
         l1 = self.helper_create_linked_list([9, 9, 9, 9, 9, 9, 9])
         l2 = self.helper_create_linked_list([9, 9, 9, 9])
         result = sol.addTwoNumbers(l1, l2)
-        self.assert_linked_lists_equal([8, 9, 9, 9, 0, 0, 0, 1], result)
+        self.assertEqual(self.helper_linked_list_to_list(result), [8, 9, 9, 9, 0, 0, 0, 1])
 
-    def test_different_lengths_l1_shorter(self):
-        """Test lists of different lengths where l1 is shorter than l2."""
-        sol = Solution()
-        l1 = self.helper_create_linked_list([1])
-        l2 = self.helper_create_linked_list([9, 9])
-        result = sol.addTwoNumbers(l1, l2)
-        self.assert_linked_lists_equal([0, 0, 1], result)
-
-    def test_carry_creates_new_most_significant_digit(self):
-        """Test where the final addition creates a carry that extends the list length."""
+    def test_single_digit_with_carry(self):
+        """Test single digits that generate a carry resulting in an extra node (5 + 5 = 10)."""
         sol = Solution()
         l1 = self.helper_create_linked_list([5])
         l2 = self.helper_create_linked_list([5])
         result = sol.addTwoNumbers(l1, l2)
-        self.assert_linked_lists_equal([0, 1], result)
+        self.assertEqual(self.helper_linked_list_to_list(result), [0, 1])
 
-    def test_minimum_constraint_single_nodes(self):
-        """Test minimum constraint values: Single nodes with low values without carry."""
+    def test_different_lengths_no_carry(self):
+        """Test lists of different lengths where no carry occurs (123 + 4000 = 4123)."""
         sol = Solution()
-        l1 = self.helper_create_linked_list([1])
-        l2 = self.helper_create_linked_list([2])
+        l1 = self.helper_create_linked_list([3, 2, 1])
+        l2 = self.helper_create_linked_list([0, 0, 0, 4])
         result = sol.addTwoNumbers(l1, l2)
-        self.assert_linked_lists_equal([3], result)
+        self.assertEqual(self.helper_linked_list_to_list(result), [3, 2, 1, 4])
 
-    def test_large_value_constraint_100_nodes(self):
-        """Test maximum constraint boundaries: 100 nodes filled with 9s (triggering continuous carries)."""
+    def test_one_list_is_zero(self):
+        """Test adding zero to a multi-digit number (123 + 0 = 123)."""
+        sol = Solution()
+        l1 = self.helper_create_linked_list([3, 2, 1])
+        l2 = self.helper_create_linked_list([0])
+        result = sol.addTwoNumbers(l1, l2)
+        self.assertEqual(self.helper_linked_list_to_list(result), [3, 2, 1])
+
+    def test_max_constraint_length_all_nines(self):
+        """Test extreme boundary constraint with 100 nodes of 9s to ensure scalability and cascading."""
         sol = Solution()
         l1 = self.helper_create_linked_list([9] * 100)
-        l2 = self.helper_create_linked_list([9] * 100)
+        l2 = self.helper_create_linked_list([1])
         result = sol.addTwoNumbers(l1, l2)
         
-        # Adding 99...9 (100 digits) + 99...9 (100 digits) results in:
-        # [8, 9, 9, ..., 9, 1] -> 18 followed by ninety-nine 9s, then 1 (total 101 digits)
-        expected = [8] + ([9] * 99) + [1]
-        self.assert_linked_lists_equal(expected, result)
+        # 999...999 (100 times) + 1 = 1000...000 (100 zeros and a leading 1)
+        # Reversed list representation: [0] * 100 followed by [1]
+        expected = [0] * 100 + [1]
+        self.assertEqual(self.helper_linked_list_to_list(result), expected)
 
 if __name__ == '__main__':
     unittest.main()

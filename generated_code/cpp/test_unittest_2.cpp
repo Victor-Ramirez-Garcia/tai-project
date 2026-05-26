@@ -1,25 +1,26 @@
 #include <gtest/gtest.h>
 #include <vector>
-#include "program_2_1.cpp" // Assuming a generic ID placeholder like 2 for the Add Two Numbers problem
+#include "solution_2_1.cpp"
 
 // Helper function to create a linked list from a vector
 ListNode* createList(const std::vector<int>& nums) {
     if (nums.empty()) return nullptr;
     ListNode* head = new ListNode(nums[0]);
-    ListNode* current = head;
+    ListNode* curr = head;
     for (size_t i = 1; i < nums.size(); ++i) {
-        current->next = new ListNode(nums[i]);
-        current = current->next;
+        curr->next = new ListNode(nums[i]);
+        curr = curr->next;
     }
     return head;
 }
 
-// Helper function to convert a linked list to a vector for easy comparison
+// Helper function to convert a linked list back to a vector for verification
 std::vector<int> listToVector(ListNode* head) {
     std::vector<int> result;
-    while (head != nullptr) {
-        result.push_back(head->val);
-        head = head->next;
+    ListNode* curr = head;
+    while (curr != nullptr) {
+        result.push_back(curr->val);
+        curr = curr->next;
     }
     return result;
 }
@@ -38,7 +39,7 @@ protected:
     Solution solution;
 };
 
-// Test Case: Example 1 from problem description
+// Example 1: l1 = [2,4,3], l2 = [5,6,4] -> Output: [7,0,8]
 TEST_F(AddTwoNumbersTest, TestExample1) {
     ListNode* l1 = createList({2, 4, 3});
     ListNode* l2 = createList({5, 6, 4});
@@ -53,8 +54,8 @@ TEST_F(AddTwoNumbersTest, TestExample1) {
     freeList(result);
 }
 
-// Test Case: Example 2 from problem description (Single zero elements)
-TEST_F(AddTwoNumbersTest, TestExample2_Zeros) {
+// Example 2: l1 = [0], l2 = [0] -> Output: [0]
+TEST_F(AddTwoNumbersTest, TestExample2SingleZeros) {
     ListNode* l1 = createList({0});
     ListNode* l2 = createList({0});
     
@@ -68,8 +69,8 @@ TEST_F(AddTwoNumbersTest, TestExample2_Zeros) {
     freeList(result);
 }
 
-// Test Case: Example 3 from problem description (Different lengths and multiple carries)
-TEST_F(AddTwoNumbersTest, TestExample3_DifferentLengthsWithCarries) {
+// Example 3: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9] -> Output: [8,9,9,9,0,0,0,1]
+TEST_F(AddTwoNumbersTest, TestExample3VaryingLengthsWithCarries) {
     ListNode* l1 = createList({9, 9, 9, 9, 9, 9, 9});
     ListNode* l2 = createList({9, 9, 9, 9});
     
@@ -83,43 +84,46 @@ TEST_F(AddTwoNumbersTest, TestExample3_DifferentLengthsWithCarries) {
     freeList(result);
 }
 
-// Test Case: One list is significantly shorter than the other without extra carry at the end
-TEST_F(AddTwoNumbersTest, TestOneListShorterNoFinalCarry) {
+// Edge Case: One list is significantly longer than the other, ending with additional carry
+TEST_F(AddTwoNumbersTest, TestOneListLongerWithFinalCarry) {
     ListNode* l1 = createList({1});
-    ListNode* l2 = createList({9, 8, 7});
-    
-    ListNode* result = solution.addTwoNumbers(l1, l2);
-    std::vector<int> expected = {0, 9, 7};
-    
-    EXPECT_EQ(listToVector(result), expected);
-    
-    freeList(l1);
-    freeList(l2);
-    freeList(result);
-}
-
-// Test Case: Single digit addition causing a carry
-TEST_F(AddTwoNumbersTest, TestSingleDigitsWithCarry) {
-    ListNode* l1 = createList({5});
-    ListNode* l2 = createList({7});
-    
-    ListNode* result = solution.addTwoNumbers(l1, l2);
-    std::vector<int> expected = {2, 1};
-    
-    EXPECT_EQ(listToVector(result), expected);
-    
-    freeList(l1);
-    freeList(l2);
-    freeList(result);
-}
-
-// Test Case: Max constraint simulation logic check (Continuous carrying up to a new node)
-TEST_F(AddTwoNumbersTest, TestContinuousCarriesCreatesNewNode) {
-    ListNode* l1 = createList({9, 9, 9});
-    ListNode* l2 = createList({1});
+    ListNode* l2 = createList({9, 9, 9});
     
     ListNode* result = solution.addTwoNumbers(l1, l2);
     std::vector<int> expected = {0, 0, 0, 1};
+    
+    EXPECT_EQ(listToVector(result), expected);
+    
+    freeList(l1);
+    freeList(l2);
+    freeList(result);
+}
+
+// Edge Case: Maximum constraint length simulation (100 nodes of 9s)
+TEST_F(AddTwoNumbersTest, TestMaxConstraintLength) {
+    std::vector<int> longNum(100, 9);
+    ListNode* l1 = createList(longNum);
+    ListNode* l2 = createList({1});
+    
+    ListNode* result = solution.addTwoNumbers(l1, l2);
+    
+    std::vector<int> expected(100, 0);
+    expected.push_back(1); // 1 followed by 100 zeros in reverse order
+    
+    EXPECT_EQ(listToVector(result), expected);
+    
+    freeList(l1);
+    freeList(l2);
+    freeList(result);
+}
+
+// Edge Case: Minimum constraint length (1 node each, no carry)
+TEST_F(AddTwoNumbersTest, TestMinConstraintLengthNoCarry) {
+    ListNode* l1 = createList({5});
+    ListNode* l2 = createList({3});
+    
+    ListNode* result = solution.addTwoNumbers(l1, l2);
+    std::vector<int> expected = {8};
     
     EXPECT_EQ(listToVector(result), expected);
     

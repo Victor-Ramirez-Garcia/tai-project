@@ -43,10 +43,10 @@ STRICT GUIDELINES:
    or 'test_solution.py').
 5. CLARITY: Each test method should have a descriptive name reflecting the scenario being tested 
    (e.g., 'test_empty_input', 'test_large_value_constraint').
-6. IMPORT REQUIREMENT: The solution will be saved in a file named 'program_{id}_1.{ext}'. 
+6. IMPORT REQUIREMENT: The solution will be saved in a file named 'solution_{id}_1.{ext}'. 
    Your test file must import the 'Solution' class from this specific file. 
-   - For Python: Use 'from program_{id}_1 import Solution'.
-   - For C++: Use '#include "program_{id}_1.cpp"'.
+   - For Python: Use 'from solution_{id}_1 import Solution'.
+   - For C++: Use '#include "solution_{id}_1.cpp"'.
 """
 
 

@@ -38,12 +38,12 @@ def set_file_counters() -> list:
         prompt['file_counter'] = 1
         # get path to leetcode problem directory
         CODE_ROOT = BASE_DIR / "generated_code" / prompt["language"]
-        FILENAME = f"program_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
+        FILENAME = f"solution_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
         
         # set file counter to next available file
         while ((CODE_ROOT / FILENAME).exists()):
             prompt['file_counter'] += 1
-            FILENAME = f"program_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
+            FILENAME = f"solution_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
 
     return prompts
 
@@ -128,7 +128,7 @@ def save_code(code, prompt, is_unittest: bool) -> None:
 
     if is_unittest == False:
         # get path to leetcode problem directory
-        FILENAME = f"program_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
+        FILENAME = f"solution_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
     else:
         FILENAME = f"test_unittest_{prompt['leetcode-problem-id']}.{prompt['language']}"
 
@@ -143,7 +143,7 @@ def save_code(code, prompt, is_unittest: bool) -> None:
         # set trial counter to next available file
         while ((CODE_ROOT / FILENAME).exists()):
             prompt["file_counter"] += 1
-            FILENAME = f"program_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
+            FILENAME = f"solution_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
 
 
 def generate_program(prompt, context, is_unittest: bool) -> None:
@@ -172,12 +172,12 @@ def generate_program(prompt, context, is_unittest: bool) -> None:
         context.clear_cookies()
 
         if is_unittest == False:
-            print(f"failed {prompt["language"]} generation for program #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
+            print(f"failed {prompt["language"]} generation for solution #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
         else:
-            print(f"failed {prompt["language"]} generation for program #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
+            print(f"failed {prompt["language"]} generation for unittest #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
         time.sleep(WAIT_FOR_NEW_PAGE)
     if is_unittest == False:
-        print(f"success {prompt["language"]} generation for program #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
+        print(f"success {prompt["language"]} generation for solution #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
     else:
         print(f"success {prompt["language"]} generation for unittest #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
     time.sleep(WAIT_FOR_NEW_PAGE)
