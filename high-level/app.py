@@ -1,4 +1,5 @@
-import time, json
+import time, json, os
+from pathlib import Path
 from playwright.sync_api import sync_playwright
 from playwright._impl._errors import TargetClosedError
 from constants import (
@@ -10,7 +11,7 @@ WAIT_FOR_NEW_PAGE = 10 # time (in seconds) to wait for a new page
 
 PROMPT_PATH = BASE_DIR / "prompts" / "prompts.json"
 
-def load_prompts() -> dict:
+def load_prompts() -> list:
     """
     Loads the constructed prompts from file.
     """
@@ -23,10 +24,10 @@ def save_prompts(prompts) -> None:
     Saves the prompts to file.
     """
     with open(PROMPT_PATH, "w", encoding="utf-8") as f:
-        json.dump(prompts, f, indent=2)
+        json.dump(prompts, f, indent=4)
 
 
-def set_file_counters() -> dict:
+def set_file_counters() -> list:
     """
     Sets the file counter's to the next available file.
     """
@@ -137,7 +138,7 @@ def save_code(code, prompt, is_unittest: bool) -> None:
     
     if is_unittest == False:
         # append file path to prompt
-        prompt["generated_program_paths"].append(CODE_ROOT / FILENAME)
+        prompt["generated_program_paths"].append(Path(os.path.relpath(CODE_ROOT / FILENAME, start=Path(__file__).parent)).as_posix())
 
         # set trial counter to next available file
         while ((CODE_ROOT / FILENAME).exists()):
@@ -201,7 +202,7 @@ def main():
         # close context and browser, and save updated entries in prompts
         context.close()
         browser.close()
-        #save_prompts(prompts)
+        save_prompts(prompts)
 
 
 if __name__ == "__main__":
