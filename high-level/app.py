@@ -6,7 +6,7 @@ from constants import (
 )
 
 TRIALS = 1 # number of trials to run
-WAIT_FOR_NEW_BROWSER = 10 # time (in seconds) to wait for a new browser
+WAIT_FOR_NEW_PAGE = 10 # time (in seconds) to wait for a new page
 
 PROMPT_PATH = BASE_DIR / "prompts" / "prompts.json"
 
@@ -36,7 +36,7 @@ def set_file_counters() -> dict:
     for prompt in prompts: # for each leetcode problem
         prompt['file_counter'] = 1
         # get path to leetcode problem directory
-        CODE_ROOT = BASE_DIR / "generated_code" / prompt["leetcode-problem-id"] / prompt["language"]
+        CODE_ROOT = BASE_DIR / "generated_code" / prompt["language"]
         FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
         
         # set file counter to next available file
@@ -116,61 +116,91 @@ def get_generated_code(page, timeout=60000):
             return ""
 
 
-def save_code(code, prompt) -> None:
+def save_code(code, prompt, is_unittest: bool) -> None:
     """
     Saves the code to the leetcode problem's directory and sets trial
     counter to next available file.
     """
-    # get path to leetcode problem directory
-    FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
-    CODE_ROOT = BASE_DIR / "generated_code" / prompt["leetcode-problem-id"] / prompt["language"]
+    CODE_ROOT = BASE_DIR / "generated_code" / prompt["language"]
     CODE_ROOT.mkdir(parents=True, exist_ok=True)
+
+    if is_unittest == False:
+        # get path to leetcode problem directory
+        FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
+    else:
+        FILENAME = f"unittest_{prompt['leetcode-problem-id']}.{prompt['language']}"
 
     # save code to file
     with open(CODE_ROOT / FILENAME, 'w') as f:
         f.write(code)
     
-    # append file path to prompt
-    prompt["generated_program_paths"].append(CODE_ROOT / FILENAME)
+    if is_unittest == False:
+        # append file path to prompt
+        prompt["generated_program_paths"].append(CODE_ROOT / FILENAME)
 
-    # set trial counter to next available file
-    while ((CODE_ROOT / FILENAME).exists()):
-        prompt["file_counter"] += 1
-        FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
+        # set trial counter to next available file
+        while ((CODE_ROOT / FILENAME).exists()):
+            prompt["file_counter"] += 1
+            FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
+
+
+def generate_program(prompt, context, is_unittest: bool) -> None:
+    """
+    Generates a program.
+    """
+    code = ""
+
+    while True:
+        if is_unittest == False:
+            page = generate_code(SITES["gemini"], prompt["prompt_solution"], context) # goes to site, enters prompt, and generates the code
+        else:
+            page = generate_code(SITES["gemini"], prompt["prompt_unittest"], context) # goes to site, enters prompt, and generates the code
+
+        # get and save generated code to leetcode problem path
+        code = get_generated_code(page)
+        if code != "":
+            save_code(code, prompt, is_unittest)
+            # close page and clear cookies from context
+            page.close()
+            context.clear_cookies()
+            break
+
+        # close page and clear cookies from context
+        page.close()
+        context.clear_cookies()
+
+        if is_unittest == False:
+            print(f"failed {prompt["language"]} generation for program #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
+        else:
+            print(f"failed {prompt["language"]} generation for program #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
+        time.sleep(WAIT_FOR_NEW_PAGE)
+    if is_unittest == False:
+        print(f"success {prompt["language"]} generation for program #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
+    else:
+        print(f"success {prompt["language"]} generation for unittest #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
+    time.sleep(WAIT_FOR_NEW_PAGE)
 
 
 def main():
+    """
+    Generates programs and unittests for each leet problem in prompts.json.
+    """
     prompts = set_file_counters() # loads prompts and initializes file counter's
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True) # create new headless browser (browser that does not pop up)
         context = browser.new_context() # create new browser context that doesnt share cookies/cache with other browser context
         for prompt in prompts:
-            code = ""
+            generate_program(prompt, context, False) # generate program
 
-            while code == "":
-                page = generate_code(SITES["gemini"], prompt["prompt"], context) # goes to site, enters prompt, and generates the code
-
-                # get and save generated code to leetcode problem path
-                code = get_generated_code(page)
-                if code != "":
-                    save_code(code, prompt)
-                else:
-                    # close page and clear cookies from context
-                    page.close()
-                    context.clear_cookies()
-
-                    print(f"failed {prompt["language"]} generation for #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_BROWSER} seconds)")
-                    time.sleep(WAIT_FOR_NEW_BROWSER)
-            # close page and clear cookies from context
-            page.close()
-            context.clear_cookies()
-            print(f"success {prompt["language"]} generation for #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_BROWSER} seconds)")
-            time.sleep(WAIT_FOR_NEW_BROWSER)
-
-
-        # close browser and wait x seconds
+            CODE_ROOT = BASE_DIR / "generated_code" / prompt["language"]
+            UNITTEST_FILENAME = f"unittest_{prompt['leetcode-problem-id']}.{prompt['language']}"
+            # skip unittest if it exists (we only need one)
+            if not (CODE_ROOT / UNITTEST_FILENAME).exists():
+                generate_program(prompt, context, True) # generate unittest
+        # close context and browser, and save updated entries in prompts
+        context.close()
         browser.close()
-    save_prompts(prompts)
+        save_prompts(prompts)
 
 
 if __name__ == "__main__":
