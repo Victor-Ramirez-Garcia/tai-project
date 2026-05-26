@@ -14,7 +14,17 @@ void AssertVectorEqualsIgnoreOrder(std::vector<int> actual, std::vector<int> exp
 // Test case for Example 1 from the problem description
 TEST(TwoSumTest, Example1) {
     Solution solution;
-    std::vector<int> nums = {2, 7, 11, 15};
+
+    // Helper to sort indices since the problem allows any order
+    void verify_result(vector<int> result, vector<int> expected) {
+        sort(result.begin(), result.end());
+        sort(expected.begin(), expected.end());
+        EXPECT_EQ(result, expected);
+    }
+};
+// Test Example 1: Standard case
+TEST_F(TwoSumTest, Example1_StandardCase) {
+    vector<int> nums = {2, 7, 11, 15};
     int target = 9;
     std::vector<int> expected = {0, 1};
     AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
@@ -82,9 +92,4 @@ TEST(TwoSumTest, DuplicateElementsSeparateIndices) {
     int target = 10;
     std::vector<int> expected = {1, 3}; // The two 5s at indices 1 and 3
     AssertVectorEqualsIgnoreOrder(solution.twoSum(nums, target), expected);
-}
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
 }

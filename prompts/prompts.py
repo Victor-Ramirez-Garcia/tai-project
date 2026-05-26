@@ -30,8 +30,7 @@ unit test file for the provided LeetCode problem.
 
 STRICT GUIDELINES:
 1. FRAMEWORK: 
-   - For C++, use the GoogleTest (gTest) framework. Ensure you include the necessary headers 
-     and define a 'main' function to run the tests.
+   - For C++, use the GoogleTest (gTest) framework. 
    - For Python, use the standard 'unittest' module. Create a class that inherits from 'unittest.TestCase'.
 2. COVERAGE: You must write test cases that cover:
    - All 'examples' provided in the problem description.
@@ -45,8 +44,15 @@ STRICT GUIDELINES:
    (e.g., 'test_empty_input', 'test_large_value_constraint').
 6. IMPORT REQUIREMENT: The solution will be saved in a file named 'solution_{id}_1.{ext}'. 
    Your test file must import the 'Solution' class from this specific file. 
+<<<<<<< HEAD
    - For Python: Use 'from solution_{id}_1 import Solution'.
    - For C++: Use '#include "solution_{id}_1.cpp"'.
+=======
+   - For Python: Use 'from program_{id}_1 import Solution'.
+   - For C++: Use '#include "program_{id}_1.cpp"'.
+7. NO MAIN FUNCTION: Do not include a 'main()' function in your C++ test file. The build system 
+   (CMake/gTest) provides the 'main()' function automatically. Adding one will cause build errors.
+>>>>>>> 6b70176653a4fdc83990b8df604ca8a27e36ee22
 """
 
 
