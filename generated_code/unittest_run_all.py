@@ -85,7 +85,7 @@ def main():
     Main function to run all unit tests for generated code.
     """
     print("Running Python unit tests...")
-    discover_and_run_python_tests(PY_UNITTESTS_DIR, PY_UNITTEST_RESULTS_FILE)
+    run_and_store_python_tests(PY_UNITTESTS_DIR, PY_UNITTEST_RESULTS_FILE)
     print("Running C++ unit tests...")
     run_and_store_cpp_tests(CPP_UNITTESTS_DIR, CPP_UNITTEST_RESULTS_FILE)
     print("All unit tests completed. Results stored.")
