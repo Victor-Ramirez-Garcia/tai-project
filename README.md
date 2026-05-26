@@ -79,3 +79,21 @@ PROCESS
 To run python unittests, navigate to generated_code/py/ and run `python3 -m unittest discover -v`
 ## low-level/
 Currently Empty.
+
+To test in the generated_code/cpp/
+```bash
+# 1. Create a build directory to keep things clean
+mkdir build
+cd build
+
+# 2. Configure the project (this finds GTest and generates build files)
+cmake ..
+
+# 3. Compile all test executables
+cmake --build .
+
+# 4. Execute all tests and report results
+ctest --output-on-failure
+
+# Or  ./run_tests_401
+```
