@@ -75,5 +75,7 @@ PROCESS
     - Gets and saves the generated code to the next available file
     - Closes page and clear cookies
 
+
+To run python unittests, navigate to generated_code/py/ and run `python3 -m unittest discover -v`
 ## low-level/
 Currently Empty.
