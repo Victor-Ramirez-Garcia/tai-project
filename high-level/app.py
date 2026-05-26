@@ -37,12 +37,13 @@ def set_file_counters() -> dict:
         prompt['file_counter'] = 1
         # get path to leetcode problem directory
         CODE_ROOT = BASE_DIR / "generated_code" / prompt["language"]
-        FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
+        FILENAME = f"program_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
         
         # set file counter to next available file
         while ((CODE_ROOT / FILENAME).exists()):
             prompt['file_counter'] += 1
-            FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
+            FILENAME = f"program_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
+
     return prompts
 
 
@@ -126,7 +127,7 @@ def save_code(code, prompt, is_unittest: bool) -> None:
 
     if is_unittest == False:
         # get path to leetcode problem directory
-        FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
+        FILENAME = f"program_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
     else:
         FILENAME = f"unittest_{prompt['leetcode-problem-id']}.{prompt['language']}"
 
@@ -141,7 +142,7 @@ def save_code(code, prompt, is_unittest: bool) -> None:
         # set trial counter to next available file
         while ((CODE_ROOT / FILENAME).exists()):
             prompt["file_counter"] += 1
-            FILENAME = f"program_{prompt['file_counter']}.{prompt['language']}"
+            FILENAME = f"program_{prompt['leetcode-problem-id']}_{prompt['file_counter']}.{prompt['language']}"
 
 
 def generate_program(prompt, context, is_unittest: bool) -> None:
