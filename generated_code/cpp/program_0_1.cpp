@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 
-std::string foo() {
-    return "Hello World!";
-}
+class Solution {
+public:
+    std::string foo() {
+        return "Hello World!";
+    }
+};
