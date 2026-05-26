@@ -80,6 +80,8 @@ To run python unittests, navigate to generated_code/py/ and run `python3 -m unit
 ## low-level/
 Currently Empty.
 
+To use cmake, install VScode extention: `https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools`
+
 To test in the generated_code/cpp/
 ```bash
 # 1. Create a build directory to keep things clean
