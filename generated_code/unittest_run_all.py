@@ -75,26 +75,46 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
     Returns:
         int: The number of tests that were added to the results.
     """
-    results = []
+    results = []    
     tests_added = 0
-    files = list(Path(unittest_files_dir).glob("test_unittest_*.py"))
+    # Search for test files
+    files: list[Path] = list(Path(unittest_files_dir).glob("test_unittest_*.py"))
 
     for file in files:
-        problem_id = re.search(r"unittest_(\d+)", file.name).group(1)
+        # Extract ID
+        match = re.search(r"unittest_(\d+)", file.name)
+        if not match:
+            continue
+        problem_id = match.group(1)
+        
+        # Get metadata (assuming this function is defined elsewhere in your script)
         meta = get_metadata(problem_id)
         
-        # Run unittest as a module
-        # Return code 0: Pass, 1: Failure (Assertion), 2: Error (Syntax/Import)
-        proc = subprocess.run(["python3", "-m", "unittest", str(file)], capture_output=True, text=True)
+        # FIX: Run the file directly as a script instead of using 'python3 -m unittest'
+        # This treats the file as an executable script rather than a module.
+        # We set cwd to unittest_files_dir so the script can resolve its own imports.
+        cmd = ["python3", file.name]
+        proc = subprocess.run(cmd, capture_output=True, text=True, cwd=unittest_files_dir)
+
+        print(f"Running {file.name}... Return code: {proc.returncode}")
+        print("Stdout:", proc.stdout)
+        print("Stderr:", proc.stderr)
         
-        print(f"""\n{proc}\n""")
-        error_type = "None"
-        if proc.returncode == 1: error_type = "Assertion"
-        elif proc.returncode >= 2: error_type = "Syntax/Import"
+        # Determine status based on return code
+        # 0: Pass, 1: Assertion failure, >1: Syntax/Import/Runtime error
+        if proc.returncode == 0:
+            result = "pass"
+            error_type = "None"
+        elif proc.returncode == 1:
+            result = "failed"
+            error_type = "Assertion"
+        else:
+            result = "failed"
+            error_type = "Syntax/Import/Runtime"
             
         results.append({
             "id": problem_id,
-            "result": "pass" if proc.returncode == 0 else "failed",
+            "result": result,
             "error_type": error_type,
             "difficulty": meta.get("difficulty"),
             "examples_count": len(meta.get("examples", [])),

@@ -1,0 +1,34 @@
+[
+    {
+        "id": "2",
+        "result": "failed",
+        "error_type": "Assertion",
+        "difficulty": "Medium",
+        "examples_count": 3,
+        "constraints_count": 3
+    },
+    {
+        "id": "3",
+        "result": "pass",
+        "error_type": "None",
+        "difficulty": "Medium",
+        "examples_count": 3,
+        "constraints_count": 2
+    },
+    {
+        "id": "0",
+        "result": "failed",
+        "error_type": "Assertion",
+        "difficulty": "Unknown",
+        "examples_count": 0,
+        "constraints_count": 0
+    },
+    {
+        "id": "1",
+        "result": "failed",
+        "error_type": "Assertion",
+        "difficulty": "Easy",
+        "examples_count": 3,
+        "constraints_count": 4
+    }
+]
