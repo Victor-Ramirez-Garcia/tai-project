@@ -48,6 +48,27 @@ def get_metadata(problem_id):
     except:
         return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
     return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
+
+
+def classify_python_error(stderr: str) -> str:
+    """
+
+
+    Analyzes stderr to determine if it's a Logic/Assertion failure 
+    or a Code/Syntax/Name error.
+    """
+    if not stderr:
+        return "Unknown"
+    
+    # Check for specific Python crash indicators
+    if any(err in stderr for err in ["SyntaxError", "NameError", "ImportError", "AttributeError", "TypeError"]):
+        return "Syntax/Name/Import Error"
+    
+    # If it's a test runner failure, it usually contains 'AssertionError' or 'FAILED'
+    if "AssertionError" in stderr or "FAILED" in stderr:
+        return "Assertion"
+        
+    return "Runtime/Other"
     
 def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     """
@@ -105,12 +126,10 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
         if proc.returncode == 0:
             result = "pass"
             error_type = "None"
-        elif proc.returncode == 1:
-            result = "failed"
-            error_type = "Assertion"
         else:
             result = "failed"
-            error_type = "Syntax/Import/Runtime"
+            # Use our new classifier
+            error_type = classify_python_error(proc.stderr)
             
         results.append({
             "id": problem_id,
@@ -118,7 +137,8 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
             "error_type": error_type,
             "difficulty": meta.get("difficulty"),
             "examples_count": len(meta.get("examples", [])),
-            "constraints_count": len(meta.get("constraints", []))
+            "constraints_count": len(meta.get("constraints", [])),
+            "raw_stderr": proc.stderr if proc.returncode != 0 else "" # Useful for debugging
         })
         tests_added += 1
         

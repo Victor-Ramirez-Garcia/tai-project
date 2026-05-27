@@ -2,10 +2,11 @@
     {
         "id": "2",
         "result": "failed",
-        "error_type": "Assertion",
+        "error_type": "Syntax/Name/Import Error",
         "difficulty": "Medium",
         "examples_count": 3,
-        "constraints_count": 3
+        "constraints_count": 3,
+        "raw_stderr": "Traceback (most recent call last):\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/test_unittest_2.py\", line 3, in <module>\n    from solution_2_1 import Solution\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/solution_2_1.py\", line 6, in <module>\n    class Solution:\n    ...<28 lines>...\n            return dummy_head.next\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/solution_2_1.py\", line 7, in Solution\n    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:\n                                ^^^^^^^^\nNameError: name 'Optional' is not defined\n"
     },
     {
         "id": "3",
@@ -13,22 +14,25 @@
         "error_type": "None",
         "difficulty": "Medium",
         "examples_count": 3,
-        "constraints_count": 2
+        "constraints_count": 2,
+        "raw_stderr": ""
     },
     {
         "id": "0",
         "result": "failed",
-        "error_type": "Assertion",
+        "error_type": "Syntax/Name/Import Error",
         "difficulty": "Unknown",
         "examples_count": 0,
-        "constraints_count": 0
+        "constraints_count": 0,
+        "raw_stderr": "Traceback (most recent call last):\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/test_unittest_0.py\", line 2, in <module>\n    from solution_0_1 import Solution\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/solution_0_1.py\", line 4\n    return a\"Hello, World!\"\n            ^^^^^^^^^^^^^^^\nSyntaxError: invalid syntax\n"
     },
     {
         "id": "1",
         "result": "failed",
-        "error_type": "Assertion",
+        "error_type": "Syntax/Name/Import Error",
         "difficulty": "Easy",
         "examples_count": 3,
-        "constraints_count": 4
+        "constraints_count": 4,
+        "raw_stderr": "Traceback (most recent call last):\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/test_unittest_1.py\", line 2, in <module>\n    from solution_1_1 import Solution\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/solution_1_1.py\", line 1, in <module>\n    class Solution:\n    ...<14 lines>...\n                num_to_index[num] = index\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/solution_1_1.py\", line 2, in Solution\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n                           ^^^^\nNameError: name 'List' is not defined. Did you mean: 'list'?\n"
     }
 ]
