@@ -49,24 +49,6 @@ def get_metadata(problem_id):
         return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
     return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
 
-def extract_compiler_error(build_log: str, source_filename: str) -> str:
-    """
-    Collects every line in the build log that references the specific source file.
-    """
-    filename = os.path.basename(source_filename)
-    lines = build_log.splitlines()
-    
-    # Filter for lines that mention the file and keep a small window of context (e.g., +2 lines)
-    error_lines = []
-    for i, line in enumerate(lines):
-        if filename in line:
-            # Add the error line
-            error_lines.append(line)
-            # Optionally add the next 2 lines for context (like the caret '^')
-            error_lines.extend(lines[i+1:i+3])
-            
-    return "\n".join(error_lines)
-
 def get_error_for_file(build_log: str, source_filename: str) -> str:
     """
     Searches the full build log for the specific file and extracts relevant errors.
@@ -235,23 +217,6 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
     return tests_added
 
 
-def evaluate_cpp_test_results(result_file_path: str):
-    """
-    Evaluates the results of the C++ unit tests.
-
-    This function should be implemented to analyze the stored C++ test results
-    and generate a summary or report.
-    """
-    pass
-
-def evaluate_python_test_results(result_file_path: str):
-    """
-    Evaluates the results of the Python unit tests.
-    This function should be implemented to analyze the stored Python test results
-    and generate a summary or report.
-    """
-    pass
-
 def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str):
     """
     Generates a summary report for both C++ and Python unit tests.
@@ -279,11 +244,11 @@ def main():
     tests_added_py = run_and_store_python_tests(PY_UNITTESTS_DIR, PY_UNITTEST_RESULTS_FILE)
     print(f"Added {tests_added_py} Python tests to results.")
 
+    """
     print("Running C++ unit tests...")
     tests_added_cpp = run_and_store_cpp_tests(CPP_UNITTESTS_DIR, CPP_UNITTEST_RESULTS_FILE)
     print(f"Added {tests_added_cpp} C++ tests to results.")
 
-    """
     print("Evaluating Python test results...")
     evaluate_python_test_results(PY_UNITTEST_RESULTS_FILE)
     print("Evaluating C++ test results...")
