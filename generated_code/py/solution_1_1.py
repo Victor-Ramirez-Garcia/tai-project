@@ -3,7 +3,7 @@ class Solution:
         # Map to store the value and its corresponding index
         # Time Complexity: O(N) since we traverse the list containing N elements only once.
         # Space Complexity: O(N) to store the elements in the hash map.
-        num_to_index = {}
+        num_t1o_index = {}
         
         for index, num in enumerate(nums):
             complement = target - num

@@ -1,7 +1,7 @@
 import unittest
-from solution_0_1 import Solution
+from solution_5_1 import Solution
 
 class TestGeneratedCode(unittest.TestCase):
     def test_python_code(self):
         solution = Solution()
-        self.assertEqual(solution.foo(), "Hello, World!")
+        self.assertEqual(solution.foo(), "a")
