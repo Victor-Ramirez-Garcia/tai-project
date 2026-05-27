@@ -85,21 +85,26 @@ def get_error_for_file(build_log: str, source_filename: str) -> str:
 
 def classify_python_error(stderr: str) -> str:
     """
-    Analyzes stderr to determine if it's a Logic/Assertion failure 
-    or a Code/Syntax/Name error.
+    Analyzes the stderr text to determine the category of the failure.
     """
-    if not stderr:
-        return "Unknown"
+    # These are code crashes, not logical assertions
+    crash_patterns = [
+        "NameError", 
+        "SyntaxError", 
+        "ImportError", 
+        "ModuleNotFoundError", 
+        "AttributeError", 
+        "TypeError"
+    ]
     
-    # Check for specific Python crash indicators
-    if any(err in stderr for err in ["SyntaxError", "NameError", "ImportError", "AttributeError", "TypeError"]):
-        return "Syntax/Name/Import Error"
+    if any(pattern in stderr for pattern in crash_patterns):
+        return "Syntax/Import/Runtime Error"
     
-    # If it's a test runner failure, it usually contains 'AssertionError' or 'FAILED'
+    # If it's not a crash but it failed, it's an assertion error
     if "AssertionError" in stderr or "FAILED" in stderr:
-        return "Assertion"
+        return "Assertion Failure"
         
-    return "Runtime/Other"
+    return "Unknown Error"
 
 def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> int:
     """
@@ -190,31 +195,28 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
     files: list[Path] = list(Path(unittest_files_dir).glob("test_unittest_*.py"))
 
     for file in files:
-        # Extract ID
         match = re.search(r"unittest_(\d+)", file.name)
         if not match:
             continue
         problem_id = match.group(1)
         
-        # Get metadata (assuming this function is defined elsewhere in your script)
         meta = get_metadata(problem_id)
         
-        # FIX: Run the file directly as a script instead of using 'python3 -m unittest'
-        # This treats the file as an executable script rather than a module.
-        # We set cwd to unittest_files_dir so the script can resolve its own imports.
-        cmd = ["python3", file.name]
+        # FIX: Run via the unittest module. 
+        # This forces the test suite to execute and provides reliable exit codes.
+        # 0: Success
+        # 1: Test failed (AssertionError)
+        # 2: Error (Runtime/Import/Syntax error)
+        cmd = ["python3", "-m", "unittest", file.name]
         proc = subprocess.run(cmd, capture_output=True, text=True, cwd=unittest_files_dir)
 
-        # Determine status based on return code
-        # 0: Pass, 1: Assertion failure, >1: Syntax/Import/Runtime error
         if proc.returncode == 0:
             result = "pass"
             error_type = "None"
         else:
             result = "failed"
-            # Use our new classifier
             error_type = classify_python_error(proc.stderr)
-            
+
         results.append({
             "id": problem_id,
             "result": result,
@@ -222,7 +224,8 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
             "difficulty": meta.get("difficulty"),
             "examples_count": len(meta.get("examples", [])),
             "constraints_count": len(meta.get("constraints", [])),
-            "raw_stderr": proc.stderr if proc.returncode != 0 else "" # Useful for debugging
+            # Capture stderr for both assertions and crashes
+            "raw_stderr": proc.stderr if proc.returncode != 0 else ""
         })
         tests_added += 1
         
@@ -230,6 +233,7 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
         json.dump(results, f, indent=4)
     
     return tests_added
+
 
 def evaluate_cpp_test_results(result_file_path: str):
     """
