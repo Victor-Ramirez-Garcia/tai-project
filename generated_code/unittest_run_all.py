@@ -49,6 +49,24 @@ def get_metadata(problem_id):
         return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
     return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
 
+def extract_compiler_error(build_log: str, source_filename: str) -> str:
+    """
+    Collects every line in the build log that references the specific source file.
+    """
+    filename = os.path.basename(source_filename)
+    lines = build_log.splitlines()
+    
+    # Filter for lines that mention the file and keep a small window of context (e.g., +2 lines)
+    error_lines = []
+    for i, line in enumerate(lines):
+        if filename in line:
+            # Add the error line
+            error_lines.append(line)
+            # Optionally add the next 2 lines for context (like the caret '^')
+            error_lines.extend(lines[i+1:i+3])
+            
+    return "\n".join(error_lines)
+
 def classify_cpp_error(stderr: str, return_code: int) -> str:
     """
     Analyzes stderr and return code to classify C++ errors.
@@ -105,7 +123,9 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> i
 
     # 2. Build the project (keep going even if errors occur)
     # We ignore the return code here because we will check file existence later
-    subprocess.run(["cmake", "--build", str(build_dir), "--", "-k"], capture_output=True)
+    build_proc = subprocess.run(["cmake", "--build", str(build_dir), "--", "-k"], 
+                                capture_output=True, text=True)
+    build_log = build_proc.stderr # Compiler errors usually go to stderr
 
     # 3. Iterate through SOURCE test files (This is our source of truth)
     for source_file in source_dir.glob("test_unittest_*.cpp"):
@@ -118,7 +138,8 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> i
         # Determine the binary name expected by CMakeLists.txt
         # NOTE: Make sure this pattern matches what you have in your CMakeLists.txt
         binary_name = f"run_test_unittest_{problem_id}" 
-        binary_path = build_dir / binary_name
+        #binary_path = build_dir / binary_name
+        binary_path = build_dir / f"run_test_unittest_{problem_id}"
         
         if binary_path.exists():
             # SUCCESS: Binary exists, run it
@@ -133,10 +154,10 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> i
                 error_type = classify_cpp_error(proc.stderr, proc.returncode)
                 raw_stderr = proc.stderr
         else:
-            # FAILURE: Binary does not exist (Compilation failed)
+            # FAILURE: Extract the specific error
             result = "failed"
             error_type = "Syntax/Compilation"
-            raw_stderr = f"Could not find binary {binary_name}. Compilation likely failed."
+            raw_stderr = extract_compiler_error(build_log, str(source_file))
 
         results.append({
             "id": problem_id,
