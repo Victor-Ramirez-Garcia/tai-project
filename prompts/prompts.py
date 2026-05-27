@@ -22,6 +22,12 @@ STRICT GUIDELINES:
    explanations before or after the code block. The output must be ready to be parsed as a 
    raw string and placed directly into an IDE.
 6. COMMENTS: Include concise comments explaining the core logic, especially for non-trivial parts.
+7. DEPENDENCIES & COMPILABILITY (MANDATORY):
+   - PYTHON: You MUST include all necessary imports at the top (e.g., 'from typing import List, Optional, Deque'). 
+     If using any type hints (List, Optional, etc.), the import is non-negotiable.
+   - C++: You MUST include all necessary standard library headers (e.g., #include <vector>, #include <string>, #include <algorithm>, #include <queue>).
+   - STRUCTURES: If the problem involves custom structures (ListNode, TreeNode) and they are not explicitly 
+     defined in the starter code, YOU MUST define the struct at the top of your solution file so the code is self-contained.
 """
 
 LLM_INSTRUCTION_UNITTEST = """
