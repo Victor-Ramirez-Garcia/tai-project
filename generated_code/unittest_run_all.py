@@ -146,7 +146,6 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> i
         if binary_path.exists():
             # SUCCESS: Run it
             proc = subprocess.run([str(binary_path)], capture_output=True, text=True)
-            print(proc)
             result = "pass" if proc.returncode == 0 else "failed"
             raw_stderr = proc.stderr if proc.returncode != 0 else ""
             error_type = "None" if proc.returncode == 0 else "Assertion"
@@ -206,8 +205,6 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
         # We set cwd to unittest_files_dir so the script can resolve its own imports.
         cmd = ["python3", file.name]
         proc = subprocess.run(cmd, capture_output=True, text=True, cwd=unittest_files_dir)
-
-        print(f"Running {file.name}... Return code: {proc.returncode}")
 
         # Determine status based on return code
         # 0: Pass, 1: Assertion failure, >1: Syntax/Import/Runtime error
