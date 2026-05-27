@@ -67,19 +67,21 @@ def extract_compiler_error(build_log: str, source_filename: str) -> str:
             
     return "\n".join(error_lines)
 
-def classify_cpp_error(stderr: str, return_code: int) -> str:
+def get_error_for_file(build_log: str, source_filename: str) -> str:
     """
-    Analyzes stderr and return code to classify C++ errors.
+    Searches the full build log for the specific file and extracts relevant errors.
     """
-    # If the binary crashed (segfault, abort, etc.)
-    if return_code < 0:
-        return "Runtime/Segfault"
+    # Isolate the filename
+    fname = Path(source_filename).name
     
-    # Check for GTest or common assertion patterns
-    if "FAILED" in stderr or "Assertion" in stderr or "check failed" in stderr:
-        return "Assertion"
-        
-    return "Runtime/Other"
+    # Simple regex to find lines associated with the file
+    # It searches for the filename, then grabs the text until the next error or block
+    pattern = re.compile(rf"({re.escape(fname)}.*?)(\n\s*\n|make\[)", re.DOTALL)
+    match = pattern.search(build_log)
+    
+    if match:
+        return match.group(1).strip()
+    return "Compilation failed. Check build logs for details."
 
 def classify_python_error(stderr: str) -> str:
     """
@@ -118,16 +120,19 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> i
 
     # 1. Ensure project is configured
     if not (build_dir / "CMakeCache.txt").exists():
+        build_dir.rmdir(parents=True, exist_ok=True)
         build_dir.mkdir(parents=True, exist_ok=True)
         subprocess.run(["cmake", "-S", str(source_dir), "-B", str(build_dir)], capture_output=True)
 
-    # 2. Build the project (keep going even if errors occur)
-    # We ignore the return code here because we will check file existence later
-    build_proc = subprocess.run(["cmake", "--build", str(build_dir), "--", "-k"], 
-                                capture_output=True, text=True)
-    build_log = build_proc.stderr # Compiler errors usually go to stderr
+    # 2. Build the project AND capture the full log
+    build_proc = subprocess.run(
+        ["cmake", "--build", str(build_dir), "--", "-k"], 
+        capture_output=True, 
+        text=True # Important to get a string, not bytes
+    )
+    full_build_log = build_proc.stderr 
 
-    # 3. Iterate through SOURCE test files (This is our source of truth)
+    # 3. Iterate through SOURCE test files
     for source_file in source_dir.glob("test_unittest_*.cpp"):
         match = re.search(r"unittest_(\d+)", source_file.name)
         if not match: continue
@@ -135,29 +140,21 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> i
         problem_id = match.group(1)
         meta = get_metadata(problem_id)
         
-        # Determine the binary name expected by CMakeLists.txt
-        # NOTE: Make sure this pattern matches what you have in your CMakeLists.txt
         binary_name = f"run_test_unittest_{problem_id}" 
-        #binary_path = build_dir / binary_name
-        binary_path = build_dir / f"run_test_unittest_{problem_id}"
+        binary_path = build_dir / binary_name
         
         if binary_path.exists():
-            # SUCCESS: Binary exists, run it
+            # SUCCESS: Run it
             proc = subprocess.run([str(binary_path)], capture_output=True, text=True)
-            
-            if proc.returncode == 0:
-                result = "pass"
-                error_type = "None"
-                raw_stderr = ""
-            else:
-                result = "failed"
-                error_type = classify_cpp_error(proc.stderr, proc.returncode)
-                raw_stderr = proc.stderr
+            print(proc)
+            result = "pass" if proc.returncode == 0 else "failed"
+            raw_stderr = proc.stderr if proc.returncode != 0 else ""
+            error_type = "None" if proc.returncode == 0 else "Assertion"
         else:
-            # FAILURE: Extract the specific error
+            # FAILURE: Binary missing -> Search the log for the cause
             result = "failed"
             error_type = "Syntax/Compilation"
-            raw_stderr = extract_compiler_error(build_log, str(source_file))
+            raw_stderr = get_error_for_file(full_build_log, source_file.name)
 
         results.append({
             "id": problem_id,
