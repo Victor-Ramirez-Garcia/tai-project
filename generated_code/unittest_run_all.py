@@ -2,7 +2,18 @@
 unittest_run_all.py
 
 - Runs unit tests for all generated code for both C++ and Python, separately.
-- Stores the results of the tests in a structured format (e.g., JSON, XML) for later evaluation for both C++ and Python, separately.
+    - The results should be redirected to a file, python and cpp separately, for later evaluation.
+        - Since python doesn't compile the code before running, we can directly run the tests and capture the results.
+        - For C++, we need to compile the code first and then run the tests, capturing the results.
+- Stores the results of each unittest in a structured JSON format for later evaluation for both C++ and Python, separately.
+    - Each stored record should include the following information:
+    - Leetcode Id
+    - Result (pass/failed)
+    - Error type if an (Syntax, Runtime, Logical/Assertion)
+    - Difficulty
+    - Number of examples provided
+    - Number of constraints provided
+    
 - Evaluates the results of the tests and generates a summary or report for both C++ and Python, separately.
     - The evaluation report should include metrics such as 
         - The number of tests passed, failed
@@ -13,12 +24,31 @@ unittest_run_all.py
         - How many leetcode `constraints` were provided for each of the passed or failed test
 """
 
-PY_UNITTESTS_DIR = "generated_code/py"
-CPP_UNITTESTS_DIR = "generated_code/cpp"
+import os
+import json
+import subprocess
+import re
+from pathlib import Path
+
+PY_UNITTESTS_DIR = "py/"
+CPP_UNITTESTS_DIR = "cpp/"
 
 PY_UNITTEST_RESULTS_FILE = "python_test_results.json"
 CPP_UNITTEST_RESULTS_FILE = "cpp_test_results.json"
 
+# Helper to load library metadata
+def get_metadata(problem_id):
+    # Adjust this path to your actual leetcode_library.json
+    try:
+        with open("../problem_extraction/leetcode_library.json", "r") as f:
+            data = json.load(f)
+            for entry in data:
+                if str(entry.get("id")) == str(problem_id):
+                    return entry
+    except:
+        return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
+    return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
+    
 def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     """
     Discovers and runs C++ unit tests for all generated code.
@@ -32,7 +62,7 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     """
     pass
 
-def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str):
+def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -> int:
     """
     Discovers and runs Python unit tests for all generated code.
 
@@ -42,8 +72,40 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str):
     Args:
         unittest_files_dir (str): The directory where Python unit test files are located.
         output_file_path (str): The file path where the test results should be stored.
+    Returns:
+        int: The number of tests that were added to the results.
     """
-    pass
+    results = []
+    tests_added = 0
+    files = list(Path(unittest_files_dir).glob("test_unittest_*.py"))
+
+    for file in files:
+        problem_id = re.search(r"unittest_(\d+)", file.name).group(1)
+        meta = get_metadata(problem_id)
+        
+        # Run unittest as a module
+        # Return code 0: Pass, 1: Failure (Assertion), 2: Error (Syntax/Import)
+        proc = subprocess.run(["python3", "-m", "unittest", str(file)], capture_output=True, text=True)
+        
+        print(f"""\n{proc}\n""")
+        error_type = "None"
+        if proc.returncode == 1: error_type = "Assertion"
+        elif proc.returncode >= 2: error_type = "Syntax/Import"
+            
+        results.append({
+            "id": problem_id,
+            "result": "pass" if proc.returncode == 0 else "failed",
+            "error_type": error_type,
+            "difficulty": meta.get("difficulty"),
+            "examples_count": len(meta.get("examples", [])),
+            "constraints_count": len(meta.get("constraints", []))
+        })
+        tests_added += 1
+        
+    with open(output_file_path, "w") as f:
+        json.dump(results, f, indent=4)
+    
+    return tests_added
 
 def evaluate_cpp_test_results(result_file_path: str):
     """
@@ -85,7 +147,10 @@ def main():
     Main function to run all unit tests for generated code.
     """
     print("Running Python unit tests...")
-    discover_and_run_python_tests(PY_UNITTESTS_DIR, PY_UNITTEST_RESULTS_FILE)
+    tests_added = run_and_store_python_tests(PY_UNITTESTS_DIR, PY_UNITTEST_RESULTS_FILE)
+    print(f"Added {tests_added} Python tests to results.")
+
+    """
     print("Running C++ unit tests...")
     run_and_store_cpp_tests(CPP_UNITTESTS_DIR, CPP_UNITTEST_RESULTS_FILE)
     print("All unit tests completed. Results stored.")
@@ -100,6 +165,7 @@ def main():
 
     generate_graph_report(CPP_UNITTEST_RESULTS_FILE, PY_UNITTEST_RESULTS_FILE)
     print("Summary report generated.")
+    """
 
 if __name__ == "__main__":
     main()
