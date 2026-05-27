@@ -3,16 +3,16 @@ class Solution:
         # Map to store the value and its corresponding index
         # Time Complexity: O(N) since we traverse the list containing N elements only once.
         # Space Complexity: O(N) to store the elements in the hash map.
-        seen = {}
+        num_to_index = {}
         
-        for i, num in enumerate(nums):
+        for index, num in enumerate(nums):
             complement = target - num
             
             # If the complement exists in the map, we found our pair
-            if complement in seen:
-                return [seen[complement], i]
+            if complement in num_to_index:
+                return [num_to_index[complement], index]
             
-            # Otherwise, store the current number with its index
-            seen[num] = i
+            # Otherwise, store the current number and its index in the map
+            num_to_index[num] = index
             
-        return []
+        # The problem guarantees exactly one solution, so we don't need a fallback return

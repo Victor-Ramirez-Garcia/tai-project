@@ -1,74 +1,69 @@
 #include <gtest/gtest.h>
 #include <string>
-#include "program_3_1.cpp"
+#include "solution_unknown_1.cpp" // Note: Replace 'unknown' with the specific problem ID if available
 
 class LongestSubstringTest : public ::testing::Test {
 protected:
-    Solution sol;
+    Solution solution;
 };
 
-// --- Example Cases ---
+// --- Example Test Cases ---
 
-TEST_F(LongestSubstringTest, Example1_StandardString) {
+TEST_F(LongestSubstringTest, Example1_NormalString) {
     std::string s = "abcabcbb";
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 3);
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 3);
 }
 
-TEST_F(LongestSubstringTest, Example2_AllIdentical) {
+TEST_F(LongestSubstringTest, Example2_AllIdenticalCharacters) {
     std::string s = "bbbbb";
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 1);
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 1);
 }
 
-TEST_F(LongestSubstringTest, Example3_MixedCharacters) {
+TEST_F(LongestSubstringTest, Example3_SubstringWithRepeatingCharacter) {
     std::string s = "pwwkew";
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 3);
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 3);
 }
 
-// --- Edge Cases & Constraints ---
+// --- Boundary and Edge Test Cases ---
 
-TEST_F(LongestSubstringTest, EmptyString) {
+TEST_F(LongestSubstringTest, EdgeCase_EmptyString) {
     std::string s = "";
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 0);
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 0);
 }
 
-TEST_F(LongestSubstringTest, SingleCharacter) {
+TEST_F(LongestSubstringTest, EdgeCase_SingleCharacter) {
     std::string s = "a";
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 1);
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 1);
 }
 
-TEST_F(LongestSubstringTest, TwoIdenticalCharacters) {
-    std::string s = "aa";
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 1);
+TEST_F(LongestSubstringTest, EdgeCase_AllUniqueCharacters) {
+    std::string s = "abcdefg";
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 7);
 }
 
-TEST_F(LongestSubstringTest, LongestIsAtStart) {
-    std::string s = "abcdefghijaa";
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 10);
+TEST_F(LongestSubstringTest, Constraint_SpecialCharactersAndSpaces) {
+    std::string s = "a b!@12 a";
+    // Unique parts: "a b!@12 " (length 8) or " b!@12 a" (length 8)
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 8);
 }
 
-TEST_F(LongestSubstringTest, LongestIsAtEnd) {
-    std::string s = "aabbcdefghij";
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 8);
+TEST_F(LongestSubstringTest, Constraint_AllSpaces) {
+    std::string s = "    ";
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 1);
 }
 
-TEST_F(LongestSubstringTest, SymbolsAndSpaces) {
-    std::string s = "a b!@#$ %^&*()";
-    // Unique characters including space and symbols
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 14);
+TEST_F(LongestSubstringTest, Structural_TwoRepeatedPatterns) {
+    std::string s = "dvdf";
+    // Substring "vdf" has length 3. Common pitfall for basic sliding window without correct index updates.
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 3);
 }
 
-TEST_F(LongestSubstringTest, DigitsOnly) {
-    std::string s = "123123456";
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 6);
+TEST_F(LongestSubstringTest, Structural_LongestAtEnd) {
+    std::string s = "abbaabcdef";
+    EXPECT_EQ(solution.lengthOfLongestSubstring(s), 6); // "abcdef"
 }
 
-TEST_F(LongestSubstringTest, MaxLengthConstraintSimulation) {
-    // Generate a repeating pattern to simulate heavy load
-    std::string s = "";
-    std::string pattern = "abcdefghijklmnopqrstuvwxyz";
-    for(int i = 0; i < 1000; ++i) {
-        s += pattern;
-    }
-    // Length is 26,000, within 5 * 10^4. Longest unique should be 26.
-    EXPECT_EQ(sol.lengthOfLongestSubstring(s), 26);
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
