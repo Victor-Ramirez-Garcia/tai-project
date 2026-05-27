@@ -1,0 +1,38 @@
+[
+    {
+        "id": "3",
+        "result": "failed",
+        "error_type": "Syntax/Compilation",
+        "difficulty": "Medium",
+        "examples_count": 3,
+        "constraints_count": 2,
+        "raw_stderr": "Could not find binary run_test_unittest_3. Compilation likely failed."
+    },
+    {
+        "id": "2",
+        "result": "failed",
+        "error_type": "Syntax/Compilation",
+        "difficulty": "Medium",
+        "examples_count": 3,
+        "constraints_count": 3,
+        "raw_stderr": "Could not find binary run_test_unittest_2. Compilation likely failed."
+    },
+    {
+        "id": "0",
+        "result": "pass",
+        "error_type": "None",
+        "difficulty": "Unknown",
+        "examples_count": 0,
+        "constraints_count": 0,
+        "raw_stderr": ""
+    },
+    {
+        "id": "1",
+        "result": "failed",
+        "error_type": "Syntax/Compilation",
+        "difficulty": "Easy",
+        "examples_count": 3,
+        "constraints_count": 4,
+        "raw_stderr": "Could not find binary run_test_unittest_1. Compilation likely failed."
+    }
+]

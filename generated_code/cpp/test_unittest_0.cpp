@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "program_0_1.cpp" // Replace with the actual filename containing foo()
+#include "solution_0_1.cpp" // Replace with the actual filename containing foo()
 
 // The TEST macro defines a test suite and the specific test name
 TEST(FooTestSuite, ReturnsHelloWorld) {
