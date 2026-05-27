@@ -100,8 +100,8 @@ def classify_python_error(stderr: str) -> str:
         return "Assertion"
         
     return "Runtime/Other"
-    
-def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
+
+def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> int:
     """
     Discovers and runs C++ unit tests for all generated code.
 
@@ -112,7 +112,6 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
         unittest_files_dir (str): The directory where C++ unit test files are located.
         output_file_path (str): The file path where the test results should be stored.
     """
-def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> int:
     results = []
     tests_added = 0
     build_dir = Path(unittest_files_dir) / "build"
