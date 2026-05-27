@@ -1,572 +1,1133 @@
 [
     {
-        "id": "1",
-        "title": "Two Sum",
+        "id": "4271",
+        "title": "Find the Degree of Each Vertex",
         "difficulty": "Easy",
         "tags": [
             "Array",
-            "Hash Table"
+            "Graph Theory",
+            "Matrix"
         ],
-        "question": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\nYou can return the answer in any order.",
-        "examples": [
-            "Input: nums = [2,7,11,15], target = 9\nOutput: [0,1]\nExplanation: Because nums[0] + nums[1] == 9, we return [0, 1].",
-            "Input: nums = [3,2,4], target = 6\nOutput: [1,2]",
-            "Input: nums = [3,3], target = 6\nOutput: [0,1]"
-        ],
+        "question": "You are given a 2D integer array matrix of size n x n representing the adjacency matrix of an undirected graph with n vertices labeled from 0 to n - 1.\nmatrix[i][j] = 1 indicates that there is an edge between vertices i and j.\nmatrix[i][j] = 0 indicates that there is no edge between vertices i and j.\nThe degree of a vertex is the number of edges connected to it.\nReturn an integer array ans of size n where ans[i] represents the degree of vertex i.",
+        "examples": [],
         "constraints": [
-            "2 <= nums.length <= 10^4",
-            "-10^9 <= nums[i] <= 10^9",
-            "-10^9 <= target <= 10^9",
-            "Only one valid answer exists."
+            "matrix[i][j] = 1 indicates that there is an edge between vertices i and j.",
+            "matrix[i][j] = 0 indicates that there is no edge between vertices i and j."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        \n    }\n};"
+            "python": "class Solution:\n    def findDegrees(self, matrix: list[list[int]]) -> list[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> findDegrees(vector<vector<int>>& matrix) {\n        \n    }\n};"
         }
     },
     {
-        "id": "2",
-        "title": "Add Two Numbers",
-        "difficulty": "Medium",
-        "tags": [
-            "Linked List",
-            "Math",
-            "Recursion"
-        ],
-        "question": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.\nYou may assume the two numbers do not contain any leading zero, except the number 0 itself.",
-        "examples": [
-            "Input: l1 = [2,4,3], l2 = [5,6,4]\nOutput: [7,0,8]\nExplanation: 342 + 465 = 807.",
-            "Input: l1 = [0], l2 = [0]\nOutput: [0]",
-            "Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]\nOutput: [8,9,9,9,0,0,0,1]"
-        ],
-        "constraints": [
-            "The number of nodes in each linked list is in the range [1, 100].",
-            "0 <= Node.val <= 9",
-            "It is guaranteed that the list represents a number that does not have leading zeros."
-        ],
-        "starter_code": {
-            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:\n        ",
-            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "3",
-        "title": "Longest Substring Without Repeating Characters",
-        "difficulty": "Medium",
-        "tags": [
-            "Hash Table",
-            "String",
-            "Sliding Window"
-        ],
-        "question": "Given a string s, find the length of the longest substring without duplicate characters.",
-        "examples": [
-            "Input: s = \"abcabcbb\"\nOutput: 3\nExplanation: The answer is \"abc\", with the length of 3. Note that \"bca\" and \"cab\" are also correct answers.",
-            "Input: s = \"bbbbb\"\nOutput: 1\nExplanation: The answer is \"b\", with the length of 1.",
-            "Input: s = \"pwwkew\"\nOutput: 3\nExplanation: The answer is \"wke\", with the length of 3.\nNotice that the answer must be a substring, \"pwke\" is a subsequence and not a substring."
-        ],
-        "constraints": [
-            "0 <= s.length <= 5 * 10^4",
-            "s consists of English letters, digits, symbols and spaces."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def lengthOfLongestSubstring(self, s: str) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int lengthOfLongestSubstring(string s) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "4",
-        "title": "Median of Two Sorted Arrays",
-        "difficulty": "Hard",
-        "tags": [
-            "Array",
-            "Binary Search",
-            "Divide and Conquer"
-        ],
-        "question": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.\nThe overall run time complexity should be O(log (m+n)).",
-        "examples": [
-            "Input: nums1 = [1,3], nums2 = [2]\nOutput: 2.00000\nExplanation: merged array = [1,2,3] and median is 2.",
-            "Input: nums1 = [1,2], nums2 = [3,4]\nOutput: 2.50000\nExplanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5."
-        ],
-        "constraints": [
-            "nums1.length == m",
-            "nums2.length == n",
-            "0 <= m <= 1000",
-            "0 <= n <= 1000",
-            "1 <= m + n <= 2000",
-            "-10^6 <= nums1[i], nums2[i] <= 10^6"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:\n        ",
-            "cpp": "class Solution {\npublic:\n    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "5",
-        "title": "Longest Palindromic Substring",
-        "difficulty": "Medium",
-        "tags": [
-            "Two Pointers",
-            "String",
-            "Dynamic Programming"
-        ],
-        "question": "Given a string s, return the longest palindromic substring in s.",
-        "examples": [
-            "Input: s = \"babad\"\nOutput: \"bab\"\nExplanation: \"aba\" is also a valid answer.",
-            "Input: s = \"cbbd\"\nOutput: \"bb\""
-        ],
-        "constraints": [
-            "1 <= s.length <= 1000",
-            "s consist of only digits and English letters."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def longestPalindrome(self, s: str) -> str:\n        ",
-            "cpp": "class Solution {\npublic:\n    string longestPalindrome(string s) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "6",
-        "title": "Zigzag Conversion",
-        "difficulty": "Medium",
-        "tags": [
-            "String"
-        ],
-        "question": "The string \"PAYPALISHIRING\" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)\nP A H N\nA P L S I I G\nY I R\nAnd then read line by line: \"PAHNAPLSIIGYIR\"\nWrite the code that will take a string and make this conversion given a number of rows:\nstring convert(string s, int numRows);",
-        "examples": [
-            "P A H N\nA P L S I I G\nY I R",
-            "string convert(string s, int numRows);",
-            "Input: s = \"PAYPALISHIRING\", numRows = 3\nOutput: \"PAHNAPLSIIGYIR\"",
-            "Input: s = \"PAYPALISHIRING\", numRows = 4\nOutput: \"PINALSIGYAHRPI\"\nExplanation:\nP I N\nA L S I G\nY A H R\nP I",
-            "Input: s = \"A\", numRows = 1\nOutput: \"A\""
-        ],
-        "constraints": [
-            "1 <= s.length <= 1000",
-            "s consists of English letters (lower-case and upper-case), ',' and '.'.",
-            "1 <= numRows <= 1000"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def convert(self, s: str, numRows: int) -> str:\n        ",
-            "cpp": "class Solution {\npublic:\n    string convert(string s, int numRows) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "7",
-        "title": "Reverse Integer",
-        "difficulty": "Medium",
-        "tags": [
-            "Math"
-        ],
-        "question": "Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.\nAssume the environment does not allow you to store 64-bit integers (signed or unsigned).",
-        "examples": [
-            "Input: x = 123\nOutput: 321",
-            "Input: x = -123\nOutput: -321",
-            "Input: x = 120\nOutput: 21"
-        ],
-        "constraints": [
-            "-2^31 <= x <= 2^31 - 1"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def reverse(self, x: int) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int reverse(int x) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "8",
-        "title": "String to Integer (atoi)",
-        "difficulty": "Medium",
-        "tags": [
-            "String"
-        ],
-        "question": "Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.\nThe algorithm for myAtoi(string s) is as follows:\nWhitespace: Ignore any leading whitespace (\" \").\nSignedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity if neither present.\nConversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.\nRounding: If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then round the integer to remain in the range. Specifically, integers less than -231 should be rounded to -231, and integers greater than 231 - 1 should be rounded to 231 - 1.\nReturn the integer as the final result.",
-        "examples": [
-            "The underlined characters are what is read in and the caret is the current reader position.\nStep 1: \"42\" (no characters read because there is no leading whitespace)\n ^\nStep 2: \"42\" (no characters read because there is neither a '-' nor '+')\n ^\nStep 3: \"42\" (\"42\" is read in)\n ^",
-            "Step 1: \" -042\" (leading whitespace is read and ignored)\n ^\nStep 2: \" -042\" ('-' is read, so the result should be negative)\n ^\nStep 3: \" -042\" (\"042\" is read in, leading zeros ignored in the result)\n ^",
-            "Step 1: \"1337c0d3\" (no characters read because there is no leading whitespace)\n ^\nStep 2: \"1337c0d3\" (no characters read because there is neither a '-' nor '+')\n ^\nStep 3: \"1337c0d3\" (\"1337\" is read in; reading stops because the next character is a non-digit)\n ^",
-            "Step 1: \"0-1\" (no characters read because there is no leading whitespace)\n ^\nStep 2: \"0-1\" (no characters read because there is neither a '-' nor '+')\n ^\nStep 3: \"0-1\" (\"0\" is read in; reading stops because the next character is a non-digit)\n ^"
-        ],
-        "constraints": [
-            "0 <= s.length <= 200",
-            "s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def myAtoi(self, s: str) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int myAtoi(string s) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "9",
-        "title": "Palindrome Number",
+        "id": "3846",
+        "title": "Minimum Operations to Make Array Sum Divisible by K",
         "difficulty": "Easy",
         "tags": [
+            "Array",
             "Math"
         ],
-        "question": "Given an integer x, return true if x is a palindrome, and false otherwise.",
-        "examples": [
-            "Input: x = 121\nOutput: true\nExplanation: 121 reads as 121 from left to right and from right to left.",
-            "Input: x = -121\nOutput: false\nExplanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.",
-            "Input: x = 10\nOutput: false\nExplanation: Reads 01 from right to left. Therefore it is not a palindrome."
-        ],
+        "question": "You are given an integer array nums and an integer k. You can perform the following operation any number of times:\nSelect an index i and replace nums[i] with nums[i] - 1.\nReturn the minimum number of operations required to make the sum of the array divisible by k.",
+        "examples": [],
         "constraints": [
-            "-2^31 <= x <= 2^31 - 1"
+            "Select an index i and replace nums[i] with nums[i] - 1."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def isPalindrome(self, x: int) -> bool:\n        ",
-            "cpp": "class Solution {\npublic:\n    bool isPalindrome(int x) {\n        \n    }\n};"
+            "python": "class Solution:\n    def minOperations(self, nums: List[int], k: int) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int minOperations(vector<int>& nums, int k) {\n        \n    }\n};"
         }
     },
     {
-        "id": "10",
-        "title": "Regular Expression Matching",
-        "difficulty": "Hard",
-        "tags": [
-            "String",
-            "Dynamic Programming",
-            "Recursion"
-        ],
-        "question": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:\n'.' Matches any single character.\u200b\u200b\u200b\u200b\n'*' Matches zero or more of the preceding element.\nReturn a boolean indicating whether the matching covers the entire input string (not partial).",
-        "examples": [
-            "Input: s = \"aa\", p = \"a\"\nOutput: false\nExplanation: \"a\" does not match the entire string \"aa\".",
-            "Input: s = \"aa\", p = \"a*\"\nOutput: true\nExplanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes \"aa\".",
-            "Input: s = \"ab\", p = \".*\"\nOutput: true\nExplanation: \".*\" means \"zero or more (*) of any character (.)\"."
-        ],
-        "constraints": [
-            "'.' Matches any single character.\u200b\u200b\u200b\u200b",
-            "'*' Matches zero or more of the preceding element."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def isMatch(self, s: str, p: str) -> bool:\n        ",
-            "cpp": "class Solution {\npublic:\n    bool isMatch(string s, string p) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "11",
-        "title": "Container With Most Water",
-        "difficulty": "Medium",
+        "id": "605",
+        "title": "Can Place Flowers",
+        "difficulty": "Easy",
         "tags": [
             "Array",
-            "Two Pointers",
             "Greedy"
         ],
-        "question": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).\nFind two lines that together with the x-axis form a container, such that the container contains the most water.\nReturn the maximum amount of water a container can store.\nNotice that you may not slant the container.",
+        "question": "You have a long flowerbed in which some of the plots are planted, and some are not. However, flowers cannot be planted in adjacent plots.\nGiven an integer array flowerbed containing 0's and 1's, where 0 means empty and 1 means not empty, and an integer n, return true if n new flowers can be planted in the flowerbed without violating the no-adjacent-flowers rule and false otherwise.",
         "examples": [
-            "Input: height = [1,8,6,2,5,4,8,3,7]\nOutput: 49\nExplanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.",
-            "Input: height = [1,1]\nOutput: 1"
+            "Input: flowerbed = [1,0,0,0,1], n = 1\nOutput: true",
+            "Input: flowerbed = [1,0,0,0,1], n = 2\nOutput: false"
         ],
         "constraints": [
-            "n == height.length",
-            "2 <= n <= 10^5",
-            "0 <= height[i] <= 10^4"
+            "1 <= flowerbed.length <= 2 * 10^4",
+            "flowerbed[i] is 0 or 1.",
+            "There are no two adjacent flowers in flowerbed.",
+            "0 <= n <= flowerbed.length"
         ],
         "starter_code": {
-            "python": "class Solution:\n    def maxArea(self, height: List[int]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int maxArea(vector<int>& height) {\n        \n    }\n};"
+            "python": "class Solution:\n    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:\n        ",
+            "cpp": "class Solution {\npublic:\n    bool canPlaceFlowers(vector<int>& flowerbed, int n) {\n        \n    }\n};"
         }
     },
     {
-        "id": "12",
-        "title": "Integer to Roman",
-        "difficulty": "Medium",
-        "tags": [
-            "Hash Table",
-            "Math",
-            "String"
-        ],
-        "question": "Seven different symbols represent Roman numerals with the following values:\nSymbol\nValue\nI\n1\nV\n5\nX\n10\nL\n50\nC\n100\nD\n500\nM\n1000\nRoman numerals are formed by appending the conversions of decimal place values from highest to lowest. Converting a decimal place value into a Roman numeral has the following rules:\nIf the value does not start with 4 or 9, select the symbol of the maximal value that can be subtracted from the input, append that symbol to the result, subtract its value, and convert the remainder to a Roman numeral.\nIf the value starts with 4 or 9 use the subtractive form representing one symbol subtracted from the following symbol, for example, 4 is 1 (I) less than 5 (V): IV and 9 is 1 (I) less than 10 (X): IX. Only the following subtractive forms are used: 4 (IV), 9 (IX), 40 (XL), 90 (XC), 400 (CD) and 900 (CM).\nOnly powers of 10 (I, X, C, M) can be appended consecutively at most 3 times to represent multiples of 10. You cannot append 5 (V), 50 (L), or 500 (D) multiple times. If you need to append a symbol 4 times use the subtractive form.\nGiven an integer, convert it to a Roman numeral.",
-        "examples": [
-            "3000 = MMM as 1000 (M) + 1000 (M) + 1000 (M)\n 700 = DCC as 500 (D) + 100 (C) + 100 (C)\n 40 = XL as 10 (X) less of 50 (L)\n 9 = IX as 1 (I) less of 10 (X)\nNote: 49 is not 1 (I) less of 50 (L) because the conversion is based on decimal places",
-            "50 = L\n 8 = VIII",
-            "1000 = M\n 900 = CM\n 90 = XC\n 4 = IV"
-        ],
-        "constraints": [
-            "If the value does not start with 4 or 9, select the symbol of the maximal value that can be subtracted from the input, append that symbol to the result, subtract its value, and convert the remainder to a Roman numeral.",
-            "If the value starts with 4 or 9 use the subtractive form representing one symbol subtracted from the following symbol, for example, 4 is 1 (I) less than 5 (V): IV and 9 is 1 (I) less than 10 (X): IX. Only the following subtractive forms are used: 4 (IV), 9 (IX), 40 (XL), 90 (XC), 400 (CD) and 900 (CM).",
-            "Only powers of 10 (I, X, C, M) can be appended consecutively at most 3 times to represent multiples of 10. You cannot append 5 (V), 50 (L), or 500 (D) multiple times. If you need to append a symbol 4 times use the subtractive form."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def intToRoman(self, num: int) -> str:\n        ",
-            "cpp": "class Solution {\npublic:\n    string intToRoman(int num) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "13",
-        "title": "Roman to Integer",
+        "id": "2020",
+        "title": "Remove One Element to Make the Array Strictly Increasing",
         "difficulty": "Easy",
         "tags": [
-            "Hash Table",
-            "Math",
-            "String"
+            "Array"
         ],
-        "question": "Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.\nSymbol Value\nI 1\nV 5\nX 10\nL 50\nC 100\nD 500\nM 1000\nFor example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.\nRoman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:\nI can be placed before V (5) and X (10) to make 4 and 9. \nX can be placed before L (50) and C (100) to make 40 and 90. \nC can be placed before D (500) and M (1000) to make 400 and 900.\nGiven a roman numeral, convert it to an integer.",
+        "question": "Given a 0-indexed integer array nums, return true if it can be made strictly increasing after removing exactly one element, or false otherwise. If the array is already strictly increasing, return true.\nThe array nums is strictly increasing if nums[i - 1] < nums[i] for each index (1 <= i < nums.length).",
         "examples": [
-            "Symbol Value\nI 1\nV 5\nX 10\nL 50\nC 100\nD 500\nM 1000",
-            "Input: s = \"III\"\nOutput: 3\nExplanation: III = 3.",
-            "Input: s = \"LVIII\"\nOutput: 58\nExplanation: L = 50, V= 5, III = 3.",
-            "Input: s = \"MCMXCIV\"\nOutput: 1994\nExplanation: M = 1000, CM = 900, XC = 90 and IV = 4."
+            "Input: nums = [1,2,10,5,7]\nOutput: true\nExplanation: By removing 10 at index 2 from nums, it becomes [1,2,5,7].\n[1,2,5,7] is strictly increasing, so return true.",
+            "Input: nums = [2,3,1,2]\nOutput: false\nExplanation:\n[3,1,2] is the result of removing the element at index 0.\n[2,1,2] is the result of removing the element at index 1.\n[2,3,2] is the result of removing the element at index 2.\n[2,3,1] is the result of removing the element at index 3.\nNo resulting array is strictly increasing, so return false.",
+            "Input: nums = [1,1,1]\nOutput: false\nExplanation: The result of removing any element is [1,1].\n[1,1] is not strictly increasing, so return false."
         ],
         "constraints": [
-            "I can be placed before V (5) and X (10) to make 4 and 9.",
-            "X can be placed before L (50) and C (100) to make 40 and 90.",
-            "C can be placed before D (500) and M (1000) to make 400 and 900."
+            "2 <= nums.length <= 1000",
+            "1 <= nums[i] <= 1000"
         ],
         "starter_code": {
-            "python": "class Solution:\n    def romanToInt(self, s: str) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int romanToInt(string s) {\n        \n    }\n};"
+            "python": "class Solution:\n    def canBeIncreasing(self, nums: List[int]) -> bool:\n        ",
+            "cpp": "class Solution {\npublic:\n    bool canBeIncreasing(vector<int>& nums) {\n        \n    }\n};"
         }
     },
     {
-        "id": "14",
-        "title": "Longest Common Prefix",
+        "id": "3379",
+        "title": "Score of a String",
+        "difficulty": "Easy",
+        "tags": [
+            "String"
+        ],
+        "question": "You are given a string s. The score of a string is defined as the sum of the absolute difference between the ASCII values of adjacent characters.\nReturn the score of s.",
+        "examples": [],
+        "constraints": [
+            "2 <= s.length <= 100",
+            "s consists only of lowercase English letters."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def scoreOfString(self, s: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int scoreOfString(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2137",
+        "title": "Final Value of Variable After Performing Operations",
         "difficulty": "Easy",
         "tags": [
             "Array",
             "String",
-            "Trie"
+            "Simulation"
         ],
-        "question": "Write a function to find the longest common prefix string amongst an array of strings.\nIf there is no common prefix, return an empty string \"\".",
+        "question": "There is a programming language with only four operations and one variable X:\n++X and X++ increments the value of the variable X by 1.\n--X and X-- decrements the value of the variable X by 1.\nInitially, the value of X is 0.\nGiven an array of strings operations containing a list of operations, return the final value of X after performing all the operations.",
         "examples": [
-            "Input: strs = [\"flower\",\"flow\",\"flight\"]\nOutput: \"fl\"",
-            "Input: strs = [\"dog\",\"racecar\",\"car\"]\nOutput: \"\"\nExplanation: There is no common prefix among the input strings."
+            "Input: operations = [\"--X\",\"X++\",\"X++\"]\nOutput: 1\nExplanation: The operations are performed as follows:\nInitially, X = 0.\n--X: X is decremented by 1, X = 0 - 1 = -1.\nX++: X is incremented by 1, X = -1 + 1 = 0.\nX++: X is incremented by 1, X = 0 + 1 = 1.",
+            "Input: operations = [\"++X\",\"++X\",\"X++\"]\nOutput: 3\nExplanation: The operations are performed as follows:\nInitially, X = 0.\n++X: X is incremented by 1, X = 0 + 1 = 1.\n++X: X is incremented by 1, X = 1 + 1 = 2.\nX++: X is incremented by 1, X = 2 + 1 = 3.",
+            "Input: operations = [\"X++\",\"++X\",\"--X\",\"X--\"]\nOutput: 0\nExplanation: The operations are performed as follows:\nInitially, X = 0.\nX++: X is incremented by 1, X = 0 + 1 = 1.\n++X: X is incremented by 1, X = 1 + 1 = 2.\n--X: X is decremented by 1, X = 2 - 1 = 1.\nX--: X is decremented by 1, X = 1 - 1 = 0."
         ],
         "constraints": [
-            "1 <= strs.length <= 200",
-            "0 <= strs[i].length <= 200",
-            "strs[i] consists of only lowercase English letters if it is non-empty."
+            "++X and X++ increments the value of the variable X by 1.",
+            "--X and X-- decrements the value of the variable X by 1."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def longestCommonPrefix(self, strs: List[str]) -> str:\n        ",
-            "cpp": "class Solution {\npublic:\n    string longestCommonPrefix(vector<string>& strs) {\n        \n    }\n};"
+            "python": "class Solution:\n    def finalValueAfterOperations(self, operations: List[str]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int finalValueAfterOperations(vector<string>& operations) {\n        \n    }\n};"
         }
     },
     {
-        "id": "15",
-        "title": "3Sum",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Two Pointers",
-            "Sorting"
-        ],
-        "question": "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.\nNotice that the solution set must not contain duplicate triplets.",
-        "examples": [
-            "Input: nums = [-1,0,1,2,-1,-4]\nOutput: [[-1,-1,2],[-1,0,1]]\nExplanation: \nnums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0.\nnums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0.\nnums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0.\nThe distinct triplets are [-1,0,1] and [-1,-1,2].\nNotice that the order of the output and the order of the triplets does not matter.",
-            "Input: nums = [0,1,1]\nOutput: []\nExplanation: The only possible triplet does not sum up to 0.",
-            "Input: nums = [0,0,0]\nOutput: [[0,0,0]]\nExplanation: The only possible triplet sums up to 0."
-        ],
-        "constraints": [
-            "3 <= nums.length <= 3000",
-            "-10^5 <= nums[i] <= 10^5"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def threeSum(self, nums: list[int]) -> list[list[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> threeSum(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "16",
-        "title": "3Sum Closest",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Two Pointers",
-            "Sorting"
-        ],
-        "question": "Given an integer array nums of length n and an integer target, find three integers at distinct indices in nums such that the sum is closest to target.\nReturn the sum of the three integers.\nYou may assume that each input would have exactly one solution.",
-        "examples": [
-            "Input: nums = [-1,2,1,-4], target = 1\nOutput: 2\nExplanation: The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).",
-            "Input: nums = [0,0,0], target = 1\nOutput: 0\nExplanation: The sum that is closest to the target is 0. (0 + 0 + 0 = 0)."
-        ],
-        "constraints": [
-            "3 <= nums.length <= 500",
-            "-1000 <= nums[i] <= 1000",
-            "-10^4 <= target <= 10^4"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def threeSumClosest(self, nums: List[int], target: int) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int threeSumClosest(vector<int>& nums, int target) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "17",
-        "title": "Letter Combinations of a Phone Number",
-        "difficulty": "Medium",
+        "id": "2532",
+        "title": "Remove Letter To Equalize Frequency",
+        "difficulty": "Easy",
         "tags": [
             "Hash Table",
             "String",
-            "Backtracking"
+            "Counting"
         ],
-        "question": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.\nA mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.",
+        "question": "You are given a 0-indexed string word, consisting of lowercase English letters. You need to select one index and remove the letter at that index from word so that the frequency of every letter present in word is equal.\nReturn true if it is possible to remove one letter so that the frequency of all letters in word are equal, and false otherwise.\nNote:\nThe frequency of a letter x is the number of times it occurs in the string.\nYou must remove exactly one letter and cannot choose to do nothing.",
         "examples": [
-            "Input: digits = \"23\"\nOutput: [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
-            "Input: digits = \"2\"\nOutput: [\"a\",\"b\",\"c\"]"
+            "Input: word = \"abcc\"\nOutput: true\nExplanation: Select index 3 and delete it: word becomes \"abc\" and each character has a frequency of 1.",
+            "Input: word = \"aazz\"\nOutput: false\nExplanation: We must delete a character, so either the frequency of \"a\" is 1 and the frequency of \"z\" is 2, or vice versa. It is impossible to make all present letters have equal frequency."
         ],
         "constraints": [
-            "1 <= digits.length <= 4",
-            "digits[i] is a digit in the range ['2', '9']."
+            "The frequency of a letter x is the number of times it occurs in the string.",
+            "You must remove exactly one letter and cannot choose to do nothing."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def letterCombinations(self, digits: str) -> List[str]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<string> letterCombinations(string digits) {\n        \n    }\n};"
+            "python": "class Solution:\n    def equalFrequency(self, word: str) -> bool:\n        ",
+            "cpp": "class Solution {\npublic:\n    bool equalFrequency(string word) {\n        \n    }\n};"
         }
     },
     {
-        "id": "18",
-        "title": "4Sum",
-        "difficulty": "Medium",
+        "id": "3684",
+        "title": "Substring Matching Pattern",
+        "difficulty": "Easy",
         "tags": [
-            "Array",
-            "Two Pointers",
-            "Sorting"
+            "String",
+            "String Matching"
         ],
-        "question": "Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:\n0 <= a, b, c, d < n\na, b, c, and d are distinct.\nnums[a] + nums[b] + nums[c] + nums[d] == target\nYou may return the answer in any order.",
-        "examples": [
-            "Input: nums = [1,0,-1,0,-2,2], target = 0\nOutput: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]",
-            "Input: nums = [2,2,2,2,2], target = 8\nOutput: [[2,2,2,2]]"
-        ],
+        "question": "You are given a string s and a pattern string p, where p contains exactly one '*' character.\nThe '*' in p can be replaced with any sequence of zero or more characters.\nReturn true if p can be made a substring of s, and false otherwise.",
+        "examples": [],
         "constraints": [
-            "0 <= a, b, c, d < n",
-            "a, b, c, and d are distinct.",
-            "nums[a] + nums[b] + nums[c] + nums[d] == target"
+            "1 <= s.length <= 50",
+            "1 <= p.length <= 50",
+            "s contains only lowercase English letters.",
+            "p contains only lowercase English letters and exactly one '*'"
         ],
         "starter_code": {
-            "python": "class Solution:\n    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> fourSum(vector<int>& nums, int target) {\n        \n    }\n};"
+            "python": "class Solution:\n    def hasMatch(self, s: str, p: str) -> bool:\n        ",
+            "cpp": "class Solution {\npublic:\n    bool hasMatch(string s, string p) {\n        \n    }\n};"
         }
     },
     {
-        "id": "19",
-        "title": "Remove Nth Node From End of List",
-        "difficulty": "Medium",
+        "id": "1411",
+        "title": "Convert Binary Number in a Linked List to Integer",
+        "difficulty": "Easy",
+        "tags": [
+            "Linked List",
+            "Math"
+        ],
+        "question": "Given head which is a reference node to a singly-linked list. The value of each node in the linked list is either 0 or 1. The linked list holds the binary representation of a number.\nReturn the decimal value of the number in the linked list.\nThe most significant bit is at the head of the linked list.",
+        "examples": [
+            "Input: head = [1,0,1]\nOutput: 5\nExplanation: (101) in base 2 = (5) in base 10",
+            "Input: head = [0]\nOutput: 0"
+        ],
+        "constraints": [
+            "The Linked List is not empty.",
+            "Number of nodes will not exceed 30.",
+            "Each node's value is either 0 or 1."
+        ],
+        "starter_code": {
+            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def getDecimalValue(self, head: Optional[ListNode]) -> int:\n        ",
+            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    int getDecimalValue(ListNode* head) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "908",
+        "title": "Middle of the Linked List",
+        "difficulty": "Easy",
         "tags": [
             "Linked List",
             "Two Pointers"
         ],
-        "question": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
+        "question": "Given the head of a singly linked list, return the middle node of the linked list.\nIf there are two middle nodes, return the second middle node.",
         "examples": [
-            "Input: head = [1,2,3,4,5], n = 2\nOutput: [1,2,3,5]",
-            "Input: head = [1], n = 1\nOutput: []",
-            "Input: head = [1,2], n = 1\nOutput: [1]"
+            "Input: head = [1,2,3,4,5]\nOutput: [3,4,5]\nExplanation: The middle node of the list is node 3.",
+            "Input: head = [1,2,3,4,5,6]\nOutput: [4,5,6]\nExplanation: Since the list has two middle nodes with values 3 and 4, we return the second one."
         ],
         "constraints": [
-            "The number of nodes in the list is sz.",
-            "1 <= sz <= 30",
-            "0 <= Node.val <= 100",
-            "1 <= n <= sz"
+            "The number of nodes in the list is in the range [1, 100].",
+            "1 <= Node.val <= 100"
         ],
         "starter_code": {
-            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:\n        ",
-            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* removeNthFromEnd(ListNode* head, int n) {\n        \n    }\n};"
+            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
+            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* middleNode(ListNode* head) {\n        \n    }\n};"
         }
     },
     {
-        "id": "20",
-        "title": "Valid Parentheses",
+        "id": "141",
+        "title": "Linked List Cycle",
         "difficulty": "Easy",
         "tags": [
-            "String",
-            "Stack"
+            "Hash Table",
+            "Linked List",
+            "Two Pointers"
         ],
-        "question": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\nAn input string is valid if:\nOpen brackets must be closed by the same type of brackets.\nOpen brackets must be closed in the correct order.\nEvery close bracket has a corresponding open bracket of the same type.",
-        "examples": [],
+        "question": "Given head, the head of a linked list, determine if the linked list has a cycle in it.\nThere is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.\nReturn true if there is a cycle in the linked list. Otherwise, return false.",
+        "examples": [
+            "Input: head = [3,2,0,-4], pos = 1\nOutput: true\nExplanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).",
+            "Input: head = [1,2], pos = 0\nOutput: true\nExplanation: There is a cycle in the linked list, where the tail connects to the 0th node.",
+            "Input: head = [1], pos = -1\nOutput: false\nExplanation: There is no cycle in the linked list."
+        ],
         "constraints": [
-            "1 <= s.length <= 10^4",
-            "s consists of parentheses only '()[]{}'."
+            "The number of the nodes in the list is in the range [0, 10^4].",
+            "-10^5 <= Node.val <= 10^5",
+            "pos is -1 or a valid index in the linked-list."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def isValid(self, s: str) -> bool:\n        ",
-            "cpp": "class Solution {\npublic:\n    bool isValid(string s) {\n        \n    }\n};"
+            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.next = None\n\nclass Solution:\n    def hasCycle(self, head: Optional[ListNode]) -> bool:\n        ",
+            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode(int x) : val(x), next(NULL) {}\n * };\n */\nclass Solution {\npublic:\n    bool hasCycle(ListNode *head) {\n        \n    }\n};"
         }
     },
     {
-        "id": "21",
-        "title": "Merge Two Sorted Lists",
+        "id": "203",
+        "title": "Remove Linked List Elements",
         "difficulty": "Easy",
         "tags": [
             "Linked List",
             "Recursion"
         ],
-        "question": "You are given the heads of two sorted linked lists list1 and list2.\nMerge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\nReturn the head of the merged linked list.",
+        "question": "Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.",
         "examples": [
-            "Input: list1 = [1,2,4], list2 = [1,3,4]\nOutput: [1,1,2,3,4,4]",
-            "Input: list1 = [], list2 = []\nOutput: []",
-            "Input: list1 = [], list2 = [0]\nOutput: [0]"
+            "Input: head = [1,2,6,3,4,5,6], val = 6\nOutput: [1,2,3,4,5]",
+            "Input: head = [], val = 1\nOutput: []",
+            "Input: head = [7,7,7,7], val = 7\nOutput: []"
         ],
         "constraints": [
-            "The number of nodes in both lists is in the range [0, 50].",
-            "-100 <= Node.val <= 100",
-            "Both list1 and list2 are sorted in non-decreasing order."
+            "The number of nodes in the list is in the range [0, 10^4].",
+            "1 <= Node.val <= 50",
+            "0 <= val <= 50"
         ],
         "starter_code": {
-            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:\n        ",
-            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n        \n    }\n};"
+            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:\n        ",
+            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* removeElements(ListNode* head, int val) {\n        \n    }\n};"
         }
     },
     {
-        "id": "22",
-        "title": "Generate Parentheses",
+        "id": "975",
+        "title": "Range Sum of BST",
+        "difficulty": "Easy",
+        "tags": [
+            "Tree",
+            "Depth-First Search",
+            "Binary Search Tree",
+            "Binary Tree"
+        ],
+        "question": "Given the root node of a binary search tree and two integers low and high, return the sum of values of all nodes with a value in the inclusive range [low, high].",
+        "examples": [
+            "Input: root = [10,5,15,3,7,null,18], low = 7, high = 15\nOutput: 32\nExplanation: Nodes 7, 10, and 15 are in the range [7, 15]. 7 + 10 + 15 = 32.",
+            "Input: root = [10,5,15,3,7,13,18,1,null,6], low = 6, high = 10\nOutput: 23\nExplanation: Nodes 6, 7, and 10 are in the range [6, 10]. 6 + 7 + 10 = 23."
+        ],
+        "constraints": [
+            "The number of nodes in the tree is in the range [1, 2 * 10^4].",
+            "1 <= Node.val <= 10^5",
+            "1 <= low <= high <= 10^5",
+            "All Node.val are unique."
+        ],
+        "starter_code": {
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int rangeSumBST(TreeNode* root, int low, int high) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "1498",
+        "title": "Find a Corresponding Node of a Binary Tree in a Clone of That Tree",
+        "difficulty": "Easy",
+        "tags": [
+            "Tree",
+            "Depth-First Search",
+            "Breadth-First Search",
+            "Binary Tree"
+        ],
+        "question": "Given two binary trees original and cloned and given a reference to a node target in the original tree.\nThe cloned tree is a copy of the original tree.\nReturn a reference to the same node in the cloned tree.\nNote that you are not allowed to change any of the two trees or the target node and the answer must be a reference to a node in the cloned tree.",
+        "examples": [
+            "Input: tree = [7,4,3,null,null,6,19], target = 3\nOutput: 3\nExplanation: In all examples the original and cloned trees are shown. The target node is a green node from the original tree. The answer is the yellow node from the cloned tree.",
+            "Input: tree = [7], target = 7\nOutput: 7",
+            "Input: tree = [8,null,6,null,5,null,4,null,3,null,2,null,1], target = 4\nOutput: 4"
+        ],
+        "constraints": [
+            "The number of nodes in the tree is in the range [1, 10^4].",
+            "The values of the nodes of the tree are unique.",
+            "target node is a node from the original tree and is not null."
+        ],
+        "starter_code": {
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.left = None\n#         self.right = None\n\nclass Solution:\n    def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}\n * };\n */\n\nclass Solution {\npublic:\n    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "671",
+        "title": "Second Minimum Node In a Binary Tree",
+        "difficulty": "Easy",
+        "tags": [
+            "Tree",
+            "Depth-First Search",
+            "Binary Tree"
+        ],
+        "question": "Given a non-empty special binary tree consisting of nodes with the non-negative value, where each node in this tree has exactly two or zero sub-node. If the node has two sub-nodes, then this node's value is the smaller value among its two sub-nodes. More formally, the property root.val = min(root.left.val, root.right.val) always holds.\nGiven such a binary tree, you need to output the second minimum value in the set made of all the nodes' value in the whole tree.\nIf no such second minimum value exists, output -1 instead.",
+        "examples": [
+            "Input: root = [2,2,5,null,null,5,7]\nOutput: 5\nExplanation: The smallest value is 2, the second smallest value is 5.",
+            "Input: root = [2,2,2]\nOutput: -1\nExplanation: The smallest value is 2, but there isn't any second smallest value."
+        ],
+        "constraints": [
+            "The number of nodes in the tree is in the range [1, 25].",
+            "1 <= Node.val <= 2^31 - 1",
+            "root.val == min(root.left.val, root.right.val) for each internal node of the tree."
+        ],
+        "starter_code": {
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int findSecondMinimumValue(TreeNode* root) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "572",
+        "title": "Subtree of Another Tree",
+        "difficulty": "Easy",
+        "tags": [
+            "Tree",
+            "Depth-First Search",
+            "String Matching",
+            "Binary Tree",
+            "Hash Function"
+        ],
+        "question": "Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise.\nA subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. The tree tree could also be considered as a subtree of itself.",
+        "examples": [
+            "Input: root = [3,4,5,1,2], subRoot = [4,1,2]\nOutput: true",
+            "Input: root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]\nOutput: false"
+        ],
+        "constraints": [
+            "The number of nodes in the root tree is in the range [1, 2000].",
+            "The number of nodes in the subRoot tree is in the range [1, 1000].",
+            "-10^4 <= root.val <= 10^4",
+            "-10^4 <= subRoot.val <= 10^4"
+        ],
+        "starter_code": {
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    bool isSubtree(TreeNode* root, TreeNode* subRoot) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3555",
+        "title": "Final Array State After K Multiplication Operations I",
+        "difficulty": "Easy",
+        "tags": [
+            "Array",
+            "Math",
+            "Heap (Priority Queue)",
+            "Simulation"
+        ],
+        "question": "You are given an integer array nums, an integer k, and an integer multiplier.\nYou need to perform k operations on nums. In each operation:\nFind the minimum value x in nums. If there are multiple occurrences of the minimum value, select the one that appears first.\nReplace the selected minimum value x with x * multiplier.\nReturn an integer array denoting the final state of nums after performing all k operations.",
+        "examples": [],
+        "constraints": [
+            "Find the minimum value x in nums. If there are multiple occurrences of the minimum value, select the one that appears first.",
+            "Replace the selected minimum value x with x * multiplier."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> getFinalState(vector<int>& nums, int k, int multiplier) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3226",
+        "title": "Minimum Number Game",
+        "difficulty": "Easy",
+        "tags": [
+            "Array",
+            "Sorting",
+            "Heap (Priority Queue)",
+            "Simulation"
+        ],
+        "question": "You are given a 0-indexed integer array nums of even length and there is also an empty array arr. Alice and Bob decided to play a game where in every round Alice and Bob will do one move. The rules of the game are as follows:\nEvery round, first Alice will remove the minimum element from nums, and then Bob does the same.\nNow, first Bob will append the removed element in the array arr, and then Alice does the same.\nThe game continues until nums becomes empty.\nReturn the resulting array arr.",
+        "examples": [
+            "Input: nums = [5,4,2,3]\nOutput: [3,2,5,4]\nExplanation: In round one, first Alice removes 2 and then Bob removes 3. Then in arr firstly Bob appends 3 and then Alice appends 2. So arr = [3,2].\nAt the begining of round two, nums = [5,4]. Now, first Alice removes 4 and then Bob removes 5. Then both append in arr which becomes [3,2,5,4].",
+            "Input: nums = [2,5]\nOutput: [5,2]\nExplanation: In round one, first Alice removes 2 and then Bob removes 5. Then in arr firstly Bob appends and then Alice appends. So arr = [5,2]."
+        ],
+        "constraints": [
+            "Every round, first Alice will remove the minimum element from nums, and then Bob does the same.",
+            "Now, first Bob will append the removed element in the array arr, and then Alice does the same.",
+            "The game continues until nums becomes empty."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def numberGame(self, nums: List[int]) -> List[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> numberGame(vector<int>& nums) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2204",
+        "title": "Find Subsequence of Length K With the Largest Sum",
+        "difficulty": "Easy",
+        "tags": [
+            "Array",
+            "Hash Table",
+            "Sorting",
+            "Heap (Priority Queue)"
+        ],
+        "question": "You are given an integer array nums and an integer k. You want to find a subsequence of nums of length k that has the largest sum.\nReturn any such subsequence as an integer array of length k.\nA subsequence is an array that can be derived from another array by deleting some or no elements without changing the order of the remaining elements.",
+        "examples": [
+            "Input: nums = [2,1,3,3], k = 2\nOutput: [3,3]\nExplanation:\nThe subsequence has the largest sum of 3 + 3 = 6.",
+            "Input: nums = [-1,-2,3,4], k = 3\nOutput: [-1,3,4]\nExplanation: \nThe subsequence has the largest sum of -1 + 3 + 4 = 6.",
+            "Input: nums = [3,4,3,3], k = 2\nOutput: [3,4]\nExplanation:\nThe subsequence has the largest sum of 3 + 4 = 7. \nAnother possible subsequence is [4, 3]."
+        ],
+        "constraints": [
+            "1 <= nums.length <= 1000",
+            "-10^5 <= nums[i] <= 10^5",
+            "1 <= k <= nums.length"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def maxSubsequence(self, nums: List[int], k: int) -> List[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> maxSubsequence(vector<int>& nums, int k) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2412",
+        "title": "Minimum Amount of Time to Fill Cups",
+        "difficulty": "Easy",
+        "tags": [
+            "Array",
+            "Greedy",
+            "Sorting",
+            "Heap (Priority Queue)"
+        ],
+        "question": "You have a water dispenser that can dispense cold, warm, and hot water. Every second, you can either fill up 2 cups with different types of water, or 1 cup of any type of water.\nYou are given a 0-indexed integer array amount of length 3 where amount[0], amount[1], and amount[2] denote the number of cold, warm, and hot water cups you need to fill respectively. Return the minimum number of seconds needed to fill up all the cups.",
+        "examples": [
+            "Input: amount = [1,4,2]\nOutput: 4\nExplanation: One way to fill up the cups is:\nSecond 1: Fill up a cold cup and a warm cup.\nSecond 2: Fill up a warm cup and a hot cup.\nSecond 3: Fill up a warm cup and a hot cup.\nSecond 4: Fill up a warm cup.\nIt can be proven that 4 is the minimum number of seconds needed.",
+            "Input: amount = [5,4,4]\nOutput: 7\nExplanation: One way to fill up the cups is:\nSecond 1: Fill up a cold cup, and a hot cup.\nSecond 2: Fill up a cold cup, and a warm cup.\nSecond 3: Fill up a cold cup, and a warm cup.\nSecond 4: Fill up a warm cup, and a hot cup.\nSecond 5: Fill up a cold cup, and a hot cup.\nSecond 6: Fill up a cold cup, and a warm cup.\nSecond 7: Fill up a hot cup.",
+            "Input: amount = [5,0,0]\nOutput: 5\nExplanation: Every second, we fill up a cold cup."
+        ],
+        "constraints": [
+            "amount.length == 3",
+            "0 <= amount[i] <= 100"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def fillCups(self, amount: List[int]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int fillCups(vector<int>& amount) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "1895",
+        "title": "Minimum Number of Operations to Move All Balls to Each Box",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "String",
+            "Prefix Sum"
+        ],
+        "question": "You have n boxes. You are given a binary string boxes of length n, where boxes[i] is '0' if the ith box is empty, and '1' if it contains one ball.\nIn one operation, you can move one ball from a box to an adjacent box. Box i is adjacent to box j if abs(i - j) == 1. Note that after doing so, there may be more than one ball in some boxes.\nReturn an array answer of size n, where answer[i] is the minimum number of operations needed to move all the balls to the ith box.\nEach answer[i] is calculated considering the initial state of the boxes.",
+        "examples": [
+            "Input: boxes = \"110\"\nOutput: [1,1,3]\nExplanation: The answer for each box is as follows:\n1) First box: you will have to move one ball from the second box to the first box in one operation.\n2) Second box: you will have to move one ball from the first box to the second box in one operation.\n3) Third box: you will have to move one ball from the first box to the third box in two operations, and move one ball from the second box to the third box in one operation.",
+            "Input: boxes = \"001011\"\nOutput: [11,8,5,4,3,4]"
+        ],
+        "constraints": [
+            "n == boxes.length",
+            "1 <= n <= 2000",
+            "boxes[i] is either '0' or '1'."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def minOperations(self, boxes: str) -> List[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> minOperations(string boxes) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2265",
+        "title": "Partition Array According to Given Pivot",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Two Pointers",
+            "Simulation"
+        ],
+        "question": "You are given a 0-indexed integer array nums and an integer pivot. Rearrange nums such that the following conditions are satisfied:\nEvery element less than pivot appears before every element greater than pivot.\nEvery element equal to pivot appears in between the elements less than and greater than pivot.\nThe relative order of the elements less than pivot and the elements greater than pivot is maintained.\n\t\nMore formally, consider every pi, pj where pi is the new position of the ith element and pj is the new position of the jth element. If i < j and both elements are smaller (or larger) than pivot, then pi < pj.\nReturn nums after the rearrangement.",
+        "examples": [
+            "Input: nums = [9,12,5,10,14,3,10], pivot = 10\nOutput: [9,5,3,10,10,12,14]\nExplanation: \nThe elements 9, 5, and 3 are less than the pivot so they are on the left side of the array.\nThe elements 12 and 14 are greater than the pivot so they are on the right side of the array.\nThe relative ordering of the elements less than and greater than pivot is also maintained. [9, 5, 3] and [12, 14] are the respective orderings.",
+            "Input: nums = [-3,4,3,2], pivot = 2\nOutput: [-3,2,4,3]\nExplanation: \nThe element -3 is less than the pivot so it is on the left side of the array.\nThe elements 4 and 3 are greater than the pivot so they are on the right side of the array.\nThe relative ordering of the elements less than and greater than pivot is also maintained. [-3] and [4, 3] are the respective orderings."
+        ],
+        "constraints": [
+            "Every element less than pivot appears before every element greater than pivot.",
+            "Every element equal to pivot appears in between the elements less than and greater than pivot.",
+            "The relative order of the elements less than pivot and the elements greater than pivot is maintained.\n\t\nMore formally, consider every pi, pj where pi is the new position of the i^th element and pj is the new position of the j^th element. If i < j and both elements are smaller (or larger) than pivot, then pi < pj.",
+            "More formally, consider every pi, pj where pi is the new position of the i^^th element and pj is the new position of the j^^th element. If i < j and both elements are smaller (or larger) than pivot, then pi < pj."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def pivotArray(self, nums: List[int], pivot: int) -> List[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> pivotArray(vector<int>& nums, int pivot) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3877",
+        "title": "Two-Letter Card Game",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Hash Table",
+            "String",
+            "Counting",
+            "Enumeration"
+        ],
+        "question": "You are given a deck of cards represented by a string array cards, and each card displays two lowercase letters.\nYou are also given a letter x. You play a game with the following rules:\nStart with 0 points.\nOn each turn, you must find two compatible cards from the deck that both contain the letter x in any position.\nRemove the pair of cards and earn 1 point.\nThe game ends when you can no longer find a pair of compatible cards.\nReturn the maximum number of points you can gain with optimal play.\nTwo cards are compatible if the strings differ in exactly 1 position.",
+        "examples": [],
+        "constraints": [
+            "Start with 0 points.",
+            "On each turn, you must find two compatible cards from the deck that both contain the letter x in any position.",
+            "Remove the pair of cards and earn 1 point.",
+            "The game ends when you can no longer find a pair of compatible cards."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def score(self, cards: List[str], x: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int score(vector<string>& cards, char x) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3915",
+        "title": "Maximum Product of Two Integers With No Common Bits",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Dynamic Programming",
+            "Bit Manipulation"
+        ],
+        "question": "You are given an integer array nums.\nYour task is to find two distinct indices i and j such that the product nums[i] * nums[j] is maximized, and the binary representations of nums[i] and nums[j] do not share any common set bits.\nReturn the maximum possible product of such a pair. If no such pair exists, return 0.",
+        "examples": [],
+        "constraints": [
+            "2 <= nums.length <= 10^5",
+            "1 <= nums[i] <= 10^6"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    long long maxProduct(vector<int>& nums) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "4087",
+        "title": "Maximum Substrings With Distinct Start",
+        "difficulty": "Medium",
+        "tags": [
+            "Hash Table",
+            "String"
+        ],
+        "question": "You are given a string s consisting of lowercase English letters.\nReturn an integer denoting the maximum number of substrings you can split s into such that each substring starts with a distinct character (i.e., no two substrings start with the same character).",
+        "examples": [],
+        "constraints": [
+            "Split \"abab\" into \"a\" and \"bab\".",
+            "Each substring starts with a distinct character i.e 'a' and 'b'. Thus, the answer is 2."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def maxDistinct(self, s: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int maxDistinct(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "1807",
+        "title": "Partitioning Into Minimum Number Of Deci-Binary Numbers",
         "difficulty": "Medium",
         "tags": [
             "String",
-            "Dynamic Programming",
-            "Backtracking"
+            "Greedy"
         ],
-        "question": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+        "question": "A decimal number is called deci-binary if each of its digits is either 0 or 1 without any leading zeros. For example, 101 and 1100 are deci-binary, while 112 and 3001 are not.\nGiven a string n that represents a positive decimal integer, return the minimum number of positive deci-binary numbers needed so that they sum up to n.",
         "examples": [
-            "Input: n = 3\nOutput: [\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]",
-            "Input: n = 1\nOutput: [\"()\"]"
+            "Input: n = \"32\"\nOutput: 3\nExplanation: 10 + 11 + 11 = 32",
+            "Input: n = \"82734\"\nOutput: 8",
+            "Input: n = \"27346209830709182346\"\nOutput: 9"
         ],
         "constraints": [
-            "1 <= n <= 8"
+            "1 <= n.length <= 10^5",
+            "n consists of only digits.",
+            "n does not contain any leading zeros and represents a positive integer."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def generateParenthesis(self, n: int) -> List[str]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<string> generateParenthesis(int n) {\n        \n    }\n};"
+            "python": "class Solution:\n    def minPartitions(self, n: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int minPartitions(string n) {\n        \n    }\n};"
         }
     },
     {
-        "id": "23",
-        "title": "Merge k Sorted Lists",
+        "id": "4220",
+        "title": "Minimum Operations to Sort a String",
+        "difficulty": "Medium",
+        "tags": [
+            "String"
+        ],
+        "question": "You are given a string s consisting of lowercase English letters.\nIn one operation, you can select any substring of s that is not the entire string and sort it in non-descending alphabetical order.\nReturn the minimum number of operations required to make s sorted in non-descending order. If it is not possible, return -1.",
+        "examples": [],
+        "constraints": [
+            "Sort substring \"og\" to \"go\".",
+            "Now, s = \"dgo\", which is sorted in ascending order. Thus, the answer is 1."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def minOperations(self, s: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int minOperations(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "4265",
+        "title": "Longest Balanced Substring After One Swap",
+        "difficulty": "Medium",
+        "tags": [
+            "Hash Table",
+            "String",
+            "Prefix Sum"
+        ],
+        "question": "You are given a binary string s consisting only of characters '0' and '1'.\nA string is balanced if it contains an equal number of '0's and '1's.\nYou can perform at most one swap between any two characters in s. Then, you select a balanced substring from s.\nReturn an integer representing the maximum length of the balanced substring you can select.",
+        "examples": [],
+        "constraints": [
+            "Swap \"100001\". The string becomes \"101000\".",
+            "Select the substring \"101000\", which is balanced because it has two '0's and two '1's."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def longestBalanced(self, s: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int longestBalanced(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2903",
+        "title": "Insert Greatest Common Divisors in Linked List",
+        "difficulty": "Medium",
+        "tags": [
+            "Linked List",
+            "Math",
+            "Number Theory"
+        ],
+        "question": "Given the head of a linked list head, in which each node contains an integer value.\nBetween every pair of adjacent nodes, insert a new node with a value equal to the greatest common divisor of them.\nReturn the linked list after insertion.\nThe greatest common divisor of two numbers is the largest positive integer that evenly divides both numbers.",
+        "examples": [
+            "Input: head = [18,6,10,3]\nOutput: [18,6,6,2,10,1,3]\nExplanation: The 1st diagram denotes the initial linked list and the 2nd diagram denotes the linked list after inserting the new nodes (nodes in blue are the inserted nodes).\n- We insert the greatest common divisor of 18 and 6 = 6 between the 1st and the 2nd nodes.\n- We insert the greatest common divisor of 6 and 10 = 2 between the 2nd and the 3rd nodes.\n- We insert the greatest common divisor of 10 and 3 = 1 between the 3rd and the 4th nodes.\nThere are no more adjacent nodes, so we return the linked list.",
+            "Input: head = [7]\nOutput: [7]\nExplanation: The 1st diagram denotes the initial linked list and the 2nd diagram denotes the linked list after inserting the new nodes.\nThere are no pairs of adjacent nodes, so we return the initial linked list."
+        ],
+        "constraints": [
+            "The number of nodes in the list is in the range [1, 5000].",
+            "1 <= Node.val <= 1000"
+        ],
+        "starter_code": {
+            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def insertGreatestCommonDivisors(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
+            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* insertGreatestCommonDivisors(ListNode* head) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2299",
+        "title": "Merge Nodes in Between Zeros",
+        "difficulty": "Medium",
+        "tags": [
+            "Linked List",
+            "Simulation"
+        ],
+        "question": "You are given the head of a linked list, which contains a series of integers separated by 0's. The beginning and end of the linked list will have Node.val == 0.\nFor every two consecutive 0's, merge all the nodes lying in between them into a single node whose value is the sum of all the merged nodes. The modified list should not contain any 0's.\nReturn the head of the modified linked list.",
+        "examples": [
+            "Input: head = [0,3,1,0,4,5,2,0]\nOutput: [4,11]\nExplanation: \nThe above figure represents the given linked list. The modified list contains\n- The sum of the nodes marked in green: 3 + 1 = 4.\n- The sum of the nodes marked in red: 4 + 5 + 2 = 11.",
+            "Input: head = [0,1,0,3,0,2,2,0]\nOutput: [1,3,4]\nExplanation: \nThe above figure represents the given linked list. The modified list contains\n- The sum of the nodes marked in green: 1 = 1.\n- The sum of the nodes marked in red: 3 = 3.\n- The sum of the nodes marked in yellow: 2 + 2 = 4."
+        ],
+        "constraints": [
+            "The number of nodes in the list is in the range [3, 2 * 10^5].",
+            "0 <= Node.val <= 1000",
+            "There are no two consecutive nodes with Node.val == 0.",
+            "The beginning and end of the linked list have Node.val == 0."
+        ],
+        "starter_code": {
+            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
+            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeNodes(ListNode* head) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2374",
+        "title": "Steps to Make Array Non-decreasing",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Linked List",
+            "Dynamic Programming",
+            "Stack",
+            "Monotonic Stack",
+            "Simulation"
+        ],
+        "question": "You are given a 0-indexed integer array nums. In one step, remove all elements nums[i] where nums[i - 1] > nums[i] for all 0 < i < nums.length.\nReturn the number of steps performed until nums becomes a non-decreasing array.",
+        "examples": [
+            "Input: nums = [5,3,4,4,7,3,6,11,8,5,11]\nOutput: 3\nExplanation: The following are the steps performed:\n- Step 1: [5,3,4,4,7,3,6,11,8,5,11] becomes [5,4,4,7,6,11,11]\n- Step 2: [5,4,4,7,6,11,11] becomes [5,4,7,11,11]\n- Step 3: [5,4,7,11,11] becomes [5,7,11,11]\n[5,7,11,11] is a non-decreasing array. Therefore, we return 3.",
+            "Input: nums = [4,5,7,7,13]\nOutput: 0\nExplanation: nums is already a non-decreasing array. Therefore, we return 0."
+        ],
+        "constraints": [
+            "1 <= nums.length <= 10^5",
+            "1 <= nums[i] <= 10^9"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def totalSteps(self, nums: List[int]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int totalSteps(vector<int>& nums) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "838",
+        "title": "Design Linked List",
+        "difficulty": "Medium",
+        "tags": [
+            "Linked List",
+            "Design"
+        ],
+        "question": "Design your implementation of the linked list. You can choose to use a singly or doubly linked list.\nA node in a singly linked list should have two attributes: val and next. val is the value of the current node, and next is a pointer/reference to the next node.\nIf you want to use the doubly linked list, you will need one more attribute prev to indicate the previous node in the linked list. Assume all nodes in the linked list are 0-indexed.\nImplement the MyLinkedList class:\nMyLinkedList() Initializes the MyLinkedList object.\nint get(int index) Get the value of the indexth node in the linked list. If the index is invalid, return -1.\nvoid addAtHead(int val) Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.\nvoid addAtTail(int val) Append a node of value val as the last element of the linked list.\nvoid addAtIndex(int index, int val) Add a node of value val before the indexth node in the linked list. If index equals the length of the linked list, the node will be appended to the end of the linked list. If index is greater than the length, the node will not be inserted.\nvoid deleteAtIndex(int index) Delete the indexth node in the linked list, if the index is valid.",
+        "examples": [
+            "Input\n[\"MyLinkedList\", \"addAtHead\", \"addAtTail\", \"addAtIndex\", \"get\", \"deleteAtIndex\", \"get\"]\n[[], [1], [3], [1, 2], [1], [1], [1]]\nOutput\n[null, null, null, null, 2, null, 3]\nExplanation\nMyLinkedList myLinkedList = new MyLinkedList();\nmyLinkedList.addAtHead(1);\nmyLinkedList.addAtTail(3);\nmyLinkedList.addAtIndex(1, 2); // linked list becomes 1->2->3\nmyLinkedList.get(1); // return 2\nmyLinkedList.deleteAtIndex(1); // now the linked list is 1->3\nmyLinkedList.get(1); // return 3"
+        ],
+        "constraints": [
+            "MyLinkedList() Initializes the MyLinkedList object.",
+            "int get(int index) Get the value of the index^th node in the linked list. If the index is invalid, return -1.",
+            "void addAtHead(int val) Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.",
+            "void addAtTail(int val) Append a node of value val as the last element of the linked list.",
+            "void addAtIndex(int index, int val) Add a node of value val before the index^th node in the linked list. If index equals the length of the linked list, the node will be appended to the end of the linked list. If index is greater than the length, the node will not be inserted.",
+            "void deleteAtIndex(int index) Delete the index^th node in the linked list, if the index is valid."
+        ],
+        "starter_code": {
+            "python": "class MyLinkedList:\n\n    def __init__(self):\n        \n\n    def get(self, index: int) -> int:\n        \n\n    def addAtHead(self, val: int) -> None:\n        \n\n    def addAtTail(self, val: int) -> None:\n        \n\n    def addAtIndex(self, index: int, val: int) -> None:\n        \n\n    def deleteAtIndex(self, index: int) -> None:\n        \n\n\n# Your MyLinkedList object will be instantiated and called as such:\n# obj = MyLinkedList()\n# param_1 = obj.get(index)\n# obj.addAtHead(val)\n# obj.addAtTail(val)\n# obj.addAtIndex(index,val)\n# obj.deleteAtIndex(index)",
+            "cpp": "class MyLinkedList {\npublic:\n    MyLinkedList() {\n        \n    }\n    \n    int get(int index) {\n        \n    }\n    \n    void addAtHead(int val) {\n        \n    }\n    \n    void addAtTail(int val) {\n        \n    }\n    \n    void addAtIndex(int index, int val) {\n        \n    }\n    \n    void deleteAtIndex(int index) {\n        \n    }\n};\n\n/**\n * Your MyLinkedList object will be instantiated and called as such:\n * MyLinkedList* obj = new MyLinkedList();\n * int param_1 = obj->get(index);\n * obj->addAtHead(val);\n * obj->addAtTail(val);\n * obj->addAtIndex(index,val);\n * obj->deleteAtIndex(index);\n */"
+        }
+    },
+    {
+        "id": "1114",
+        "title": "Binary Search Tree to Greater Sum Tree",
+        "difficulty": "Medium",
+        "tags": [
+            "Tree",
+            "Depth-First Search",
+            "Binary Search Tree",
+            "Binary Tree"
+        ],
+        "question": "Given the root of a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus the sum of all keys greater than the original key in BST.\nAs a reminder, a binary search tree is a tree that satisfies these constraints:\nThe left subtree of a node contains only nodes with keys less than the node's key.\nThe right subtree of a node contains only nodes with keys greater than the node's key.\nBoth the left and right subtrees must also be binary search trees.",
+        "examples": [
+            "Input: root = [4,1,6,0,2,5,7,null,null,null,3,null,null,null,8]\nOutput: [30,36,21,36,35,26,15,null,null,null,33,null,null,null,8]",
+            "Input: root = [0,null,1]\nOutput: [1,null,1]"
+        ],
+        "constraints": [
+            "The left subtree of a node contains only nodes with keys less than the node's key.",
+            "The right subtree of a node contains only nodes with keys greater than the node's key.",
+            "Both the left and right subtrees must also be binary search trees."
+        ],
+        "starter_code": {
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def bstToGst(self, root: Optional[TreeNode]) -> Optional[TreeNode]:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    TreeNode* bstToGst(TreeNode* root) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2347",
+        "title": "Count Nodes Equal to Average of Subtree",
+        "difficulty": "Medium",
+        "tags": [
+            "Tree",
+            "Depth-First Search",
+            "Binary Tree"
+        ],
+        "question": "Given the root of a binary tree, return the number of nodes where the value of the node is equal to the average of the values in its subtree.\nNote:\nThe average of n elements is the sum of the n elements divided by n and rounded down to the nearest integer.\nA subtree of root is a tree consisting of root and all of its descendants.",
+        "examples": [
+            "Input: root = [4,8,5,0,1,null,6]\nOutput: 5\nExplanation: \nFor the node with value 4: The average of its subtree is (4 + 8 + 5 + 0 + 1 + 6) / 6 = 24 / 6 = 4.\nFor the node with value 5: The average of its subtree is (5 + 6) / 2 = 11 / 2 = 5.\nFor the node with value 0: The average of its subtree is 0 / 1 = 0.\nFor the node with value 1: The average of its subtree is 1 / 1 = 1.\nFor the node with value 6: The average of its subtree is 6 / 1 = 6.",
+            "Input: root = [1]\nOutput: 1\nExplanation: For the node with value 1: The average of its subtree is 1 / 1 = 1."
+        ],
+        "constraints": [
+            "The average of n elements is the sum of the n elements divided by n and rounded down to the nearest integer.",
+            "A subtree of root is a tree consisting of root and all of its descendants."
+        ],
+        "starter_code": {
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def averageOfSubtree(self, root: TreeNode) -> int:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int averageOfSubtree(TreeNode* root) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "98",
+        "title": "Validate Binary Search Tree",
+        "difficulty": "Medium",
+        "tags": [
+            "Tree",
+            "Depth-First Search",
+            "Binary Search Tree",
+            "Binary Tree"
+        ],
+        "question": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).\nA valid BST is defined as follows:\nThe left subtree of a node contains only nodes with keys strictly less than the node's key.\nThe right subtree of a node contains only nodes with keys strictly greater than the node's key.\nBoth the left and right subtrees must also be binary search trees.",
+        "examples": [
+            "Input: root = [2,1,3]\nOutput: true",
+            "Input: root = [5,1,4,null,null,3,6]\nOutput: false\nExplanation: The root node's value is 5 but its right child's value is 4."
+        ],
+        "constraints": [
+            "The left subtree of a node contains only nodes with keys strictly less than the node's key.",
+            "The right subtree of a node contains only nodes with keys strictly greater than the node's key.",
+            "Both the left and right subtrees must also be binary search trees."
+        ],
+        "starter_code": {
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def isValidBST(self, root: Optional[TreeNode]) -> bool:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    bool isValidBST(TreeNode* root) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "687",
+        "title": "Longest Univalue Path",
+        "difficulty": "Medium",
+        "tags": [
+            "Tree",
+            "Depth-First Search",
+            "Binary Tree"
+        ],
+        "question": "Given the root of a binary tree, return the length of the longest path, where each node in the path has the same value. This path may or may not pass through the root.\nThe length of the path between two nodes is represented by the number of edges between them.",
+        "examples": [
+            "Input: root = [5,4,5,1,1,null,5]\nOutput: 2\nExplanation: The shown image shows that the longest path of the same value (i.e. 5).",
+            "Input: root = [1,4,5,4,4,null,5]\nOutput: 2\nExplanation: The shown image shows that the longest path of the same value (i.e. 4)."
+        ],
+        "constraints": [
+            "The number of nodes in the tree is in the range [0, 10^4].",
+            "-1000 <= Node.val <= 1000",
+            "The depth of the tree will not exceed 1000."
+        ],
+        "starter_code": {
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def longestUnivaluePath(self, root: Optional[TreeNode]) -> int:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int longestUnivaluePath(TreeNode* root) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "451",
+        "title": "Sort Characters By Frequency",
+        "difficulty": "Medium",
+        "tags": [
+            "Hash Table",
+            "String",
+            "Sorting",
+            "Heap (Priority Queue)",
+            "Bucket Sort",
+            "Counting"
+        ],
+        "question": "Given a string s, sort it in decreasing order based on the frequency of the characters. The frequency of a character is the number of times it appears in the string.\nReturn the sorted string. If there are multiple answers, return any of them.",
+        "examples": [
+            "Input: s = \"tree\"\nOutput: \"eert\"\nExplanation: 'e' appears twice while 'r' and 't' both appear once.\nSo 'e' must appear before both 'r' and 't'. Therefore \"eetr\" is also a valid answer.",
+            "Input: s = \"cccaaa\"\nOutput: \"aaaccc\"\nExplanation: Both 'c' and 'a' appear three times, so both \"cccaaa\" and \"aaaccc\" are valid answers.\nNote that \"cacaca\" is incorrect, as the same characters must be together.",
+            "Input: s = \"Aabb\"\nOutput: \"bbAa\"\nExplanation: \"bbaA\" is also a valid answer, but \"Aabb\" is incorrect.\nNote that 'A' and 'a' are treated as two different characters."
+        ],
+        "constraints": [
+            "1 <= s.length <= 5 * 10^5",
+            "s consists of uppercase and lowercase English letters and digits."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def frequencySort(self, s: str) -> str:\n        ",
+            "cpp": "class Solution {\npublic:\n    string frequencySort(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "1917",
+        "title": "Maximum Average Pass Ratio",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Greedy",
+            "Heap (Priority Queue)"
+        ],
+        "question": "There is a school that has classes of students and each class will be having a final exam. You are given a 2D integer array classes, where classes[i] = [passi, totali]. You know beforehand that in the ith class, there are totali total students, but only passi number of students will pass the exam.\nYou are also given an integer extraStudents. There are another extraStudents brilliant students that are guaranteed to pass the exam of any class they are assigned to. You want to assign each of the extraStudents students to a class in a way that maximizes the average pass ratio across all the classes.\nThe pass ratio of a class is equal to the number of students of the class that will pass the exam divided by the total number of students of the class. The average pass ratio is the sum of pass ratios of all the classes divided by the number of the classes.\nReturn the maximum possible average pass ratio after assigning the extraStudents students. Answers within 10-5 of the actual answer will be accepted.",
+        "examples": [
+            "Input: classes = [[1,2],[3,5],[2,2]], extraStudents = 2\nOutput: 0.78333\nExplanation: You can assign the two extra students to the first class. The average pass ratio will be equal to (3/4 + 3/5 + 2/2) / 3 = 0.78333.",
+            "Input: classes = [[2,4],[3,9],[4,5],[2,10]], extraStudents = 4\nOutput: 0.53485"
+        ],
+        "constraints": [
+            "1 <= classes.length <= 10^5",
+            "classes[i].length == 2",
+            "1 <= passi <= totali <= 10^5",
+            "1 <= extraStudents <= 10^5"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def maxAverageRatio(self, classes: List[List[int]], extraStudents: int) -> float:\n        ",
+            "cpp": "class Solution {\npublic:\n    double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2418",
+        "title": "Minimum Sum of Squared Difference",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Binary Search",
+            "Greedy",
+            "Sorting",
+            "Heap (Priority Queue)"
+        ],
+        "question": "You are given two positive 0-indexed integer arrays nums1 and nums2, both of length n.\nThe sum of squared difference of arrays nums1 and nums2 is defined as the sum of (nums1[i] - nums2[i])2 for each 0 <= i < n.\nYou are also given two positive integers k1 and k2. You can modify any of the elements of nums1 by +1 or -1 at most k1 times. Similarly, you can modify any of the elements of nums2 by +1 or -1 at most k2 times.\nReturn the minimum sum of squared difference after modifying array nums1 at most k1 times and modifying array nums2 at most k2 times.\nNote: You are allowed to modify the array elements to become negative integers.",
+        "examples": [
+            "Input: nums1 = [1,2,3,4], nums2 = [2,10,20,19], k1 = 0, k2 = 0\nOutput: 579\nExplanation: The elements in nums1 and nums2 cannot be modified because k1 = 0 and k2 = 0. \nThe sum of square difference will be: (1 - 2)2 + (2 - 10)2 + (3 - 20)2 + (4 - 19)2 = 579.",
+            "Input: nums1 = [1,4,10,12], nums2 = [5,8,6,9], k1 = 1, k2 = 1\nOutput: 43\nExplanation: One way to obtain the minimum sum of square difference is: \n- Increase nums1[0] once.\n- Increase nums2[2] once.\nThe minimum of the sum of square difference will be: \n(2 - 5)2 + (4 - 8)2 + (10 - 7)2 + (12 - 9)2 = 43.\nNote that, there are other ways to obtain the minimum of the sum of square difference, but there is no way to obtain a sum smaller than 43."
+        ],
+        "constraints": [
+            "n == nums1.length == nums2.length",
+            "1 <= n <= 10^5",
+            "0 <= nums1[i], nums2[i] <= 10^5",
+            "0 <= k1, k2 <= 10^9"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def minSumSquareDiff(self, nums1: List[int], nums2: List[int], k1: int, k2: int) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    long long minSumSquareDiff(vector<int>& nums1, vector<int>& nums2, int k1, int k2) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3354",
+        "title": "Replace Question Marks in String to Minimize Its Value",
+        "difficulty": "Medium",
+        "tags": [
+            "Hash Table",
+            "String",
+            "Greedy",
+            "Sorting",
+            "Heap (Priority Queue)",
+            "Counting"
+        ],
+        "question": "You are given a string s. s[i] is either a lowercase English letter or '?'.\nFor a string t having length m containing only lowercase English letters, we define the function cost(i) for an index i as the number of characters equal to t[i] that appeared before it, i.e. in the range [0, i - 1].\nThe value of t is the sum of cost(i) for all indices i.\nFor example, for the string t = \"aab\":\ncost(0) = 0\ncost(1) = 1\ncost(2) = 0\nHence, the value of \"aab\" is 0 + 1 + 0 = 1.\nYour task is to replace all occurrences of '?' in s with any lowercase English letter so that the value of s is minimized.\nReturn a string denoting the modified string with replaced occurrences of '?'. If there are multiple strings resulting in the minimum value, return the lexicographically smallest one.",
+        "examples": [],
+        "constraints": [
+            "cost(0) = 0",
+            "cost(1) = 1",
+            "cost(2) = 0",
+            "Hence, the value of \"aab\" is 0 + 1 + 0 = 1."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def minimizeStringValue(self, s: str) -> str:\n        ",
+            "cpp": "class Solution {\npublic:\n    string minimizeStringValue(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "1022",
+        "title": "Unique Paths III",
         "difficulty": "Hard",
         "tags": [
-            "Linked List",
-            "Divide and Conquer",
-            "Heap (Priority Queue)",
-            "Merge Sort"
+            "Array",
+            "Backtracking",
+            "Bit Manipulation",
+            "Matrix"
         ],
-        "question": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.\nMerge all the linked-lists into one sorted linked-list and return it.",
+        "question": "You are given an m x n integer array grid where grid[i][j] could be:\n1 representing the starting square. There is exactly one starting square.\n2 representing the ending square. There is exactly one ending square.\n0 representing empty squares we can walk over.\n-1 representing obstacles that we cannot walk over.\nReturn the number of 4-directional walks from the starting square to the ending square, that walk over every non-obstacle square exactly once.",
         "examples": [
-            "Input: lists = [[1,4,5],[1,3,4],[2,6]]\nOutput: [1,1,2,3,4,4,5,6]\nExplanation: The linked-lists are:\n[\n 1->4->5,\n 1->3->4,\n 2->6\n]\nmerging them into one sorted linked list:\n1->1->2->3->4->4->5->6",
-            "Input: lists = []\nOutput: []",
-            "Input: lists = [[]]\nOutput: []"
+            "Input: grid = [[1,0,0,0],[0,0,0,0],[0,0,2,-1]]\nOutput: 2\nExplanation: We have the following two paths: \n1. (0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2)\n2. (0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2)",
+            "Input: grid = [[1,0,0,0],[0,0,0,0],[0,0,0,2]]\nOutput: 4\nExplanation: We have the following four paths: \n1. (0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2),(2,3)\n2. (0,0),(0,1),(1,1),(1,0),(2,0),(2,1),(2,2),(1,2),(0,2),(0,3),(1,3),(2,3)\n3. (0,0),(1,0),(2,0),(2,1),(2,2),(1,2),(1,1),(0,1),(0,2),(0,3),(1,3),(2,3)\n4. (0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2),(2,3)",
+            "Input: grid = [[0,1],[2,0]]\nOutput: 0\nExplanation: There is no path that walks over every empty square exactly once.\nNote that the starting and ending square can be anywhere in the grid."
         ],
         "constraints": [
-            "k == lists.length",
-            "0 <= k <= 10^4",
-            "0 <= lists[i].length <= 500",
-            "-10^4 <= lists[i][j] <= 10^4",
-            "lists[i] is sorted in ascending order.",
-            "The sum of lists[i].length will not exceed 10^4."
+            "1 representing the starting square. There is exactly one starting square.",
+            "2 representing the ending square. There is exactly one ending square.",
+            "0 representing empty squares we can walk over.",
+            "-1 representing obstacles that we cannot walk over."
         ],
         "starter_code": {
-            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:\n        ",
-            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeKLists(vector<ListNode*>& lists) {\n        \n    }\n};"
+            "python": "class Solution:\n    def uniquePathsIII(self, grid: List[List[int]]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int uniquePathsIII(vector<vector<int>>& grid) {\n        \n    }\n};"
         }
     },
     {
-        "id": "24",
-        "title": "Swap Nodes in Pairs",
-        "difficulty": "Medium",
+        "id": "1381",
+        "title": "Maximum Score Words Formed by Letters",
+        "difficulty": "Hard",
         "tags": [
-            "Linked List",
-            "Recursion"
+            "Array",
+            "Hash Table",
+            "String",
+            "Dynamic Programming",
+            "Backtracking",
+            "Bit Manipulation",
+            "Counting",
+            "Bitmask"
         ],
-        "question": "Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)",
-        "examples": [],
+        "question": "Given a list of words, list of single letters (might be repeating) and score of every character.\nReturn the maximum score of any valid set of words formed by using the given letters (words[i] cannot be used two or more times).\nIt is not necessary to use all characters in letters and each letter can only be used once. Score of letters 'a', 'b', 'c', ... ,'z' is given by score[0], score[1], ... , score[25] respectively.",
+        "examples": [
+            "Input: words = [\"dog\",\"cat\",\"dad\",\"good\"], letters = [\"a\",\"a\",\"c\",\"d\",\"d\",\"d\",\"g\",\"o\",\"o\"], score = [1,0,9,5,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0]\nOutput: 23\nExplanation:\nScore a=1, c=9, d=5, g=3, o=2\nGiven letters, we can form the words \"dad\" (5+1+5) and \"good\" (3+2+2+5) with a score of 23.\nWords \"dad\" and \"dog\" only get a score of 21.",
+            "Input: words = [\"xxxz\",\"ax\",\"bx\",\"cx\"], letters = [\"z\",\"a\",\"b\",\"c\",\"x\",\"x\",\"x\"], score = [4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,10]\nOutput: 27\nExplanation:\nScore a=4, b=4, c=4, x=5, z=10\nGiven letters, we can form the words \"ax\" (4+5), \"bx\" (4+5) and \"cx\" (4+5) with a score of 27.\nWord \"xxxz\" only get a score of 25.",
+            "Input: words = [\"leetcode\"], letters = [\"l\",\"e\",\"t\",\"c\",\"o\",\"d\"], score = [0,0,1,1,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0]\nOutput: 0\nExplanation:\nLetter \"e\" can only be used once."
+        ],
         "constraints": [
-            "The number of nodes in the list is in the range [0, 100].",
-            "0 <= Node.val <= 100"
+            "1 <= words.length <= 14",
+            "1 <= words[i].length <= 15",
+            "1 <= letters.length <= 100",
+            "letters[i].length == 1",
+            "score.length == 26",
+            "0 <= score[i] <= 10",
+            "words[i], letters[i] contains only lower case English letters."
         ],
         "starter_code": {
-            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
-            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* swapPairs(ListNode* head) {\n        \n    }\n};"
+            "python": "class Solution:\n    def maxScoreWords(self, words: List[str], letters: List[str], score: List[int]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int maxScoreWords(vector<string>& words, vector<char>& letters, vector<int>& score) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3777",
+        "title": "Maximum Product of Subsequences With an Alternating Sum Equal to K",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Hash Table",
+            "Dynamic Programming"
+        ],
+        "question": "You are given an integer array nums and two integers, k and limit. Your task is to find a non-empty subsequence of nums that:\nHas an alternating sum equal to k.\nMaximizes the product of all its numbers without the product exceeding limit.\nReturn the product of the numbers in such a subsequence. If no subsequence satisfies the requirements, return -1.\nThe alternating sum of a 0-indexed array is defined as the sum of the elements at even indices minus the sum of the elements at odd indices.",
+        "examples": [],
+        "constraints": [
+            "Has an alternating sum equal to k.",
+            "Maximizes the product of all its numbers without the product exceeding limit."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def maxProduct(self, nums: List[int], k: int, limit: int) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int maxProduct(vector<int>& nums, int k, int limit) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3556",
+        "title": "Final Array State After K Multiplication Operations II",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Heap (Priority Queue)",
+            "Simulation"
+        ],
+        "question": "You are given an integer array nums, an integer k, and an integer multiplier.\nYou need to perform k operations on nums. In each operation:\nFind the minimum value x in nums. If there are multiple occurrences of the minimum value, select the one that appears first.\nReplace the selected minimum value x with x * multiplier.\nAfter the k operations, apply modulo 109 + 7 to every value in nums.\nReturn an integer array denoting the final state of nums after performing all k operations and then applying the modulo.",
+        "examples": [],
+        "constraints": [
+            "Find the minimum value x in nums. If there are multiple occurrences of the minimum value, select the one that appears first.",
+            "Replace the selected minimum value x with x * multiplier."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> getFinalState(vector<int>& nums, int k, int multiplier) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "1093",
+        "title": "Recover a Tree From Preorder Traversal",
+        "difficulty": "Hard",
+        "tags": [
+            "String",
+            "Tree",
+            "Depth-First Search",
+            "Binary Tree"
+        ],
+        "question": "We run a preorder depth-first search (DFS) on the root of a binary tree.\nAt each node in this traversal, we output D dashes (where D is the depth of this node), then we output the value of this node. If the depth of a node is D, the depth of its immediate child is D + 1. The depth of the root node is 0.\nIf a node has only one child, that child is guaranteed to be the left child.\nGiven the output traversal of this traversal, recover the tree and return its root.",
+        "examples": [
+            "Input: traversal = \"1-2--3--4-5--6--7\"\nOutput: [1,2,5,3,4,6,7]",
+            "Input: traversal = \"1-2--3---4-5--6---7\"\nOutput: [1,2,5,3,null,6,null,4,null,7]",
+            "Input: traversal = \"1-401--349---90--88\"\nOutput: [1,401,null,349,88,90]"
+        ],
+        "constraints": [
+            "The number of nodes in the original tree is in the range [1, 1000].",
+            "1 <= Node.val <= 10^9"
+        ],
+        "starter_code": {
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def recoverFromPreorder(self, traversal: str) -> Optional[TreeNode]:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    TreeNode* recoverFromPreorder(string traversal) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2079",
+        "title": "Delete Duplicate Folders in System",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Hash Table",
+            "String",
+            "Trie",
+            "Hash Function"
+        ],
+        "question": "Due to a bug, there are many duplicate folders in a file system. You are given a 2D array paths, where paths[i] is an array representing an absolute path to the ith folder in the file system.\nFor example, [\"one\", \"two\", \"three\"] represents the path \"/one/two/three\".\nTwo folders (not necessarily on the same level) are identical if they contain the same non-empty set of identical subfolders and underlying subfolder structure. The folders do not need to be at the root level to be identical. If two or more folders are identical, then mark the folders as well as all their subfolders.\nFor example, folders \"/a\" and \"/b\" in the file structure below are identical. They (as well as their subfolders) should all be marked:\n\t\n/a\n/a/x\n/a/x/y\n/a/z\n/b\n/b/x\n/b/x/y\n/b/z\nHowever, if the file structure also included the path \"/b/w\", then the folders \"/a\" and \"/b\" would not be identical. Note that \"/a/x\" and \"/b/x\" would still be considered identical even with the added folder.\nOnce all the identical folders and their subfolders have been marked, the file system will delete all of them. The file system only runs the deletion once, so any folders that become identical after the initial deletion are not deleted.\nReturn the 2D array ans containing the paths of the remaining folders after deleting all the marked folders. The paths may be returned in any order.",
+        "examples": [
+            "Input: paths = [[\"a\"],[\"c\"],[\"d\"],[\"a\",\"b\"],[\"c\",\"b\"],[\"d\",\"a\"]]\nOutput: [[\"d\"],[\"d\",\"a\"]]\nExplanation: The file structure is as shown.\nFolders \"/a\" and \"/c\" (and their subfolders) are marked for deletion because they both contain an empty\nfolder named \"b\".",
+            "Input: paths = [[\"a\"],[\"c\"],[\"a\",\"b\"],[\"c\",\"b\"],[\"a\",\"b\",\"x\"],[\"a\",\"b\",\"x\",\"y\"],[\"w\"],[\"w\",\"y\"]]\nOutput: [[\"c\"],[\"c\",\"b\"],[\"a\"],[\"a\",\"b\"]]\nExplanation: The file structure is as shown. \nFolders \"/a/b/x\" and \"/w\" (and their subfolders) are marked for deletion because they both contain an empty folder named \"y\".\nNote that folders \"/a\" and \"/c\" are identical after the deletion, but they are not deleted because they were not marked beforehand.",
+            "Input: paths = [[\"a\",\"b\"],[\"c\",\"d\"],[\"c\"],[\"a\"]]\nOutput: [[\"c\"],[\"c\",\"d\"],[\"a\"],[\"a\",\"b\"]]\nExplanation: All folders are unique in the file system.\nNote that the returned array can be in a different order as the order does not matter."
+        ],
+        "constraints": [
+            "For example, [\"one\", \"two\", \"three\"] represents the path \"/one/two/three\"."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def deleteDuplicateFolder(self, paths: List[List[str]]) -> List[List[str]]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<vector<string>> deleteDuplicateFolder(vector<vector<string>>& paths) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3774",
+        "title": "Check If Digits Are Equal in String After Operations II",
+        "difficulty": "Hard",
+        "tags": [
+            "Math",
+            "String",
+            "Combinatorics",
+            "Number Theory"
+        ],
+        "question": "You are given a string s consisting of digits. Perform the following operation repeatedly until the string has exactly two digits:\nFor each pair of consecutive digits in s, starting from the first digit, calculate a new digit as the sum of the two digits modulo 10.\nReplace s with the sequence of newly calculated digits, maintaining the order in which they are computed.\nReturn true if the final two digits in s are the same; otherwise, return false.",
+        "examples": [],
+        "constraints": [
+            "For each pair of consecutive digits in s, starting from the first digit, calculate a new digit as the sum of the two digits modulo 10.",
+            "Replace s with the sequence of newly calculated digits, maintaining the order in which they are computed."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def hasSameDigits(self, s: str) -> bool:\n        ",
+            "cpp": "class Solution {\npublic:\n    bool hasSameDigits(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3813",
+        "title": "Smallest Palindromic Rearrangement II",
+        "difficulty": "Hard",
+        "tags": [
+            "Hash Table",
+            "Math",
+            "String",
+            "Combinatorics",
+            "Counting"
+        ],
+        "question": "You are given a palindromic string s and an integer k.\nReturn the k-th lexicographically smallest palindromic permutation of s. If there are fewer than k distinct palindromic permutations, return an empty string.\nNote: Different rearrangements that yield the same palindromic string are considered identical and are counted once.",
+        "examples": [],
+        "constraints": [
+            "The two distinct palindromic rearrangements of \"abba\" are \"abba\" and \"baab\".",
+            "Lexicographically, \"abba\" comes before \"baab\". Since k = 2, the output is \"baab\"."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def smallestPalindrome(self, s: str, k: int) -> str:\n        ",
+            "cpp": "class Solution {\npublic:\n    string smallestPalindrome(string s, int k) {\n        \n    }\n};"
         }
     },
     {
@@ -593,797 +1154,277 @@
         }
     },
     {
-        "id": "26",
-        "title": "Remove Duplicates from Sorted Array",
-        "difficulty": "Easy",
-        "tags": [
-            "Array",
-            "Two Pointers"
-        ],
-        "question": "Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.\nConsider the number of unique elements in nums to be k\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b. After removing duplicates, return the number of unique elements k.\nThe first k elements of nums should contain the unique numbers in sorted order. The remaining elements beyond index k - 1 can be ignored.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint[] expectedNums = [...]; // The expected answer with correct length\nint k = removeDuplicates(nums); // Calls your implementation\nassert k == expectedNums.length;\nfor (int i = 0; i < k; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted.",
-        "examples": [
-            "int[] nums = [...]; // Input array\nint[] expectedNums = [...]; // The expected answer with correct length\nint k = removeDuplicates(nums); // Calls your implementation\nassert k == expectedNums.length;\nfor (int i = 0; i < k; i++) {\n assert nums[i] == expectedNums[i];\n}",
-            "Input: nums = [1,1,2]\nOutput: 2, nums = [1,2,_]\nExplanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.\nIt does not matter what you leave beyond the returned k (hence they are underscores).",
-            "Input: nums = [0,0,1,1,1,2,2,3,3,4]\nOutput: 5, nums = [0,1,2,3,4,_,_,_,_,_]\nExplanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.\nIt does not matter what you leave beyond the returned k (hence they are underscores)."
-        ],
-        "constraints": [
-            "1 <= nums.length <= 3 * 10^4",
-            "-100 <= nums[i] <= 100",
-            "nums is sorted in non-decreasing order."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def removeDuplicates(self, nums: List[int]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int removeDuplicates(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "27",
-        "title": "Remove Element",
-        "difficulty": "Easy",
-        "tags": [
-            "Array",
-            "Two Pointers"
-        ],
-        "question": "Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.\nConsider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:\nChange the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.\nReturn k.\nCustom Judge:\nThe judge will test your solution with the following code:\nint[] nums = [...]; // Input array\nint val = ...; // Value to remove\nint[] expectedNums = [...]; // The expected answer with correct length.\n // It is sorted with no values equaling val.\nint k = removeElement(nums, val); // Calls your implementation\nassert k == expectedNums.length;\nsort(nums, 0, k); // Sort the first k elements of nums\nfor (int i = 0; i < actualLength; i++) {\n assert nums[i] == expectedNums[i];\n}\nIf all assertions pass, then your solution will be accepted.",
-        "examples": [
-            "int[] nums = [...]; // Input array\nint val = ...; // Value to remove\nint[] expectedNums = [...]; // The expected answer with correct length.\n // It is sorted with no values equaling val.\nint k = removeElement(nums, val); // Calls your implementation\nassert k == expectedNums.length;\nsort(nums, 0, k); // Sort the first k elements of nums\nfor (int i = 0; i < actualLength; i++) {\n assert nums[i] == expectedNums[i];\n}",
-            "Input: nums = [3,2,2,3], val = 3\nOutput: 2, nums = [2,2,_,_]\nExplanation: Your function should return k = 2, with the first two elements of nums being 2.\nIt does not matter what you leave beyond the returned k (hence they are underscores).",
-            "Input: nums = [0,1,2,2,3,0,4,2], val = 2\nOutput: 5, nums = [0,1,4,0,3,_,_,_]\nExplanation: Your function should return k = 5, with the first five elements of nums containing 0, 0, 1, 3, and 4.\nNote that the five elements can be returned in any order.\nIt does not matter what you leave beyond the returned k (hence they are underscores)."
-        ],
-        "constraints": [
-            "Change the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.",
-            "Return k."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def removeElement(self, nums: List[int], val: int) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int removeElement(vector<int>& nums, int val) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "28",
-        "title": "Find the Index of the First Occurrence in a String",
-        "difficulty": "Easy",
-        "tags": [
-            "Two Pointers",
-            "String",
-            "String Matching"
-        ],
-        "question": "Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.",
-        "examples": [
-            "Input: haystack = \"sadbutsad\", needle = \"sad\"\nOutput: 0\nExplanation: \"sad\" occurs at index 0 and 6.\nThe first occurrence is at index 0, so we return 0.",
-            "Input: haystack = \"leetcode\", needle = \"leeto\"\nOutput: -1\nExplanation: \"leeto\" did not occur in \"leetcode\", so we return -1."
-        ],
-        "constraints": [
-            "1 <= haystack.length, needle.length <= 10^4",
-            "haystack and needle consist of only lowercase English characters."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def strStr(self, haystack: str, needle: str) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int strStr(string haystack, string needle) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "29",
-        "title": "Divide Two Integers",
-        "difficulty": "Medium",
-        "tags": [
-            "Math",
-            "Bit Manipulation"
-        ],
-        "question": "Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.\nThe integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.\nReturn the quotient after dividing dividend by divisor.\nNote: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [\u2212231, 231 \u2212 1]. For this problem, if the quotient is strictly greater than 231 - 1, then return 231 - 1, and if the quotient is strictly less than -231, then return -231.",
-        "examples": [
-            "Input: dividend = 10, divisor = 3\nOutput: 3\nExplanation: 10/3 = 3.33333.. which is truncated to 3.",
-            "Input: dividend = 7, divisor = -3\nOutput: -2\nExplanation: 7/-3 = -2.33333.. which is truncated to -2."
-        ],
-        "constraints": [
-            "-2^31 <= dividend, divisor <= 2^31 - 1",
-            "divisor != 0"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def divide(self, dividend: int, divisor: int) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int divide(int dividend, int divisor) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "30",
-        "title": "Substring with Concatenation of All Words",
+        "id": "1337",
+        "title": "Design Skiplist",
         "difficulty": "Hard",
         "tags": [
-            "Hash Table",
-            "String",
-            "Sliding Window"
+            "Linked List",
+            "Design"
         ],
-        "question": "You are given a string s and an array of strings words. All the strings of words are of the same length.\nA concatenated string is a string that exactly contains all the strings of any permutation of words concatenated.\nFor example, if words = [\"ab\",\"cd\",\"ef\"], then \"abcdef\", \"abefcd\", \"cdabef\", \"cdefab\", \"efabcd\", and \"efcdab\" are all concatenated strings. \"acdbef\" is not a concatenated string because it is not the concatenation of any permutation of words.\nReturn an array of the starting indices of all the concatenated substrings in s. You can return the answer in any order.",
+        "question": "Design a Skiplist without using any built-in libraries.\nA skiplist is a data structure that takes O(log(n)) time to add, erase and search. Comparing with treap and red-black tree which has the same function and performance, the code length of Skiplist can be comparatively short and the idea behind Skiplists is just simple linked lists.\nFor example, we have a Skiplist containing [30,40,50,60,70,90] and we want to add 80 and 45 into it. The Skiplist works this way:\nArtyom Kalinin [CC BY-SA 3.0], via Wikimedia Commons\nYou can see there are many layers in the Skiplist. Each layer is a sorted linked list. With the help of the top layers, add, erase and search can be faster than O(n). It can be proven that the average time complexity for each operation is O(log(n)) and space complexity is O(n).\nSee more about Skiplist: https://en.wikipedia.org/wiki/Skip_list\nImplement the Skiplist class:\nSkiplist() Initializes the object of the skiplist.\nbool search(int target) Returns true if the integer target exists in the Skiplist or false otherwise.\nvoid add(int num) Inserts the value num into the SkipList.\nbool erase(int num) Removes the value num from the Skiplist and returns true. If num does not exist in the Skiplist, do nothing and return false. If there exist multiple num values, removing any one of them is fine.\nNote that duplicates may exist in the Skiplist, your code needs to handle this situation.",
+        "examples": [
+            "Input\n[\"Skiplist\", \"add\", \"add\", \"add\", \"search\", \"add\", \"search\", \"erase\", \"erase\", \"search\"]\n[[], [1], [2], [3], [0], [4], [1], [0], [1], [1]]\nOutput\n[null, null, null, null, false, null, true, false, true, false]\nExplanation\nSkiplist skiplist = new Skiplist();\nskiplist.add(1);\nskiplist.add(2);\nskiplist.add(3);\nskiplist.search(0); // return False\nskiplist.add(4);\nskiplist.search(1); // return True\nskiplist.erase(0); // return False, 0 is not in skiplist.\nskiplist.erase(1); // return True\nskiplist.search(1); // return False, 1 has already been erased."
+        ],
+        "constraints": [
+            "Skiplist() Initializes the object of the skiplist.",
+            "bool search(int target) Returns true if the integer target exists in the Skiplist or false otherwise.",
+            "void add(int num) Inserts the value num into the SkipList.",
+            "bool erase(int num) Removes the value num from the Skiplist and returns true. If num does not exist in the Skiplist, do nothing and return false. If there exist multiple num values, removing any one of them is fine."
+        ],
+        "starter_code": {
+            "python": "class Skiplist:\n\n    def __init__(self):\n        \n\n    def search(self, target: int) -> bool:\n        \n\n    def add(self, num: int) -> None:\n        \n\n    def erase(self, num: int) -> bool:\n        \n\n\n# Your Skiplist object will be instantiated and called as such:\n# obj = Skiplist()\n# param_1 = obj.search(target)\n# obj.add(num)\n# param_3 = obj.erase(num)",
+            "cpp": "class Skiplist {\npublic:\n    Skiplist() {\n        \n    }\n    \n    bool search(int target) {\n        \n    }\n    \n    void add(int num) {\n        \n    }\n    \n    bool erase(int num) {\n        \n    }\n};\n\n/**\n * Your Skiplist object will be instantiated and called as such:\n * Skiplist* obj = new Skiplist();\n * bool param_1 = obj->search(target);\n * obj->add(num);\n * bool param_3 = obj->erase(num);\n */"
+        }
+    },
+    {
+        "id": "3772",
+        "title": "Minimum Pair Removal to Sort Array II",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Hash Table",
+            "Linked List",
+            "Heap (Priority Queue)",
+            "Simulation",
+            "Doubly-Linked List",
+            "Ordered Set"
+        ],
+        "question": "Given an array nums, you can perform the following operation any number of times:\nSelect the adjacent pair with the minimum sum in nums. If multiple such pairs exist, choose the leftmost one.\nReplace the pair with their sum.\nReturn the minimum number of operations needed to make the array non-decreasing.\nAn array is said to be non-decreasing if each element is greater than or equal to its previous element (if it exists).",
         "examples": [],
         "constraints": [
-            "For example, if words = [\"ab\",\"cd\",\"ef\"], then \"abcdef\", \"abefcd\", \"cdabef\", \"cdefab\", \"efabcd\", and \"efcdab\" are all concatenated strings. \"acdbef\" is not a concatenated string because it is not the concatenation of any permutation of words."
+            "Select the adjacent pair with the minimum sum in nums. If multiple such pairs exist, choose the leftmost one.",
+            "Replace the pair with their sum."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def findSubstring(self, s: str, words: List[str]) -> List[int]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<int> findSubstring(string s, vector<string>& words) {\n        \n    }\n};"
+            "python": "class Solution:\n    def minimumPairRemoval(self, nums: List[int]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int minimumPairRemoval(vector<int>& nums) {\n        \n    }\n};"
         }
     },
     {
-        "id": "31",
-        "title": "Next Permutation",
-        "difficulty": "Medium",
+        "id": "432",
+        "title": "All O`one Data Structure",
+        "difficulty": "Hard",
         "tags": [
-            "Array",
-            "Two Pointers"
+            "Hash Table",
+            "Linked List",
+            "Design",
+            "Doubly-Linked List"
         ],
-        "question": "A permutation of an array of integers is an arrangement of its members into a sequence or linear order.\nFor example, for arr = [1,2,3], the following are all the permutations of arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].\nThe next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).\nFor example, the next permutation of arr = [1,2,3] is [1,3,2].\nSimilarly, the next permutation of arr = [2,3,1] is [3,1,2].\nWhile the next permutation of arr = [3,2,1] is [1,2,3] because [3,2,1] does not have a lexicographical larger rearrangement.\nGiven an array of integers nums, find the next permutation of nums.\nThe replacement must be in place and use only constant extra memory.",
+        "question": "Design a data structure to store the strings' count with the ability to return the strings with minimum and maximum counts.\nImplement the AllOne class:\nAllOne() Initializes the object of the data structure.\ninc(String key) Increments the count of the string key by 1. If key does not exist in the data structure, insert it with count 1.\ndec(String key) Decrements the count of the string key by 1. If the count of key is 0 after the decrement, remove it from the data structure. It is guaranteed that key exists in the data structure before the decrement.\ngetMaxKey() Returns one of the keys with the maximal count. If no element exists, return an empty string \"\".\ngetMinKey() Returns one of the keys with the minimum count. If no element exists, return an empty string \"\".\nNote that each function must run in O(1) average time complexity.",
         "examples": [
-            "Input: nums = [1,2,3]\nOutput: [1,3,2]",
-            "Input: nums = [3,2,1]\nOutput: [1,2,3]",
-            "Input: nums = [1,1,5]\nOutput: [1,5,1]"
+            "Input\n[\"AllOne\", \"inc\", \"inc\", \"getMaxKey\", \"getMinKey\", \"inc\", \"getMaxKey\", \"getMinKey\"]\n[[], [\"hello\"], [\"hello\"], [], [], [\"leet\"], [], []]\nOutput\n[null, null, null, \"hello\", \"hello\", null, \"hello\", \"leet\"]\nExplanation\nAllOne allOne = new AllOne();\nallOne.inc(\"hello\");\nallOne.inc(\"hello\");\nallOne.getMaxKey(); // return \"hello\"\nallOne.getMinKey(); // return \"hello\"\nallOne.inc(\"leet\");\nallOne.getMaxKey(); // return \"hello\"\nallOne.getMinKey(); // return \"leet\""
         ],
         "constraints": [
-            "For example, for arr = [1,2,3], the following are all the permutations of arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1]."
+            "AllOne() Initializes the object of the data structure.",
+            "inc(String key) Increments the count of the string key by 1. If key does not exist in the data structure, insert it with count 1.",
+            "dec(String key) Decrements the count of the string key by 1. If the count of key is 0 after the decrement, remove it from the data structure. It is guaranteed that key exists in the data structure before the decrement.",
+            "getMaxKey() Returns one of the keys with the maximal count. If no element exists, return an empty string \"\".",
+            "getMinKey() Returns one of the keys with the minimum count. If no element exists, return an empty string \"\"."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def nextPermutation(self, nums: List[int]) -> None:\n        \"\"\"\n        Do not return anything, modify nums in-place instead.\n        \"\"\"\n        ",
-            "cpp": "class Solution {\npublic:\n    void nextPermutation(vector<int>& nums) {\n        \n    }\n};"
+            "python": "class AllOne:\n\n    def __init__(self):\n        \n\n    def inc(self, key: str) -> None:\n        \n\n    def dec(self, key: str) -> None:\n        \n\n    def getMaxKey(self) -> str:\n        \n\n    def getMinKey(self) -> str:\n        \n\n\n# Your AllOne object will be instantiated and called as such:\n# obj = AllOne()\n# obj.inc(key)\n# obj.dec(key)\n# param_3 = obj.getMaxKey()\n# param_4 = obj.getMinKey()",
+            "cpp": "class AllOne {\npublic:\n    AllOne() {\n        \n    }\n    \n    void inc(string key) {\n        \n    }\n    \n    void dec(string key) {\n        \n    }\n    \n    string getMaxKey() {\n        \n    }\n    \n    string getMinKey() {\n        \n    }\n};\n\n/**\n * Your AllOne object will be instantiated and called as such:\n * AllOne* obj = new AllOne();\n * obj->inc(key);\n * obj->dec(key);\n * string param_3 = obj->getMaxKey();\n * string param_4 = obj->getMinKey();\n */"
         }
     },
     {
-        "id": "32",
-        "title": "Longest Valid Parentheses",
+        "id": "2597",
+        "title": "Cycle Length Queries in a Tree",
+        "difficulty": "Hard",
+        "tags": [
+            "Array",
+            "Tree",
+            "Binary Tree"
+        ],
+        "question": "You are given an integer n. There is a complete binary tree with 2n - 1 nodes. The root of that tree is the node with the value 1, and every node with a value val in the range [1, 2n - 1 - 1] has two children where:\nThe left node has the value 2 * val, and\nThe right node has the value 2 * val + 1.\nYou are also given a 2D integer array queries of length m, where queries[i] = [ai, bi]. For each query, solve the following problem:\nAdd an edge between the nodes with values ai and bi.\nFind the length of the cycle in the graph.\nRemove the added edge between nodes with values ai and bi.\nNote that:\nA cycle is a path that starts and ends at the same node, and each edge in the path is visited only once.\nThe length of a cycle is the number of edges visited in the cycle.\nThere could be multiple edges between two nodes in the tree after adding the edge of the query.\nReturn an array answer of length m where answer[i] is the answer to the ith query.",
+        "examples": [
+            "Input: n = 3, queries = [[5,3],[4,7],[2,3]]\nOutput: [4,5,3]\nExplanation: The diagrams above show the tree of 23 - 1 nodes. Nodes colored in red describe the nodes in the cycle after adding the edge.\n- After adding the edge between nodes 3 and 5, the graph contains a cycle of nodes [5,2,1,3]. Thus answer to the first query is 4. We delete the added edge and process the next query.\n- After adding the edge between nodes 4 and 7, the graph contains a cycle of nodes [4,2,1,3,7]. Thus answer to the second query is 5. We delete the added edge and process the next query.\n- After adding the edge between nodes 2 and 3, the graph contains a cycle of nodes [2,1,3]. Thus answer to the third query is 3. We delete the added edge.",
+            "Input: n = 2, queries = [[1,2]]\nOutput: [2]\nExplanation: The diagram above shows the tree of 22 - 1 nodes. Nodes colored in red describe the nodes in the cycle after adding the edge.\n- After adding the edge between nodes 1 and 2, the graph contains a cycle of nodes [2,1]. Thus answer for the first query is 2. We delete the added edge."
+        ],
+        "constraints": [
+            "The left node has the value 2 * val, and",
+            "The right node has the value 2 * val + 1."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def cycleLengthQueries(self, n: int, queries: List[List[int]]) -> List[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> cycleLengthQueries(int n, vector<vector<int>>& queries) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "297",
+        "title": "Serialize and Deserialize Binary Tree",
         "difficulty": "Hard",
         "tags": [
             "String",
-            "Dynamic Programming",
-            "Stack"
+            "Tree",
+            "Depth-First Search",
+            "Breadth-First Search",
+            "Design",
+            "Binary Tree"
         ],
-        "question": "Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
+        "question": "Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.\nDesign an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.\nClarification: The input/output format is the same as how LeetCode serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.",
         "examples": [
-            "Input: s = \"(()\"\nOutput: 2\nExplanation: The longest valid parentheses substring is \"()\".",
-            "Input: s = \")()())\"\nOutput: 4\nExplanation: The longest valid parentheses substring is \"()()\".",
-            "Input: s = \"\"\nOutput: 0"
+            "Input: root = [1,2,3,null,null,4,5]\nOutput: [1,2,3,null,null,4,5]",
+            "Input: root = []\nOutput: []"
         ],
         "constraints": [
-            "0 <= s.length <= 3 * 10^4",
-            "s[i] is '(', or ')'."
+            "The number of nodes in the tree is in the range [0, 10^4].",
+            "-1000 <= Node.val <= 1000"
         ],
         "starter_code": {
-            "python": "class Solution:\n    def longestValidParentheses(self, s: str) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int longestValidParentheses(string s) {\n        \n    }\n};"
+            "python": "# Definition for a binary tree node.\n# class TreeNode(object):\n#     def __init__(self, x):\n#         self.val = x\n#         self.left = None\n#         self.right = None\n\nclass Codec:\n\n    def serialize(self, root):\n        \"\"\"Encodes a tree to a single string.\n        \n        :type root: TreeNode\n        :rtype: str\n        \"\"\"\n        \n\n    def deserialize(self, data):\n        \"\"\"Decodes your encoded data to tree.\n        \n        :type data: str\n        :rtype: TreeNode\n        \"\"\"\n        \n\n# Your Codec object will be instantiated and called as such:\n# ser = Codec()\n# deser = Codec()\n# ans = deser.deserialize(ser.serialize(root))",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}\n * };\n */\nclass Codec {\npublic:\n\n    // Encodes a tree to a single string.\n    string serialize(TreeNode* root) {\n        \n    }\n\n    // Decodes your encoded data to tree.\n    TreeNode* deserialize(string data) {\n        \n    }\n};\n\n// Your Codec object will be instantiated and called as such:\n// Codec ser, deser;\n// TreeNode* ans = deser.deserialize(ser.serialize(root));"
         }
     },
     {
-        "id": "33",
-        "title": "Search in Rotated Sorted Array",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Binary Search"
-        ],
-        "question": "There is an integer array nums sorted in ascending order (with distinct values).\nPrior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].\nGiven the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\nYou must write an algorithm with O(log n) runtime complexity.",
-        "examples": [
-            "Input: nums = [4,5,6,7,0,1,2], target = 0\nOutput: 4",
-            "Input: nums = [4,5,6,7,0,1,2], target = 3\nOutput: -1",
-            "Input: nums = [1], target = 0\nOutput: -1"
-        ],
-        "constraints": [
-            "1 <= nums.length <= 5000",
-            "-10^4 <= nums[i] <= 10^4",
-            "All values of nums are unique.",
-            "nums is an ascending array that is possibly rotated.",
-            "-10^4 <= target <= 10^4"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def search(self, nums: List[int], target: int) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int search(vector<int>& nums, int target) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "35",
-        "title": "Search Insert Position",
-        "difficulty": "Easy",
-        "tags": [
-            "Array",
-            "Binary Search"
-        ],
-        "question": "Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.\nYou must write an algorithm with O(log n) runtime complexity.",
-        "examples": [
-            "Input: nums = [1,3,5,6], target = 5\nOutput: 2",
-            "Input: nums = [1,3,5,6], target = 2\nOutput: 1",
-            "Input: nums = [1,3,5,6], target = 7\nOutput: 4"
-        ],
-        "constraints": [
-            "1 <= nums.length <= 10^4",
-            "-10^4 <= nums[i] <= 10^4",
-            "nums contains distinct values sorted in ascending order.",
-            "-10^4 <= target <= 10^4"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def searchInsert(self, nums: List[int], target: int) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int searchInsert(vector<int>& nums, int target) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "36",
-        "title": "Valid Sudoku",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Hash Table",
-            "Matrix"
-        ],
-        "question": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:\nEach row must contain the digits 1-9 without repetition.\nEach column must contain the digits 1-9 without repetition.\nEach of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.\nNote:\nA Sudoku board (partially filled) could be valid but is not necessarily solvable.\nOnly the filled cells need to be validated according to the mentioned rules.",
-        "examples": [
-            "Input: board = \n[[\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"]\n,[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"]\n,[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"]\n,[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"]\n,[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"]\n,[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"]\n,[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"]\n,[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"]\n,[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]\nOutput: true",
-            "Input: board = \n[[\"8\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"]\n,[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"]\n,[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"]\n,[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"]\n,[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"]\n,[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"]\n,[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"]\n,[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"]\n,[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]\nOutput: false\nExplanation: Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid."
-        ],
-        "constraints": [
-            "A Sudoku board (partially filled) could be valid but is not necessarily solvable.",
-            "Only the filled cells need to be validated according to the mentioned rules."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def isValidSudoku(self, board: List[List[str]]) -> bool:\n        ",
-            "cpp": "class Solution {\npublic:\n    bool isValidSudoku(vector<vector<char>>& board) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "37",
-        "title": "Sudoku Solver",
+        "id": "2060",
+        "title": "Merge BSTs to Create Single BST",
         "difficulty": "Hard",
         "tags": [
             "Array",
             "Hash Table",
-            "Backtracking",
-            "Matrix"
+            "Tree",
+            "Depth-First Search",
+            "Binary Search Tree",
+            "Binary Tree"
         ],
-        "question": "Write a program to solve a Sudoku puzzle by filling the empty cells.\nA sudoku solution must satisfy all of the following rules:\nEach of the digits 1-9 must occur exactly once in each row.\nEach of the digits 1-9 must occur exactly once in each column.\nEach of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.\nThe '.' character indicates empty cells.",
+        "question": "You are given n BST (binary search tree) root nodes for n separate BSTs stored in an array trees (0-indexed). Each BST in trees has at most 3 nodes, and no two roots have the same value. In one operation, you can:\nSelect two distinct indices i and j such that the value stored at one of the leaves of trees[i] is equal to the root value of trees[j].\nReplace the leaf node in trees[i] with trees[j].\nRemove trees[j] from trees.\nReturn the root of the resulting BST if it is possible to form a valid BST after performing n - 1 operations, or null if it is impossible to create a valid BST.\nA BST (binary search tree) is a binary tree where each node satisfies the following property:\nEvery node in the node's left subtree has a value strictly less than the node's value.\nEvery node in the node's right subtree has a value strictly greater than the node's value.\nA leaf is a node that has no children.",
         "examples": [
-            "Input: board = [[\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"],[\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"],[\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"],[\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"],[\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"],[\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"],[\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"],[\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"],[\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]]\nOutput: [[\"5\",\"3\",\"4\",\"6\",\"7\",\"8\",\"9\",\"1\",\"2\"],[\"6\",\"7\",\"2\",\"1\",\"9\",\"5\",\"3\",\"4\",\"8\"],[\"1\",\"9\",\"8\",\"3\",\"4\",\"2\",\"5\",\"6\",\"7\"],[\"8\",\"5\",\"9\",\"7\",\"6\",\"1\",\"4\",\"2\",\"3\"],[\"4\",\"2\",\"6\",\"8\",\"5\",\"3\",\"7\",\"9\",\"1\"],[\"7\",\"1\",\"3\",\"9\",\"2\",\"4\",\"8\",\"5\",\"6\"],[\"9\",\"6\",\"1\",\"5\",\"3\",\"7\",\"2\",\"8\",\"4\"],[\"2\",\"8\",\"7\",\"4\",\"1\",\"9\",\"6\",\"3\",\"5\"],[\"3\",\"4\",\"5\",\"2\",\"8\",\"6\",\"1\",\"7\",\"9\"]]\nExplanation: The input board is shown above and the only valid solution is shown below:"
+            "Input: trees = [[2,1],[3,2,5],[5,4]]\nOutput: [3,2,5,1,null,4]\nExplanation:\nIn the first operation, pick i=1 and j=0, and merge trees[0] into trees[1].\nDelete trees[0], so trees = [[3,2,5,1],[5,4]].\nIn the second operation, pick i=0 and j=1, and merge trees[1] into trees[0].\nDelete trees[1], so trees = [[3,2,5,1,null,4]].\nThe resulting tree, shown above, is a valid BST, so return its root.",
+            "Input: trees = [[5,3,8],[3,2,6]]\nOutput: []\nExplanation:\nPick i=0 and j=1 and merge trees[1] into trees[0].\nDelete trees[1], so trees = [[5,3,8,2,6]].\nThe resulting tree is shown above. This is the only valid operation that can be performed, but the resulting tree is not a valid BST, so return null.",
+            "Input: trees = [[5,4],[3]]\nOutput: []\nExplanation: It is impossible to perform any operations."
         ],
         "constraints": [
-            "board.length == 9",
-            "board[i].length == 9",
-            "board[i][j] is a digit or '.'.",
-            "It is guaranteed that the input board has only one solution."
+            "Select two distinct indices i and j such that the value stored at one of the leaves of trees[i] is equal to the root value of trees[j].",
+            "Replace the leaf node in trees[i] with trees[j].",
+            "Remove trees[j] from trees."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def solveSudoku(self, board: List[List[str]]) -> None:\n        \"\"\"\n        Do not return anything, modify board in-place instead.\n        \"\"\"\n        ",
-            "cpp": "class Solution {\npublic:\n    void solveSudoku(vector<vector<char>>& board) {\n        \n    }\n};"
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def canMerge(self, trees: List[TreeNode]) -> Optional[TreeNode]:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    TreeNode* canMerge(vector<TreeNode*>& trees) {\n        \n    }\n};"
         }
     },
     {
-        "id": "38",
-        "title": "Count and Say",
-        "difficulty": "Medium",
-        "tags": [
-            "String"
-        ],
-        "question": "The count-and-say sequence is a sequence of digit strings defined by the recursive formula:\ncountAndSay(1) = \"1\"\ncountAndSay(n) is the run-length encoding of countAndSay(n - 1).\nRun-length encoding (RLE) is a string compression method that works by replacing consecutive identical characters (repeated 2 or more times) with the concatenation of the character and the number marking the count of the characters (length of the run). For example, to compress the string \"3322251\" we replace \"33\" with \"23\", replace \"222\" with \"32\", replace \"5\" with \"15\" and replace \"1\" with \"11\". Thus the compressed string becomes \"23321511\".\nGiven a positive integer n, return the nth element of the count-and-say sequence.",
-        "examples": [
-            "countAndSay(1) = \"1\"\ncountAndSay(2) = RLE of \"1\" = \"11\"\ncountAndSay(3) = RLE of \"11\" = \"21\"\ncountAndSay(4) = RLE of \"21\" = \"1211\""
-        ],
-        "constraints": [
-            "countAndSay(1) = \"1\"",
-            "countAndSay(n) is the run-length encoding of countAndSay(n - 1)."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def countAndSay(self, n: int) -> str:\n        ",
-            "cpp": "class Solution {\npublic:\n    string countAndSay(int n) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "39",
-        "title": "Combination Sum",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Backtracking"
-        ],
-        "question": "Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.\nThe same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.\nThe test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.",
-        "examples": [
-            "Input: candidates = [2,3,6,7], target = 7\nOutput: [[2,2,3],[7]]\nExplanation:\n2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.\n7 is a candidate, and 7 = 7.\nThese are the only two combinations.",
-            "Input: candidates = [2,3,5], target = 8\nOutput: [[2,2,2,2],[2,3,3],[3,5]]",
-            "Input: candidates = [2], target = 1\nOutput: []"
-        ],
-        "constraints": [
-            "1 <= candidates.length <= 30",
-            "2 <= candidates[i] <= 40",
-            "All elements of candidates are distinct.",
-            "1 <= target <= 40"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "40",
-        "title": "Combination Sum II",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Backtracking"
-        ],
-        "question": "Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.\nEach number in candidates may only be used once in the combination.\nNote: The solution set must not contain duplicate combinations.",
-        "examples": [
-            "Input: candidates = [10,1,2,7,6,1,5], target = 8\nOutput: \n[\n[1,1,6],\n[1,2,5],\n[1,7],\n[2,6]\n]",
-            "Input: candidates = [2,5,2,1,2], target = 5\nOutput: \n[\n[1,2,2],\n[5]\n]"
-        ],
-        "constraints": [
-            "1 <= candidates.length <= 100",
-            "1 <= candidates[i] <= 50",
-            "1 <= target <= 30"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "41",
-        "title": "First Missing Positive",
+        "id": "124",
+        "title": "Binary Tree Maximum Path Sum",
         "difficulty": "Hard",
         "tags": [
-            "Array",
-            "Hash Table"
-        ],
-        "question": "Given an unsorted integer array nums. Return the smallest positive integer that is not present in nums.\nYou must implement an algorithm that runs in O(n) time and uses O(1) auxiliary space.",
-        "examples": [
-            "Input: nums = [1,2,0]\nOutput: 3\nExplanation: The numbers in the range [1,2] are all in the array.",
-            "Input: nums = [3,4,-1,1]\nOutput: 2\nExplanation: 1 is in the array but 2 is missing.",
-            "Input: nums = [7,8,9,11,12]\nOutput: 1\nExplanation: The smallest positive integer 1 is missing."
-        ],
-        "constraints": [
-            "1 <= nums.length <= 10^5",
-            "-2^31 <= nums[i] <= 2^31 - 1"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def firstMissingPositive(self, nums: List[int]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int firstMissingPositive(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "42",
-        "title": "Trapping Rain Water",
-        "difficulty": "Hard",
-        "tags": [
-            "Array",
-            "Two Pointers",
             "Dynamic Programming",
-            "Stack",
-            "Monotonic Stack"
+            "Tree",
+            "Depth-First Search",
+            "Binary Tree"
         ],
-        "question": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+        "question": "A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.\nThe path sum of a path is the sum of the node's values in the path.\nGiven the root of a binary tree, return the maximum path sum of any non-empty path.",
         "examples": [
-            "Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]\nOutput: 6\nExplanation: The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.",
-            "Input: height = [4,2,0,3,2,5]\nOutput: 9"
+            "Input: root = [1,2,3]\nOutput: 6\nExplanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.",
+            "Input: root = [-10,9,20,null,null,15,7]\nOutput: 42\nExplanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42."
         ],
         "constraints": [
-            "n == height.length",
-            "1 <= n <= 2 * 10^4",
-            "0 <= height[i] <= 10^5"
+            "The number of nodes in the tree is in the range [1, 3 * 10^4].",
+            "-1000 <= Node.val <= 1000"
         ],
         "starter_code": {
-            "python": "class Solution:\n    def trap(self, height: List[int]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int trap(vector<int>& height) {\n        \n    }\n};"
+            "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def maxPathSum(self, root: Optional[TreeNode]) -> int:\n        ",
+            "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int maxPathSum(TreeNode* root) {\n        \n    }\n};"
         }
     },
     {
-        "id": "43",
-        "title": "Multiply Strings",
-        "difficulty": "Medium",
-        "tags": [
-            "Math",
-            "String",
-            "Simulation"
-        ],
-        "question": "Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.\nNote: You must not use any built-in BigInteger library or convert the inputs to integer directly.",
-        "examples": [
-            "Input: num1 = \"2\", num2 = \"3\"\nOutput: \"6\"",
-            "Input: num1 = \"123\", num2 = \"456\"\nOutput: \"56088\""
-        ],
-        "constraints": [
-            "1 <= num1.length, num2.length <= 200",
-            "num1 and num2 consist of digits only.",
-            "Both num1 and num2 do not contain any leading zero, except the number 0 itself."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def multiply(self, num1: str, num2: str) -> str:\n        ",
-            "cpp": "class Solution {\npublic:\n    string multiply(string num1, string num2) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "44",
-        "title": "Wildcard Matching",
+        "id": "2681",
+        "title": "Put Marbles in Bags",
         "difficulty": "Hard",
         "tags": [
-            "String",
-            "Dynamic Programming",
+            "Array",
             "Greedy",
-            "Recursion"
+            "Sorting",
+            "Heap (Priority Queue)"
         ],
-        "question": "Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:\n'?' Matches any single character.\n'*' Matches any sequence of characters (including the empty sequence).\nThe matching should cover the entire input string (not partial).",
+        "question": "You have k bags. You are given a 0-indexed integer array weights where weights[i] is the weight of the ith marble. You are also given the integer k.\nDivide the marbles into the k bags according to the following rules:\nNo bag is empty.\nIf the ith marble and jth marble are in a bag, then all marbles with an index between the ith and jth indices should also be in that same bag.\nIf a bag consists of all the marbles with an index from i to j inclusively, then the cost of the bag is weights[i] + weights[j].\nThe score after distributing the marbles is the sum of the costs of all the k bags.\nReturn the difference between the maximum and minimum scores among marble distributions.",
         "examples": [
-            "Input: s = \"aa\", p = \"a\"\nOutput: false\nExplanation: \"a\" does not match the entire string \"aa\".",
-            "Input: s = \"aa\", p = \"*\"\nOutput: true\nExplanation: '*' matches any sequence.",
-            "Input: s = \"cb\", p = \"?a\"\nOutput: false\nExplanation: '?' matches 'c', but the second letter is 'a', which does not match 'b'."
+            "Input: weights = [1,3,5,1], k = 2\nOutput: 4\nExplanation: \nThe distribution [1],[3,5,1] results in the minimal score of (1+1) + (3+1) = 6. \nThe distribution [1,3],[5,1], results in the maximal score of (1+3) + (5+1) = 10. \nThus, we return their difference 10 - 6 = 4.",
+            "Input: weights = [1, 3], k = 2\nOutput: 0\nExplanation: The only distribution possible is [1],[3]. \nSince both the maximal and minimal score are the same, we return 0."
         ],
         "constraints": [
-            "'?' Matches any single character.",
-            "'*' Matches any sequence of characters (including the empty sequence)."
+            "No bag is empty.",
+            "If the i^th marble and j^th marble are in a bag, then all marbles with an index between the i^th and j^th indices should also be in that same bag.",
+            "If a bag consists of all the marbles with an index from i to j inclusively, then the cost of the bag is weights[i] + weights[j]."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def isMatch(self, s: str, p: str) -> bool:\n        ",
-            "cpp": "class Solution {\npublic:\n    bool isMatch(string s, string p) {\n        \n    }\n};"
+            "python": "class Solution:\n    def putMarbles(self, weights: List[int], k: int) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    long long putMarbles(vector<int>& weights, int k) {\n        \n    }\n};"
         }
     },
     {
-        "id": "45",
-        "title": "Jump Game II",
-        "difficulty": "Medium",
+        "id": "1485",
+        "title": "Minimum Cost to Make at Least One Valid Path in a Grid",
+        "difficulty": "Hard",
         "tags": [
             "Array",
-            "Dynamic Programming",
-            "Greedy"
+            "Breadth-First Search",
+            "Graph Theory",
+            "Heap (Priority Queue)",
+            "Matrix",
+            "Shortest Path"
         ],
-        "question": "You are given a 0-indexed array of integers nums of length n. You are initially positioned at index 0.\nEach element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at index i, you can jump to any index (i + j) where:\n0 <= j <= nums[i] and\ni + j < n\nReturn the minimum number of jumps to reach index n - 1. The test cases are generated such that you can reach index n - 1.",
+        "question": "Given an m x n grid. Each cell of the grid has a sign pointing to the next cell you should visit if you are currently in this cell. The sign of grid[i][j] can be:\n1 which means go to the cell to the right. (i.e go from grid[i][j] to grid[i][j + 1])\n2 which means go to the cell to the left. (i.e go from grid[i][j] to grid[i][j - 1])\n3 which means go to the lower cell. (i.e go from grid[i][j] to grid[i + 1][j])\n4 which means go to the upper cell. (i.e go from grid[i][j] to grid[i - 1][j])\nNotice that there could be some signs on the cells of the grid that point outside the grid.\nYou will initially start at the upper left cell (0, 0). A valid path in the grid is a path that starts from the upper left cell (0, 0) and ends at the bottom-right cell (m - 1, n - 1) following the signs on the grid. The valid path does not have to be the shortest.\nYou can modify the sign on a cell with cost = 1. You can modify the sign on a cell one time only.\nReturn the minimum cost to make the grid have at least one valid path.",
         "examples": [
-            "Input: nums = [2,3,1,1,4]\nOutput: 2\nExplanation: The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.",
-            "Input: nums = [2,3,0,1,4]\nOutput: 2"
+            "Input: grid = [[1,1,1,1],[2,2,2,2],[1,1,1,1],[2,2,2,2]]\nOutput: 3\nExplanation: You will start at point (0, 0).\nThe path to (3, 3) is as follows. (0, 0) --> (0, 1) --> (0, 2) --> (0, 3) change the arrow to down with cost = 1 --> (1, 3) --> (1, 2) --> (1, 1) --> (1, 0) change the arrow to down with cost = 1 --> (2, 0) --> (2, 1) --> (2, 2) --> (2, 3) change the arrow to down with cost = 1 --> (3, 3)\nThe total cost = 3.",
+            "Input: grid = [[1,1,3],[3,2,2],[1,1,4]]\nOutput: 0\nExplanation: You can follow the path from (0, 0) to (2, 2).",
+            "Input: grid = [[1,2],[4,3]]\nOutput: 1"
         ],
         "constraints": [
-            "0 <= j <= nums[i] and",
-            "i + j < n"
+            "1 which means go to the cell to the right. (i.e go from grid[i][j] to grid[i][j + 1])",
+            "2 which means go to the cell to the left. (i.e go from grid[i][j] to grid[i][j - 1])",
+            "3 which means go to the lower cell. (i.e go from grid[i][j] to grid[i + 1][j])",
+            "4 which means go to the upper cell. (i.e go from grid[i][j] to grid[i - 1][j])"
         ],
         "starter_code": {
-            "python": "class Solution:\n    def jump(self, nums: List[int]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int jump(vector<int>& nums) {\n        \n    }\n};"
+            "python": "class Solution:\n    def minCost(self, grid: List[List[int]]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int minCost(vector<vector<int>>& grid) {\n        \n    }\n};"
         }
     },
     {
-        "id": "46",
-        "title": "Permutations",
-        "difficulty": "Medium",
+        "id": "4007",
+        "title": "Maximum Total Subarray Value II",
+        "difficulty": "Hard",
         "tags": [
             "Array",
-            "Backtracking"
+            "Greedy",
+            "Segment Tree",
+            "Heap (Priority Queue)"
         ],
-        "question": "Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.",
-        "examples": [
-            "Input: nums = [1,2,3]\nOutput: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]",
-            "Input: nums = [0,1]\nOutput: [[0,1],[1,0]]",
-            "Input: nums = [1]\nOutput: [[1]]"
-        ],
-        "constraints": [
-            "1 <= nums.length <= 6",
-            "-10 <= nums[i] <= 10",
-            "All the integers of nums are unique."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def permute(self, nums: List[int]) -> List[List[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> permute(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "47",
-        "title": "Permutations II",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Backtracking",
-            "Sorting"
-        ],
-        "question": "Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.",
-        "examples": [
-            "Input: nums = [1,1,2]\nOutput:\n[[1,1,2],\n [1,2,1],\n [2,1,1]]",
-            "Input: nums = [1,2,3]\nOutput: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]"
-        ],
-        "constraints": [
-            "1 <= nums.length <= 8",
-            "-10 <= nums[i] <= 10"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def permuteUnique(self, nums: List[int]) -> List[List[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> permuteUnique(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "48",
-        "title": "Rotate Image",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Math",
-            "Matrix"
-        ],
-        "question": "You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).\nYou have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.",
-        "examples": [
-            "Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]\nOutput: [[7,4,1],[8,5,2],[9,6,3]]",
-            "Input: matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]\nOutput: [[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]"
-        ],
-        "constraints": [
-            "n == matrix.length == matrix[i].length",
-            "1 <= n <= 20",
-            "-1000 <= matrix[i][j] <= 1000"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def rotate(self, matrix: List[List[int]]) -> None:\n        \"\"\"\n        Do not return anything, modify matrix in-place instead.\n        \"\"\"\n        ",
-            "cpp": "class Solution {\npublic:\n    void rotate(vector<vector<int>>& matrix) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "49",
-        "title": "Group Anagrams",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Hash Table",
-            "String",
-            "Sorting"
-        ],
-        "question": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.",
+        "question": "You are given an integer array nums of length n and an integer k.\nYou must select exactly k distinct non-empty subarrays nums[l..r] of nums. Subarrays may overlap, but the exact same subarray (same l and r) cannot be chosen more than once.\nThe value of a subarray nums[l..r] is defined as: max(nums[l..r]) - min(nums[l..r]).\nThe total value is the sum of the values of all chosen subarrays.\nReturn the maximum possible total value you can achieve.",
         "examples": [],
         "constraints": [
-            "There is no string in strs that can be rearranged to form \"bat\".",
-            "The strings \"nat\" and \"tan\" are anagrams as they can be rearranged to form each other.",
-            "The strings \"ate\", \"eat\", and \"tea\" are anagrams as they can be rearranged to form each other."
+            "Choose nums[0..1] = [1, 3]. The maximum is 3 and the minimum is 1, giving a value of 3 - 1 = 2.",
+            "Choose nums[0..2] = [1, 3, 2]. The maximum is still 3 and the minimum is still 1, so the value is also 3 - 1 = 2."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<string>> groupAnagrams(vector<string>& strs) {\n        \n    }\n};"
+            "python": "class Solution:\n    def maxTotalValue(self, nums: List[int], k: int) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    long long maxTotalValue(vector<int>& nums, int k) {\n        \n    }\n};"
         }
     },
     {
-        "id": "50",
-        "title": "Pow(x, n)",
-        "difficulty": "Medium",
-        "tags": [
-            "Math",
-            "Recursion"
-        ],
-        "question": "Implement pow(x, n), which calculates x raised to the power n (i.e., xn).",
-        "examples": [
-            "Input: x = 2.00000, n = 10\nOutput: 1024.00000",
-            "Input: x = 2.10000, n = 3\nOutput: 9.26100",
-            "Input: x = 2.00000, n = -2\nOutput: 0.25000\nExplanation: 2-2 = 1/22 = 1/4 = 0.25"
-        ],
-        "constraints": [
-            "-100.0 < x < 100.0",
-            "-2^31 <= n <= 2^31-1",
-            "n is an integer.",
-            "Either x is not zero or n > 0.",
-            "-10^4 <= x^n <= 10^4"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def myPow(self, x: float, n: int) -> float:\n        ",
-            "cpp": "class Solution {\npublic:\n    double myPow(double x, int n) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "51",
-        "title": "N-Queens",
+        "id": "420",
+        "title": "Strong Password Checker",
         "difficulty": "Hard",
         "tags": [
-            "Array",
-            "Backtracking"
+            "String",
+            "Greedy",
+            "Heap (Priority Queue)"
         ],
-        "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.\nEach solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively.",
+        "question": "A password is considered strong if the below conditions are all met:\nIt has at least 6 characters and at most 20 characters.\nIt contains at least one lowercase letter, at least one uppercase letter, and at least one digit.\nIt does not contain three repeating characters in a row (i.e., \"Baaabb0\" is weak, but \"Baaba0\" is strong).\nGiven a string password, return the minimum number of steps required to make password strong. if password is already strong, return 0.\nIn one step, you can:\nInsert one character to password,\nDelete one character from password, or\nReplace one character of password with another character.",
         "examples": [
-            "Input: n = 4\nOutput: [[\".Q..\",\"...Q\",\"Q...\",\"..Q.\"],[\"..Q.\",\"Q...\",\"...Q\",\".Q..\"]]\nExplanation: There exist two distinct solutions to the 4-queens puzzle as shown above",
-            "Input: n = 1\nOutput: [[\"Q\"]]"
+            "Input: password = \"a\"\nOutput: 5",
+            "Input: password = \"aA1\"\nOutput: 3",
+            "Input: password = \"1337C0d3\"\nOutput: 0"
         ],
         "constraints": [
-            "1 <= n <= 9"
+            "It has at least 6 characters and at most 20 characters.",
+            "It contains at least one lowercase letter, at least one uppercase letter, and at least one digit.",
+            "It does not contain three repeating characters in a row (i.e., \"Baaabb0\" is weak, but \"Baaba0\" is strong)."
         ],
         "starter_code": {
-            "python": "class Solution:\n    def solveNQueens(self, n: int) -> List[List[str]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<string>> solveNQueens(int n) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "52",
-        "title": "N-Queens II",
-        "difficulty": "Hard",
-        "tags": [
-            "Backtracking"
-        ],
-        "question": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.\nGiven an integer n, return the number of distinct solutions to the n-queens puzzle.",
-        "examples": [
-            "Input: n = 4\nOutput: 2\nExplanation: There are two distinct solutions to the 4-queens puzzle as shown.",
-            "Input: n = 1\nOutput: 1"
-        ],
-        "constraints": [
-            "1 <= n <= 9"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def totalNQueens(self, n: int) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int totalNQueens(int n) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "53",
-        "title": "Maximum Subarray",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Divide and Conquer",
-            "Dynamic Programming"
-        ],
-        "question": "Given an integer array nums, find the subarray with the largest sum, and return its sum.",
-        "examples": [
-            "Input: nums = [-2,1,-3,4,-1,2,1,-5,4]\nOutput: 6\nExplanation: The subarray [4,-1,2,1] has the largest sum 6.",
-            "Input: nums = [1]\nOutput: 1\nExplanation: The subarray [1] has the largest sum 1.",
-            "Input: nums = [5,4,-1,7,8]\nOutput: 23\nExplanation: The subarray [5,4,-1,7,8] has the largest sum 23."
-        ],
-        "constraints": [
-            "1 <= nums.length <= 10^5",
-            "-10^4 <= nums[i] <= 10^4"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int maxSubArray(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "54",
-        "title": "Spiral Matrix",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Matrix",
-            "Simulation"
-        ],
-        "question": "Given an m x n matrix, return all elements of the matrix in spiral order.",
-        "examples": [
-            "Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]\nOutput: [1,2,3,6,9,8,7,4,5]",
-            "Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]\nOutput: [1,2,3,4,8,12,11,10,9,5,6,7]"
-        ],
-        "constraints": [
-            "m == matrix.length",
-            "n == matrix[i].length",
-            "1 <= m, n <= 10",
-            "-100 <= matrix[i][j] <= 100"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<int> spiralOrder(vector<vector<int>>& matrix) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "55",
-        "title": "Jump Game",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Dynamic Programming",
-            "Greedy"
-        ],
-        "question": "You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.\nReturn true if you can reach the last index, or false otherwise.",
-        "examples": [
-            "Input: nums = [2,3,1,1,4]\nOutput: true\nExplanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.",
-            "Input: nums = [3,2,1,0,4]\nOutput: false\nExplanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index."
-        ],
-        "constraints": [
-            "1 <= nums.length <= 10^4",
-            "0 <= nums[i] <= 10^5"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def canJump(self, nums: List[int]) -> bool:\n        ",
-            "cpp": "class Solution {\npublic:\n    bool canJump(vector<int>& nums) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "56",
-        "title": "Merge Intervals",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Sorting"
-        ],
-        "question": "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
-        "examples": [
-            "Input: intervals = [[1,3],[2,6],[8,10],[15,18]]\nOutput: [[1,6],[8,10],[15,18]]\nExplanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].",
-            "Input: intervals = [[1,4],[4,5]]\nOutput: [[1,5]]\nExplanation: Intervals [1,4] and [4,5] are considered overlapping.",
-            "Input: intervals = [[4,7],[1,4]]\nOutput: [[1,7]]\nExplanation: Intervals [1,4] and [4,7] are considered overlapping."
-        ],
-        "constraints": [
-            "1 <= intervals.length <= 10^4",
-            "intervals[i].length == 2",
-            "0 <= starti <= endi <= 10^4"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def merge(self, intervals: List[List[int]]) -> List[List[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> merge(vector<vector<int>>& intervals) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "57",
-        "title": "Insert Interval",
-        "difficulty": "Medium",
-        "tags": [
-            "Array"
-        ],
-        "question": "You are given an array of non-overlapping intervals intervals where intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starti. You are also given an interval newInterval = [start, end] that represents the start and end of another interval.\nInsert newInterval into intervals such that intervals is still sorted in ascending order by starti and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary).\nReturn intervals after the insertion.\nNote that you don't need to modify intervals in-place. You can make a new array and return it.",
-        "examples": [
-            "Input: intervals = [[1,3],[6,9]], newInterval = [2,5]\nOutput: [[1,5],[6,9]]",
-            "Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]\nOutput: [[1,2],[3,10],[12,16]]\nExplanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10]."
-        ],
-        "constraints": [
-            "0 <= intervals.length <= 10^4",
-            "intervals[i].length == 2",
-            "0 <= starti <= endi <= 10^5",
-            "intervals is sorted by starti in ascending order.",
-            "newInterval.length == 2",
-            "0 <= start <= end <= 10^5"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "58",
-        "title": "Length of Last Word",
-        "difficulty": "Easy",
-        "tags": [
-            "String"
-        ],
-        "question": "Given a string s consisting of words and spaces, return the length of the last word in the string.\nA word is a maximal substring consisting of non-space characters only.",
-        "examples": [
-            "Input: s = \"Hello World\"\nOutput: 5\nExplanation: The last word is \"World\" with length 5.",
-            "Input: s = \" fly me to the moon \"\nOutput: 4\nExplanation: The last word is \"moon\" with length 4.",
-            "Input: s = \"luffy is still joyboy\"\nOutput: 6\nExplanation: The last word is \"joyboy\" with length 6."
-        ],
-        "constraints": [
-            "1 <= s.length <= 10^4",
-            "s consists of only English letters and spaces ' '.",
-            "There will be at least one word in s."
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def lengthOfLastWord(self, s: str) -> int:\n        ",
-            "cpp": "class Solution {\npublic:\n    int lengthOfLastWord(string s) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "59",
-        "title": "Spiral Matrix II",
-        "difficulty": "Medium",
-        "tags": [
-            "Array",
-            "Matrix",
-            "Simulation"
-        ],
-        "question": "Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.",
-        "examples": [
-            "Input: n = 3\nOutput: [[1,2,3],[8,9,4],[7,6,5]]",
-            "Input: n = 1\nOutput: [[1]]"
-        ],
-        "constraints": [
-            "1 <= n <= 20"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def generateMatrix(self, n: int) -> List[List[int]]:\n        ",
-            "cpp": "class Solution {\npublic:\n    vector<vector<int>> generateMatrix(int n) {\n        \n    }\n};"
-        }
-    },
-    {
-        "id": "60",
-        "title": "Permutation Sequence",
-        "difficulty": "Hard",
-        "tags": [
-            "Math",
-            "Recursion"
-        ],
-        "question": "The set [1, 2, 3, ..., n] contains a total of n! unique permutations.\nBy listing and labeling all of the permutations in order, we get the following sequence for n = 3:\n\"123\"\n\"132\"\n\"213\"\n\"231\"\n\"312\"\n\"321\"\nGiven n and k, return the kth permutation sequence.",
-        "examples": [
-            "Input: n = 3, k = 3\nOutput: \"213\"",
-            "Input: n = 4, k = 9\nOutput: \"2314\"",
-            "Input: n = 3, k = 1\nOutput: \"123\""
-        ],
-        "constraints": [
-            "1 <= n <= 9",
-            "1 <= k <= n!"
-        ],
-        "starter_code": {
-            "python": "class Solution:\n    def getPermutation(self, n: int, k: int) -> str:\n        ",
-            "cpp": "class Solution {\npublic:\n    string getPermutation(int n, int k) {\n        \n    }\n};"
+            "python": "class Solution:\n    def strongPasswordChecker(self, password: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int strongPasswordChecker(string password) {\n        \n    }\n};"
         }
     }
 ]

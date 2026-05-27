@@ -1,8 +1,6 @@
 .venv/
-<<<<<<< HEAD
+.vscode/
 high-level/__pycache__/
 generated_code/py/__pycache__/
-=======
 *__pycache__/
 generated_code/cpp/build
->>>>>>> 6b70176653a4fdc83990b8df604ca8a27e36ee22
