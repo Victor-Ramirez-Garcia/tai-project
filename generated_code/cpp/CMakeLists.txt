@@ -5,7 +5,11 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(GTest REQUIRED)
 include(GoogleTest)
 
-# 1. Gather all files
+# IMPORTANT: Ensure the compiler looks in the current directory for 
+# the 'solution_proxy.h' file that your Python runner generates.
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+# 1. Gather all test runners
 file(GLOB TEST_RUNNERS "test_unittest_*.cpp")
 
 # 2. Process each test file individually
@@ -16,17 +20,17 @@ foreach(TEST_FILE ${TEST_RUNNERS})
     # Extract ID specifically from the end of the string
     string(REGEX REPLACE "test_unittest_" "" TEST_ID ${TEST_NAME})
     
-    # Define a unique target name based on the full test filename
+    # Define a unique target name
     set(EXEC_NAME "run_${TEST_NAME}")
     
-    # Find program files specific to this ID
-    file(GLOB PROGRAM_SOURCES "program_${TEST_ID}_*.cpp")
+    # We no longer glob PROGRAM_SOURCES. 
+    # The test file includes "solution_proxy.h", which the runner updates.
+    # Therefore, the test file itself is the only source needed for the executable.
+    add_executable(${EXEC_NAME} ${TEST_FILE})
     
-    # Create the unique executable
-    add_executable(${EXEC_NAME} ${TEST_FILE} ${PROGRAM_SOURCES})
     target_link_libraries(${EXEC_NAME} PRIVATE GTest::gtest_main)
     
-    # Use gtest_discover_tests correctly
+    # Use gtest_discover_tests
     gtest_discover_tests(${EXEC_NAME} 
         TEST_PREFIX "${TEST_ID}."
         DISCOVERY_MODE PRE_TEST

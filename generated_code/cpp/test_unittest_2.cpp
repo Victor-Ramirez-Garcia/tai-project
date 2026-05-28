@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <vector>
-#include "solution_2_1.cpp"
+#include "solution_proxy.h"
 
 // Helper function to create a linked list from a vector
 ListNode* createList(const std::vector<int>& nums) {

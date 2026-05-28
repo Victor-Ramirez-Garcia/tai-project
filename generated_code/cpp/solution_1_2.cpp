@@ -4,6 +4,6 @@
 class Solution {
 public:
     std::string foo() {
-        return "Hello World!";
+        return "Hello, Another World!";
     }
 };

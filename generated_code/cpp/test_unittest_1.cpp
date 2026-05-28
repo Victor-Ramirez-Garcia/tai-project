@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "solution_1_1.cpp" // Replace with the actual filename containing foo()
+#include "solution_proxy.h"
 
 // The TEST macro defines a test suite and the specific test name
 TEST(FooTestSuite, ReturnsHelloWorld) {

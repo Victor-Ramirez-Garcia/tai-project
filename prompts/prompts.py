@@ -55,10 +55,10 @@ STRICT GUIDELINES:
      spec.loader.exec_module(sol_module)
      Solution = sol_module.Solution
 
-   - FOR C++: Do not hardcode the include path. Use a generic proxy header.
-     Template:
-     #include "solution_proxy.h"
-     // The build system will ensure 'solution_proxy.h' includes the correct file.
+   - FOR C++: Use '#include "solution_proxy.h"'. 
+     CRITICAL: Do not include any other solution files (e.g., #include "solution_1_1.cpp") 
+     and do not redefine the 'Solution' class in this file. The proxy header will inject 
+     the necessary code during compilation.
 
 7. NO MAIN FUNCTION: Do not include a 'main()' function in your C++ test file.
 """

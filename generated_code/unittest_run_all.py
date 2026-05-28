@@ -65,76 +65,78 @@ def get_error_for_file(build_log: str, source_filename: str) -> str:
     if match:
         return match.group(1).strip()
     return "Compilation failed. Check build logs for details."
-def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> int:
-    """
-    Discovers and runs C++ unit tests for all generated code.
+import os
+import re
+import json
+import subprocess
+import shutil
+from pathlib import Path
 
-    This function should be implemented to find and execute C++ unit tests,
-    and store the results in a structured format (e.g., JSON, XML).
-
-    Args:
-        unittest_files_dir (str): The directory where C++ unit test files are located.
-        output_file_path (str): The file path where the test results should be stored.
-    """
-    results = []
-    tests_added = 0
-    build_dir = Path(unittest_files_dir) / "build"
+def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     source_dir = Path(unittest_files_dir)
+    build_dir = source_dir / "build"
+    proxy_header = source_dir / "solution_proxy.h"
+    
+    # 1. Ensure build directory exists
+    if not build_dir.exists():
+        build_dir.mkdir(parents=True)
+        subprocess.run(["cmake", "-S", str(source_dir), "-B", str(build_dir)], check=True)
 
-    # 1. Ensure project is configured
-    if not (build_dir / "CMakeCache.txt").exists():
-        if os.path.exists(build_dir):
-            shutil.rmtree(build_dir)
-        build_dir.mkdir(parents=True, exist_ok=True)
-        subprocess.run(["cmake", "-S", str(source_dir), "-B", str(build_dir)], capture_output=True)
+    problem_map = {}
+    solution_files = sorted(list(source_dir.glob("solution_*.cpp")))
 
-    # 2. Build the project AND capture the full log
-    build_proc = subprocess.run(
-        ["cmake", "--build", str(build_dir), "--", "-k"], 
-        capture_output=True, 
-        text=True # Important to get a string, not bytes
-    )
-    full_build_log = build_proc.stderr 
-
-    # 3. Iterate through SOURCE test files
-    for source_file in source_dir.glob("test_unittest_*.cpp"):
-        match = re.search(r"unittest_(\d+)", source_file.name)
+    for sol_file in solution_files:
+        match = re.search(r"solution_(\d+)_(\d+)", sol_file.name)
         if not match: continue
         
-        problem_id = match.group(1)
-        meta = get_metadata(problem_id)
+        prob_id, attempt_num = match.group(1), match.group(2)
         
-        binary_name = f"run_test_unittest_{problem_id}" 
-        binary_path = build_dir / binary_name
-        
-        if binary_path.exists():
-            # SUCCESS: Run it
-            proc = subprocess.run([str(binary_path)], capture_output=True, text=True)
-            result = "pass" if proc.returncode == 0 else "failed"
-            raw_stderr = proc.stderr if proc.returncode != 0 else ""
-            error_type = "None" if proc.returncode == 0 else "Assertion"
-        else:
-            # FAILURE: Binary missing -> Search the log for the cause
-            result = "failed"
-            error_type = "Syntax/Compilation"
-            raw_stderr = get_error_for_file(full_build_log, source_file.name)
+        if prob_id not in problem_map:
+            meta = get_metadata(prob_id)
+            problem_map[prob_id] = {
+                "id": prob_id,
+                "difficulty": meta.get("difficulty"),
+                "examples_count": len(meta.get("examples", [])),
+                "constraints_count": len(meta.get("constraints", [])),
+                "attempts": []
+            }
 
-        results.append({
-            "id": problem_id,
-            "result": result,
-            "error_type": error_type,
-            "difficulty": meta.get("difficulty"),
-            "examples_count": len(meta.get("examples", [])),
-            "constraints_count": len(meta.get("constraints", [])),
-            "raw_stderr": raw_stderr
-        })
-        tests_added += 1
+        # 2. Swap the Proxy Header
+        # This tells C++ which solution file to include in the next build
+        with open(proxy_header, "w") as f:
+            f.write(f'#include "{sol_file.name}"')
+            
+        # 3. Build only the specific test binary for this problem_id
+        binary_name = f"run_test_unittest_{prob_id}"
+        build_result = subprocess.run(
+            ["cmake", "--build", str(build_dir), "--target", binary_name], 
+            capture_output=True, text=True
+        )
         
+        # 4. Execute and Record
+        if build_result.returncode == 0:
+            binary_path = build_dir / binary_name
+            proc = subprocess.run([str(binary_path)], capture_output=True, text=True)
+            
+            problem_map[prob_id]["attempts"].append({
+                "attempt_number": int(attempt_num),
+                "result": "pass" if proc.returncode == 0 else "failed",
+                "error_type": "None" if proc.returncode == 0 else "Assertion Failure",
+                "raw_stderr": proc.stderr if proc.returncode != 0 else ""
+            })
+        else:
+            # Handle Compilation/Syntax errors
+            problem_map[prob_id]["attempts"].append({
+                "attempt_number": int(attempt_num),
+                "result": "failed",
+                "error_type": "Syntax/Compilation Error",
+                "raw_stderr": build_result.stderr
+            })
+
     with open(output_file_path, "w") as f:
-        json.dump(results, f, indent=4)
-        
-    return tests_added
-   
+        json.dump(list(problem_map.values()), f, indent=4)
+
+
 def classify_python_error(stderr: str) -> str:
     """
     Analyzes the stderr text to determine the category of the failure.
