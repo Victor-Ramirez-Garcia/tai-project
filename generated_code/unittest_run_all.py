@@ -94,6 +94,7 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
                 "difficulty": meta.get("difficulty"),
                 "examples_count": len(meta.get("examples", [])),
                 "constraints_count": len(meta.get("constraints", [])),
+                "tags": meta.get("tags", []),
                 "attempts": []
             }
 
@@ -213,6 +214,7 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
                 "difficulty": meta.get("difficulty"),
                 "examples_count": len(meta.get("examples", [])),
                 "constraints_count": len(meta.get("constraints", [])),
+                "tags": meta.get("tags", []),
                 "attempts": []
             }
         
