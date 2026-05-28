@@ -109,7 +109,8 @@ def process_problems(input_filename, output_filename) -> int:
 
             output_list.append({
                 "leetcode-problem-id": entry.get("id"),
-                "language": lang_slug,
+                "language": lang,
+                "extension": lang_slug,
                 "prompt_solution": prompt_solution_text,
                 "prompt_unittest": prompt_unittest_text,
                 "generated_program_paths": [],
