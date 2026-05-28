@@ -9,7 +9,7 @@ from constants import (
 
 TRIALS = 1 # number of trials to run
 PROMPT_PATH = BASE_DIR / "prompts" / "prompts.json" # path to prompts.json
-MAX_WORKERS = 1 # number of concurrent threads
+MAX_WORKERS = 4 # number of concurrent threads
 
 def wait_for_new_page(a=10, b=25):
     delay = random.uniform(a,b)
@@ -192,7 +192,7 @@ def generate_program(prompt, context, is_unittest: bool) -> None:
 
 def process_prompt(prompt):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False) # create new headless browser (browser that does not pop up)
+        browser = p.chromium.launch(headless=True) # create new headless browser (browser that does not pop up)
         context = browser.new_context() # create new browser context that doesnt share cookies/cache with other browser context
         try:
             generate_program(prompt, context, False) # generate program
