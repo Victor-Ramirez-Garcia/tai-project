@@ -41,19 +41,26 @@ STRICT GUIDELINES:
 2. COVERAGE: You must write test cases that cover:
    - All 'examples' provided in the problem description.
    - Key edge cases identified from the 'constraints' (e.g., minimum/maximum input sizes, empty inputs).
-3. INTEGRATION: Assume the user's solution is in a header file or the same file. Use proper assertions 
-   (e.g., EXPECT_EQ for gTest, self.assertEqual for unittest).
-4. FORMATTING: Return ONLY the code for the test file. Do not include markdown conversational filler. 
-   The output must be a raw code block ready to be saved as a test file (e.g., 'test_solution.cpp' 
-   or 'test_solution.py').
-5. CLARITY: Each test method should have a descriptive name reflecting the scenario being tested 
-   (e.g., 'test_empty_input', 'test_large_value_constraint').
-6. IMPORT REQUIREMENT: The solution will be saved in a file named 'solution_{id}_1.{ext}'. 
-   Your test file must import the 'Solution' class from this specific file. 
-   - For Python: Use 'from solution_{id}_1 import Solution'.
-   - For C++: Use '#include "solution_{id}_1.cpp"'.
-7. NO MAIN FUNCTION: Do not include a 'main()' function in your C++ test file. The build system 
-   (CMake/gTest) provides the 'main()' function automatically. Adding one will cause build errors.
+3. INTEGRATION: Use proper assertions (e.g., EXPECT_EQ for gTest, self.assertEqual for unittest).
+4. FORMATTING: Return ONLY the code for the test file. Do not include markdown conversational filler.
+5. CLARITY: Each test method should have a descriptive name reflecting the scenario being tested.
+6. DYNAMIC LOADING / PROXY INCLUDES:
+   - FOR PYTHON: Do not hardcode the import. Use 'importlib' to load the solution dynamically from the 
+     environment variable 'TEST_SOLUTION_FILE'. 
+     Template:
+     import os, importlib.util
+     solution_path = os.environ.get("TEST_SOLUTION_FILE")
+     spec = importlib.util.spec_from_file_location("Solution", solution_path)
+     sol_module = importlib.util.module_from_spec(spec)
+     spec.loader.exec_module(sol_module)
+     Solution = sol_module.Solution
+
+   - FOR C++: Do not hardcode the include path. Use a generic proxy header.
+     Template:
+     #include "solution_proxy.h"
+     // The build system will ensure 'solution_proxy.h' includes the correct file.
+
+7. NO MAIN FUNCTION: Do not include a 'main()' function in your C++ test file.
 """
 
 

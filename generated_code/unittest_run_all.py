@@ -31,7 +31,7 @@ import re
 import shutil
 from pathlib import Path
 
-PY_UNITTESTS_DIR = "py/"
+PY_UNITTESTS_DIR = "python/"
 CPP_UNITTESTS_DIR = "cpp/"
 
 PY_UNITTEST_RESULTS_FILE = "python_test_results.json"
@@ -190,50 +190,53 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
     Returns:
         int: The number of tests that were added to the results.
     """
-    results = []    
-    tests_added = 0
-    # Search for test files
-    files: list[Path] = list(Path(unittest_files_dir).glob("test_unittest_*.py"))
+    # 1. Structure to hold results grouped by ID
+    problem_map = {}
+    
+    # 2. Get all solution files (e.g., solution_1_1.py, solution_1_2.py)
+    # Sort them to ensure attempts are processed in order
+    solution_files = sorted(Path(unittest_files_dir).glob("solution_*.py"))
 
-    for file in files:
-        match = re.search(r"unittest_(\d+)", file.name)
-        if not match:
-            continue
-        problem_id = match.group(1)
+    for sol_file in solution_files:
+        match = re.search(r"solution_(\d+)_(\d+)", sol_file.name)
+        if not match: continue
         
-        meta = get_metadata(problem_id)
+        prob_id, attempt_num = match.group(1), match.group(2)
         
-        # FIX: Run via the unittest module. 
-        # This forces the test suite to execute and provides reliable exit codes.
-        # 0: Success
-        # 1: Test failed (AssertionError)
-        # 2: Error (Runtime/Import/Syntax error)
-        cmd = ["python3", "-m", "unittest", file.name]
-        proc = subprocess.run(cmd, capture_output=True, text=True, cwd=unittest_files_dir)
-
-        if proc.returncode == 0:
-            result = "pass"
-            error_type = "None"
-        else:
-            result = "failed"
-            error_type = classify_python_error(proc.stderr)
-
-        results.append({
-            "id": problem_id,
-            "result": result,
-            "error_type": error_type,
-            "difficulty": meta.get("difficulty"),
-            "examples_count": len(meta.get("examples", [])),
-            "constraints_count": len(meta.get("constraints", [])),
-            # Capture stderr for both assertions and crashes
+        # 3. Initialize entry if ID not seen yet
+        if prob_id not in problem_map:
+            meta = get_metadata(prob_id)
+            problem_map[prob_id] = {
+                "id": prob_id,
+                "difficulty": meta.get("difficulty"),
+                "examples_count": len(meta.get("examples", [])),
+                "constraints_count": len(meta.get("constraints", [])),
+                "attempts": []
+            }
+        
+        # 4. Prepare execution environment
+        # Point to the existing unittest file for this specific ID
+        test_file = Path(unittest_files_dir) / f"test_unittest_{prob_id}.py"
+        
+        # Pass the specific solution file path to the test via environment variable
+        env = os.environ.copy()
+        env["TEST_SOLUTION_FILE"] = str(sol_file.absolute())
+        
+        # 5. Run test
+        cmd = ["python3", "-m", "unittest", str(test_file)]
+        proc = subprocess.run(cmd, capture_output=True, text=True, env=env)
+        
+        # 6. Store attempt result
+        problem_map[prob_id]["attempts"].append({
+            "attempt_number": int(attempt_num),
+            "result": "pass" if proc.returncode == 0 else "failed",
+            "error_type": classify_python_error(proc.stderr) if proc.returncode != 0 else "None",
             "raw_stderr": proc.stderr if proc.returncode != 0 else ""
         })
-        tests_added += 1
-        
+
+    # 7. Convert map back to list for final JSON output
     with open(output_file_path, "w") as f:
-        json.dump(results, f, indent=4)
-    
-    return tests_added
+        json.dump(list(problem_map.values()), f, indent=4)
 
 
 def evaluate_cpp_test_results(result_file_path: str):
