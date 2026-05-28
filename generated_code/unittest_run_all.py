@@ -50,24 +50,6 @@ def get_metadata(problem_id):
         return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
     return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
 
-def extract_compiler_error(build_log: str, source_filename: str) -> str:
-    """
-    Collects every line in the build log that references the specific source file.
-    """
-    filename = os.path.basename(source_filename)
-    lines = build_log.splitlines()
-    
-    # Filter for lines that mention the file and keep a small window of context (e.g., +2 lines)
-    error_lines = []
-    for i, line in enumerate(lines):
-        if filename in line:
-            # Add the error line
-            error_lines.append(line)
-            # Optionally add the next 2 lines for context (like the caret '^')
-            error_lines.extend(lines[i+1:i+3])
-            
-    return "\n".join(error_lines)
-
 def get_error_for_file(build_log: str, source_filename: str) -> str:
     """
     Searches the full build log for the specific file and extracts relevant errors.
