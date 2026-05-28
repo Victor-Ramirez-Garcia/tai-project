@@ -183,12 +183,13 @@ def generate_program(prompt, context, is_unittest: bool) -> None:
             print(f"failed {prompt["language"]} generation for solution #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
         else:
             print(f"failed {prompt["language"]} generation for unittest #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
-        wait_for_new_page()
+        time.sleep(WAIT_FOR_NEW_PAGE)
     WAIT_FOR_NEW_PAGE = wait_for_new_page()
     if is_unittest == False:
         print(f"success {prompt["language"]} generation for solution #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
     else:
         print(f"success {prompt["language"]} generation for unittest #{prompt["leetcode-problem-id"]} (wait for {WAIT_FOR_NEW_PAGE} seconds)")
+    time.sleep(WAIT_FOR_NEW_PAGE)
 
 def process_prompt(prompt):
     with sync_playwright() as p:
