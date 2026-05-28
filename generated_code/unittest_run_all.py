@@ -19,7 +19,7 @@ unittest_run_all.py
         - The number of tests passed, failed
         - Which failures were caused by Syntax, Runtime, or Logical/Assertion errors
         - What was the leetcode `difficulty` for each of the passed or failed test
-        - What were the leetcode `tags` for each of the the passed or failed test
+        - What were the leetcode `tags` for each ofjthe the passed or failed test
         - How many leetcode `examples` were provided for each of the passed or failed test
         - How many leetcode `constraints` were provided for each of the passed or failed test
 """
@@ -30,6 +30,7 @@ import subprocess
 import re
 import shutil
 from pathlib import Path
+import time
 
 PY_UNITTESTS_DIR = "python/"
 CPP_UNITTESTS_DIR = "cpp/"
@@ -65,12 +66,6 @@ def get_error_for_file(build_log: str, source_filename: str) -> str:
     if match:
         return match.group(1).strip()
     return "Compilation failed. Check build logs for details."
-import os
-import re
-import json
-import subprocess
-import shutil
-from pathlib import Path
 
 def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     source_dir = Path(unittest_files_dir)
@@ -101,19 +96,36 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
                 "attempts": []
             }
 
-        # 2. Swap the Proxy Header
-        # This tells C++ which solution file to include in the next build
+        # 1. Swap the Proxy Header
         with open(proxy_header, "w") as f:
             f.write(f'#include "{sol_file.name}"')
+            f.flush()            # Flush Python's internal buffer
+            os.fsync(f.fileno()) # Force the OS to write to disk
             
-        # 3. Build only the specific test binary for this problem_id
+        # 2. Safety Check: Verify the write
+        with open(proxy_header, "r") as f:
+            content = f.read()
+            if sol_file.name not in content:
+                raise IOError("Failed to update proxy header correctly!")
+
+        # 3. Aggressive Clean: Remove only the directory associated with the build
+        # This forces CMake to re-evaluate dependencies without nuking the whole build dir
+        # (This path depends on your CMake structure, adjust if needed)
+        cmake_files_dir = build_dir / "CMakeFiles"
+        if cmake_files_dir.exists():
+            # Deleting the specific target's directory or the whole folder
+            # If performance is an issue, just delete the specific target's .o file
+            # For total reliability, delete the directory:
+            shutil.rmtree(cmake_files_dir)
+
+        # 4. Build the test binary
         binary_name = f"run_test_unittest_{prob_id}"
         build_result = subprocess.run(
             ["cmake", "--build", str(build_dir), "--target", binary_name], 
             capture_output=True, text=True
         )
         
-        # 4. Execute and Record
+        # 5. Execute and Record
         if build_result.returncode == 0:
             binary_path = build_dir / binary_name
             proc = subprocess.run([str(binary_path)], capture_output=True, text=True)

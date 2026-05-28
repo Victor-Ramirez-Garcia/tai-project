@@ -1,0 +1,42 @@
+[
+    {
+        "id": "1",
+        "difficulty": "Easy",
+        "examples_count": 3,
+        "constraints_count": 4,
+        "attempts": [
+            {
+                "attempt_number": 1,
+                "result": "pass",
+                "error_type": "None",
+                "raw_stderr": ""
+            },
+            {
+                "attempt_number": 2,
+                "result": "failed",
+                "error_type": "Assertion Failure",
+                "raw_stderr": ""
+            },
+            {
+                "attempt_number": 3,
+                "result": "failed",
+                "error_type": "Syntax/Compilation Error",
+                "raw_stderr": "In file included from /Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_1.cpp:2:\nIn file included from /Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_proxy.h:1:\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_1_3.cpp:7:16: error: use of undeclared identifier 'a'\n        return a\"Hello World!\";\n               ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_1_3.cpp:7:17: error: expected ';' after return statement\n        return a\"Hello World!\";\n                ^\n                ;\n2 errors generated.\nmake[3]: *** [CMakeFiles/run_test_unittest_1.dir/test_unittest_1.cpp.o] Error 1\nmake[2]: *** [CMakeFiles/run_test_unittest_1.dir/all] Error 2\nmake[1]: *** [CMakeFiles/run_test_unittest_1.dir/rule] Error 2\nmake: *** [run_test_unittest_1] Error 2\n"
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "difficulty": "Medium",
+        "examples_count": 3,
+        "constraints_count": 3,
+        "attempts": [
+            {
+                "attempt_number": 1,
+                "result": "failed",
+                "error_type": "Syntax/Compilation Error",
+                "raw_stderr": "In file included from /Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:3:\nIn file included from /Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_proxy.h:1:\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_2_1.cpp:13:5: error: unknown type name 'ListNode'\n    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {\n    ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_2_1.cpp:13:29: error: unknown type name 'ListNode'\n    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {\n                            ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_2_1.cpp:13:43: error: unknown type name 'ListNode'\n    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {\n                                          ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_2_1.cpp:15:9: error: unknown type name 'ListNode'\n        ListNode dummyHead(0);\n        ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_2_1.cpp:16:9: error: unknown type name 'ListNode'\n        ListNode* curr = &dummyHead;\n        ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/solution_2_1.cpp:35:30: error: unknown type name 'ListNode'\n            curr->next = new ListNode(sum % 10);\n                             ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:6:1: error: unknown type name 'ListNode'\nListNode* createList(const std::vector<int>& nums) {\n^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:8:5: error: unknown type name 'ListNode'\n    ListNode* head = new ListNode(nums[0]);\n    ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:8:26: error: unknown type name 'ListNode'\n    ListNode* head = new ListNode(nums[0]);\n                         ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:9:5: error: unknown type name 'ListNode'\n    ListNode* curr = head;\n    ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:11:26: error: unknown type name 'ListNode'\n        curr->next = new ListNode(nums[i]);\n                         ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:18:31: error: unknown type name 'ListNode'\nstd::vector<int> listToVector(ListNode* head) {\n                              ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:20:5: error: unknown type name 'ListNode'\n    ListNode* curr = head;\n    ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:29:15: error: unknown type name 'ListNode'\nvoid freeList(ListNode* head) {\n              ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:31:9: error: unknown type name 'ListNode'\n        ListNode* temp = head;\n        ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:44:5: error: unknown type name 'ListNode'\n    ListNode* l1 = createList({2, 4, 3});\n    ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:45:5: error: unknown type name 'ListNode'\n    ListNode* l2 = createList({5, 6, 4});\n    ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:47:5: error: unknown type name 'ListNode'\n    ListNode* result = solution.addTwoNumbers(l1, l2);\n    ^\n/Users/arturagalarian/PSU/CS401/tai-project/generated_code/cpp/test_unittest_2.cpp:59:5: error: unknown type name 'ListNode'\n    ListNode* l1 = createList({0});\n    ^\nfatal error: too many errors emitted, stopping now [-ferror-limit=]\n20 errors generated.\nmake[3]: *** [CMakeFiles/run_test_unittest_2.dir/test_unittest_2.cpp.o] Error 1\nmake[2]: *** [CMakeFiles/run_test_unittest_2.dir/all] Error 2\nmake[1]: *** [CMakeFiles/run_test_unittest_2.dir/rule] Error 2\nmake: *** [run_test_unittest_2] Error 2\n"
+            }
+        ]
+    }
+]
