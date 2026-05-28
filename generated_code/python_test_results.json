@@ -3,72 +3,18 @@
         "id": "2",
         "result": "failed",
         "error_type": "Syntax/Import/Runtime Error",
-        "difficulty": "Medium",
-        "examples_count": 3,
-        "constraints_count": 3,
-        "raw_stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/__main__.py\", line 18, in <module>\n    main(module=None)\n    ~~~~^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/main.py\", line 103, in __init__\n    self.parseArgs(argv)\n    ~~~~~~~~~~~~~~^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/main.py\", line 142, in parseArgs\n    self.createTests()\n    ~~~~~~~~~~~~~~~~^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/main.py\", line 153, in createTests\n    self.test = self.testLoader.loadTestsFromNames(self.testNames,\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n                                                   self.module)\n                                                   ^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/loader.py\", line 207, in loadTestsFromNames\n    suites = [self.loadTestsFromName(name, module) for name in names]\n              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/test_unittest_2.py\", line 3, in <module>\n    from solution_2_1 import Solution\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/solution_2_1.py\", line 6, in <module>\n    class Solution:\n    ...<28 lines>...\n            return dummy_head.next\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/solution_2_1.py\", line 7, in Solution\n    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:\n                                ^^^^^^^^\nNameError: name 'Optional' is not defined\n"
+        "difficulty": "Unknown",
+        "examples_count": 0,
+        "constraints_count": 0,
+        "raw_stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/__main__.py\", line 18, in <module>\n    main(module=None)\n    ~~~~^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/main.py\", line 103, in __init__\n    self.parseArgs(argv)\n    ~~~~~~~~~~~~~~^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/main.py\", line 142, in parseArgs\n    self.createTests()\n    ~~~~~~~~~~~~~~~~^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/main.py\", line 153, in createTests\n    self.test = self.testLoader.loadTestsFromNames(self.testNames,\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n                                                   self.module)\n                                                   ^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/loader.py\", line 207, in loadTestsFromNames\n    suites = [self.loadTestsFromName(name, module) for name in names]\n              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/python/test_unittest_2.py\", line 3, in <module>\n    from solution_2_1 import Solution\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/python/solution_2_1.py\", line 6, in <module>\n    class Solution:\n    ...<28 lines>...\n            return dummy_head.next\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/python/solution_2_1.py\", line 7, in Solution\n    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:\n                                ^^^^^^^^\nNameError: name 'Optional' is not defined\n"
     },
     {
-        "id": "2",
-        "difficulty": "Medium",
-        "examples_count": 3,
-        "constraints_count": 3,
-        "attempts":
-        [
-            {
-                "attempt_number": 1,
-                "result": "failed",
-                "error_type": "Syntax/Import/Runtime Error",
-                "raw_stderr": "..."
-            },
-            {
-                "attempt_number": 2,
-                "result": "failed",
-                "error_type": "Assertion Failure",
-                "raw_stderr": "..."
-            },
-            {
-                "attempt_number": 3,
-                "result": "pass",
-                "error_type": "None",
-                "raw_stderr": ""
-            }
-        ]
-    },
-    {
-        "id": "3",
-        "result": "pass",
-        "error_type": "None",
-        "difficulty": "Medium",
-        "examples_count": 3,
-        "constraints_count": 2,
-        "raw_stderr": ""
-    },
-    {
-        "id": "0",
+        "id": "1",
         "result": "pass",
         "error_type": "None",
         "difficulty": "Unknown",
         "examples_count": 0,
         "constraints_count": 0,
         "raw_stderr": ""
-    },
-    {
-        "id": "1",
-        "result": "failed",
-        "error_type": "Syntax/Import/Runtime Error",
-        "difficulty": "Easy",
-        "examples_count": 3,
-        "constraints_count": 4,
-        "raw_stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/__main__.py\", line 18, in <module>\n    main(module=None)\n    ~~~~^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/main.py\", line 103, in __init__\n    self.parseArgs(argv)\n    ~~~~~~~~~~~~~~^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/main.py\", line 142, in parseArgs\n    self.createTests()\n    ~~~~~~~~~~~~~~~~^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/main.py\", line 153, in createTests\n    self.test = self.testLoader.loadTestsFromNames(self.testNames,\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n                                                   self.module)\n                                                   ^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/loader.py\", line 207, in loadTestsFromNames\n    suites = [self.loadTestsFromName(name, module) for name in names]\n              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/test_unittest_1.py\", line 2, in <module>\n    from solution_1_1 import Solution\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/solution_1_1.py\", line 1, in <module>\n    class Solution:\n    ...<14 lines>...\n                num_to_index[num] = index\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/solution_1_1.py\", line 2, in Solution\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n                           ^^^^\nNameError: name 'List' is not defined. Did you mean: 'list'?\n"
-    },
-    {
-        "id": "5",
-        "result": "failed",
-        "error_type": "Assertion Failure",
-        "difficulty": "Medium",
-        "examples_count": 2,
-        "constraints_count": 2,
-        "raw_stderr": "F\n======================================================================\nFAIL: test_python_code (test_unittest_5.TestGeneratedCode.test_python_code)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/py/test_unittest_5.py\", line 7, in test_python_code\n    self.assertEqual(solution.foo(), \"a\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'Hello, Another World!' != 'a'\n- Hello, Another World!\n+ a\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n"
     }
 ]

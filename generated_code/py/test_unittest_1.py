@@ -1,5 +1,5 @@
 import unittest
-from solution_0_1 import Solution
+from solution_1_1 import Solution
 
 class TestGeneratedCode(unittest.TestCase):
     def test_python_code(self):
