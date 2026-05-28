@@ -139,7 +139,7 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
                 "attempt_number": int(attempt_num),
                 "result": attempt_result,
                 "error_type": "None" if proc.returncode == 0 else "Assertion Failure",
-                "raw_stderr": proc.stderr if proc.returncode != 0 else ""
+                "raw_stderr": proc.stdout
             })
         else:
             attempt_result = "failed"
