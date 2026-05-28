@@ -28,6 +28,7 @@ import os
 import json
 import subprocess
 import re
+import shutil
 from pathlib import Path
 
 PY_UNITTESTS_DIR = "py/"
@@ -100,7 +101,8 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str) -> i
 
     # 1. Ensure project is configured
     if not (build_dir / "CMakeCache.txt").exists():
-        build_dir.rmdir(parents=True, exist_ok=True)
+        if os.path.exists(build_dir):
+            shutil.rmtree(build_dir)
         build_dir.mkdir(parents=True, exist_ok=True)
         subprocess.run(["cmake", "-S", str(source_dir), "-B", str(build_dir)], capture_output=True)
 
