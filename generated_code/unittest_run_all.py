@@ -46,7 +46,7 @@ This file retrieves the LLM's code attempts at solving the leetcode problems and
         - Difficulty vs failure type
         - Python vs C++ comparison
         - First-attempt success rate
-        -Failure progression analysis
+        - Failure progression analysis
         - Constraint complexity correlation
         - Examples/constraints impact on correctness
     - The evaluation report should include metrics such as 
@@ -66,6 +66,8 @@ import re
 import shutil
 from pathlib import Path
 import time
+import pandas as pd
+
 
 PY_UNITTESTS_DIR = "python/"
 CPP_UNITTESTS_DIR = "cpp/"
@@ -112,9 +114,11 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     # 1. Ensure build directory exists
     if build_dir.exists():
         shutil.rmtree(build_dir)
+        print("Flushed the `build/` directory.")
 
     build_dir.mkdir(parents=True)
     subprocess.run(["cmake", "-S", str(source_dir), "-B", str(build_dir)], check=True)
+    print("Compiled the unittests.")
 
     problem_map = {}
     solution_files = sorted(list(source_dir.glob("solution_*.cpp")))
@@ -430,8 +434,38 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
     with open(FINAL_UNITTEST_RESULTS_FILE, "w") as f:
         json.dump(merged_results, f, indent=4)
 
-    return len(merged_results)
+    return merged_results
 
+def generate_dataframe(merged_results: list) -> pd.DataFrame:
+    """
+
+    Returns:
+        int: total records/rows stored
+    """
+
+    attempt_rows = []
+
+    for problem in merged_results:
+
+        for language in ["python", "cpp"]:
+
+            lang_data = problem[language]
+
+            for attempt in lang_data["attempts"]:
+
+                attempt_rows.append({
+                    "id": problem["id"],
+                    "language": language,
+                    "difficulty": problem["difficulty"],
+                    "examples_count": problem["examples_count"],
+                    "constraints_count": problem["constraints_count"],
+                    "tags": problem["tags"],
+
+                    "attempt_number": attempt["attempt_number"],
+                    "result": attempt["result"],
+                    "error_type": attempt["error_type"]
+                })
+    attempt_df: pd.Dataframe = pd.DataFrame(attempt_rows)
 
 def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str):
     """
@@ -440,8 +474,6 @@ def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str)
     This function should be implemented to compile the evaluation results from both
     C++ and Python tests into a comprehensive summary report.
     """
-
-    
     pass
 
 def generate_graph_report(result_file_path_cpp: str, result_file_path_py: str):
@@ -466,8 +498,13 @@ def main():
     tests_added_cpp = run_and_store_cpp_tests(CPP_UNITTESTS_DIR, CPP_UNITTEST_RESULTS_FILE)
     print(f"Added {tests_added_cpp} C++ tests to results.")
 
-    tests_added_total: int = merge_test_results(python_results_source=PY_UNITTEST_RESULTS_FILE, cpp_results_source=CPP_UNITTEST_RESULTS_FILE)
-    print(f"Merged {tests_added_total} tests in total.")
+    print("Merging C++ and Python unit test results...")
+    merged_results: list = merge_test_results(python_results_source=PY_UNITTEST_RESULTS_FILE, 
+    cpp_results_source=CPP_UNITTEST_RESULTS_FILE)
+    print(f"Merged {len(tests_added_total)} tests in total.")
+
+    print("Converting final results into the dataframe...")
+    
 
     """
     print("Generating summary report..")
