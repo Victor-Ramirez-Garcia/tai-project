@@ -1,11 +1,13 @@
 """
 unittest_run_all.py
 
+This file retrieves the LLM's code attempts at solving the leetcode problems and unittest results for each attempt. Goal is to run the unittests, analyze and store the results, and perform analysis of the results with some additional graphical visualizations of the analysis. The analysis aims to show where the LLM has struggled the most and least to solve leetcode problems, and what metrics (difficulty, tags, constraints) have contributed to the result.
+
 - Runs unit tests for all generated code for both C++ and Python, separately.
     - The results should be redirected to a file, python and cpp separately, for later evaluation.
         - Since python doesn't compile the code before running, we can directly run the tests and capture the results.
         - For C++, we need to compile the code first and then run the tests, capturing the results.
-- Stores the results of each unittest in a structured JSON format for later evaluation for both C++ and Python, separately.
+- Stores the results of each solution attempt in a structured JSON format for later evaluation for both C++ and Python, separately.
     - Each stored record should include the following information:
     - Leetcode Id
     - Result (pass/failed)
@@ -13,8 +15,40 @@ unittest_run_all.py
     - Difficulty
     - Number of examples provided
     - Number of constraints provided
+    - etc
+
+    Structure of each leetcode problem result stored in cpp/python json array
+    ```json
+    {
+        "id": <leetcode_problem_id>,
+        "difficulty": <difficulty of said leetcode problem>,
+        "examples_count": <number examples given for said leetcode problem>,
+        "constraints_count": <constraint rules given for each leetcode problem>,
+        "tags": <list of tags/types of problems>,
+        "attempts": [
+            {
+                "attempt_number": <attempt number>,
+                "result": <pass or failure,
+                "error_type": <Either no error, assertion error, or any syntax/runtime/import errors>,
+                "raw_stderr": <raw output>
+            },
+        ],
+        "total_attempts": <total attempts made to solve the problem>,
+        "failed_attempts": <if attempts were failed, how many failed attempts>
+        "passed_attempts": <if attempts were passed, how many passed attempts>
+    },
+    ```
     
-- Evaluates the results of the tests and generates a summary or report for both C++ and Python, separately.
+    
+- Evaluates the results of the tests and generates a summary or report of the results
+    - Important list of analysis metrics
+        - Tag vs success rate
+        - Difficulty vs failure type
+        - Python vs C++ comparison
+        - First-attempt success rate
+        -Failure progression analysis
+        - Constraint complexity correlation
+        - Examples/constraints impact on correctness
     - The evaluation report should include metrics such as 
         - The number of tests passed, failed
         - Which failures were caused by Syntax, Runtime, or Logical/Assertion errors
@@ -22,6 +56,7 @@ unittest_run_all.py
         - What were the leetcode `tags` for each ofjthe the passed or failed test
         - How many leetcode `examples` were provided for each of the passed or failed test
         - How many leetcode `constraints` were provided for each of the passed or failed test
+    - Creates graphs for each type of analysis
 """
 
 import os
