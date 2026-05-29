@@ -109,9 +109,11 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     tests_added = 0
     
     # 1. Ensure build directory exists
-    if not build_dir.exists():
-        build_dir.mkdir(parents=True)
-        subprocess.run(["cmake", "-S", str(source_dir), "-B", str(build_dir)], check=True)
+    if build_dir.exists():
+        shutil.rmtree(build_dir)
+
+    build_dir.mkdir(parents=True)
+    subprocess.run(["cmake", "-S", str(source_dir), "-B", str(build_dir)], check=True)
 
     problem_map = {}
     solution_files = sorted(list(source_dir.glob("solution_*.cpp")))
