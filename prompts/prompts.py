@@ -1,4 +1,5 @@
 import json
+import os
 
 PROBLEMS_FILE_LOCATION = "../problem_extraction/leetcode_library.json"
 PROMPT_FILE_LOCATION = "prompts.json"
@@ -117,6 +118,10 @@ def process_problems(input_filename, output_filename) -> int:
 	            "file_counter": 0,
             })
         
+    if os.path.exists(output_filename):
+        print(f"Flushing old {output_filename}")
+        os.remove(output_filename)
+
     # 4. Save the final list as a valid JSON array
     with open(output_filename, "w", encoding="utf-8") as f:
         json.dump(output_list, f, indent=4)
