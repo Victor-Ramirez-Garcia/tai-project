@@ -76,7 +76,6 @@ def process_problems(input_filename, output_filename) -> int:
     # 3. Loop through each object
     for entry in input_data:
         # Here you can filter, transform, or log the data
-        print(f"Processing ID: {entry.get('id')}")
         
         starter_code = entry.get("starter_code", {})
 
