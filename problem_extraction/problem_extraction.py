@@ -14,7 +14,9 @@ for problem in my_problems:
     print(f"Working on: {problem['title']}")
 """
 
-def save_to_library(problem_data, filename="leetcode_library.json"):
+OUTPUT_LIBRARY_FILE: str = "leetcode_library.json" 
+
+def save_to_library(problem_data, filename=OUTPUT_LIBRARY_FILE) -> bool:
     """
     Appends a new problem to a JSON file. 
     If the file exists, it loads it, appends the new entry, and saves it.
@@ -35,8 +37,10 @@ def save_to_library(problem_data, filename="leetcode_library.json"):
         with open(filename, "w") as f:
             json.dump(library, f, indent=4)
         print(f"Successfully added '{problem_data['title']}' to {filename}")
+        return True
     else:
         print(f"Problem '{problem_data['title']}' is already in the library.")
+        return False
 
 def get_leetcode_problem_structured(url):
     slug = url.rstrip('/').split('/')[-1]
@@ -121,7 +125,17 @@ def clean_text(text):
 with open("urls.txt", "r") as f:
     problem_urls = [line.strip() for line in f if line.strip()]
 
+if os.path.exists(OUTPUT_LIBRARY_FILE):
+    print(f"Flushing old {OUTPUT_LIBRARY_FILE}")
+    os.remove(OUTPUT_LIBRARY_FILE)
+
+total_problems = len(problem_urls)
+saved_problems = 0
 for url in problem_urls:
     data = get_leetcode_problem_structured(url)
     if data:
-        save_to_library(data)
+        did_add = save_to_library(data)
+        if did_add:
+            saved_problems += 1
+
+print(f"Saved {saved_problems}/{total_problems} leetcode problems.")
