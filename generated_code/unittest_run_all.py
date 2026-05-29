@@ -71,6 +71,7 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     source_dir = Path(unittest_files_dir)
     build_dir = source_dir / "build"
     proxy_header = source_dir / "solution_proxy.h"
+    tests_added = 0
     
     # 1. Ensure build directory exists
     if not build_dir.exists():
@@ -93,6 +94,7 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
                 "difficulty": meta.get("difficulty"),
                 "examples_count": len(meta.get("examples", [])),
                 "constraints_count": len(meta.get("constraints", [])),
+                "tags": meta.get("tags", []),
                 "attempts": []
             }
 
@@ -124,29 +126,53 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
             ["cmake", "--build", str(build_dir), "--target", binary_name], 
             capture_output=True, text=True
         )
-        
+
+        attempt_result: str = None
         # 5. Execute and Record
         if build_result.returncode == 0:
             binary_path = build_dir / binary_name
             proc = subprocess.run([str(binary_path)], capture_output=True, text=True)
+
+            attempt_result = "pass" if proc.returncode == 0 else "failed"
             
             problem_map[prob_id]["attempts"].append({
                 "attempt_number": int(attempt_num),
-                "result": "pass" if proc.returncode == 0 else "failed",
+                "result": attempt_result,
                 "error_type": "None" if proc.returncode == 0 else "Assertion Failure",
-                "raw_stderr": proc.stderr if proc.returncode != 0 else ""
+                "raw_stderr": proc.stdout
             })
         else:
+            attempt_result = "failed"
             # Handle Compilation/Syntax errors
             problem_map[prob_id]["attempts"].append({
                 "attempt_number": int(attempt_num),
-                "result": "failed",
+                "result": attempt_result,
                 "error_type": "Syntax/Compilation Error",
                 "raw_stderr": build_result.stderr
             })
 
+        total_attempts = len(problem_map[prob_id]["attempts"])
+
+
+        #print('Running on problem ID:', prob_id, 'Attempt:', attempt_num, 'Result:', attempt_result)
+        problem_map[prob_id]["total_attempts"] = total_attempts
+        if attempt_result == "failed":
+            if "failed_attempts" not in problem_map[prob_id]:
+                problem_map[prob_id]["failed_attempts"] = 1
+            else:
+                problem_map[prob_id]["failed_attempts"] += 1
+        elif attempt_result == "pass":
+            if "passed_attempts" not in problem_map[prob_id]:
+                problem_map[prob_id]["passed_attempts"] = 1
+            else:
+                problem_map[prob_id]["passed_attempts"] += 1
+
+        tests_added += 1
+
     with open(output_file_path, "w") as f:
         json.dump(list(problem_map.values()), f, indent=4)
+
+    return tests_added
 
 
 def classify_python_error(stderr: str) -> str:
@@ -188,6 +214,7 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
     """
     # 1. Structure to hold results grouped by ID
     problem_map = {}
+    tests_added = 0
     
     # 2. Get all solution files (e.g., solution_1_1.py, solution_1_2.py)
     # Sort them to ensure attempts are processed in order
@@ -207,6 +234,7 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
                 "difficulty": meta.get("difficulty"),
                 "examples_count": len(meta.get("examples", [])),
                 "constraints_count": len(meta.get("constraints", [])),
+                "tags": meta.get("tags", []),
                 "attempts": []
             }
         
@@ -222,17 +250,37 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
         cmd = ["python3", "-m", "unittest", str(test_file)]
         proc = subprocess.run(cmd, capture_output=True, text=True, env=env)
         
+        attempt_result: str = "pass" if proc.returncode == 0 else "failed"
         # 6. Store attempt result
         problem_map[prob_id]["attempts"].append({
             "attempt_number": int(attempt_num),
-            "result": "pass" if proc.returncode == 0 else "failed",
+            "result": attempt_result,
             "error_type": classify_python_error(proc.stderr) if proc.returncode != 0 else "None",
             "raw_stderr": proc.stderr if proc.returncode != 0 else ""
         })
 
+        total_attempts = len(problem_map[prob_id]["attempts"])
+
+        #print('Running on problem ID:', prob_id, 'Attempt:', attempt_num, 'Result:', attempt_result)
+        problem_map[prob_id]["total_attempts"] = total_attempts
+        if attempt_result == "failed":
+            if "failed_attempts" not in problem_map[prob_id]:
+                problem_map[prob_id]["failed_attempts"] = 1
+            else:
+                problem_map[prob_id]["failed_attempts"] += 1
+        elif attempt_result == "pass":
+            if "passed_attempts" not in problem_map[prob_id]:
+                problem_map[prob_id]["passed_attempts"] = 1
+            else:
+                problem_map[prob_id]["passed_attempts"] += 1
+
+        tests_added += 1
+
     # 7. Convert map back to list for final JSON output
     with open(output_file_path, "w") as f:
         json.dump(list(problem_map.values()), f, indent=4)
+
+    return tests_added
 
 
 def evaluate_cpp_test_results(result_file_path: str):
