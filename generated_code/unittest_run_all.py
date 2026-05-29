@@ -67,6 +67,8 @@ import shutil
 from pathlib import Path
 import time
 import pandas as pd
+from pathlib import Path
+import matplotlib.pyplot as plt
 import argparse
 
 
@@ -76,6 +78,7 @@ CPP_UNITTESTS_DIR = "cpp/"
 PY_UNITTEST_RESULTS_FILE = "python_test_results.json"
 CPP_UNITTEST_RESULTS_FILE = "cpp_test_results.json"
 FINAL_UNITTEST_RESULTS_FILE = "test_results.json"
+GRAPH_OUTPUT_DIR = Path("analysis/figures")
 
 # Helper to load library metadata
 def get_metadata(problem_id):
@@ -510,11 +513,11 @@ def generate_problem_dataframe(merged_results):
                 "passed_attempts": lang_data["passed_attempts"],
                 "failed_attempts": lang_data["failed_attempts"]
             })
-    problem_df = pd.DataFrame(problem_rows)
-    problem_df = problem_df.explode("tags")
-    problem_df.attrs['name'] = 'Leetcode Problems Results'
+    problems_df = pd.DataFrame(problem_rows)
+    problems_df = problems_df.explode("tags")
+    problems_df.attrs['name'] = 'Leetcode Problems Results'
 
-    return problem_df
+    return problems_df
 
 def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str):
     """
@@ -525,15 +528,112 @@ def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str)
     """
     pass
 
-def generate_graph_report(result_file_path_cpp: str, result_file_path_py: str):
+def save_current_figure(filename: str) -> None:
     """
-    Generates a graphical report for both C++ and Python unit tests using numpy graphs.
-
-    This function should be implemented to create visual representations (e.g., charts, graphs)
-    of the test results for better insights.
+    Saves the current matplotlib figure and closes it.
     """
-    pass
 
+    GRAPH_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    plt.tight_layout()
+    plt.savefig(GRAPH_OUTPUT_DIR / filename)
+    plt.close()
+
+def generate_graph_report(
+    attempt_df: pd.DataFrame,
+    problems_df: pd.DataFrame
+) -> None:
+    """
+    Generates graphical analysis reports and saves them to disk.
+    """
+
+    GRAPH_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # --------------------------------------------------
+    # Python vs C++ Success Rate
+    # --------------------------------------------------
+
+    language_success = (
+        problems_df
+        .groupby("language")["eventually_passed"]
+        .mean()
+        .sort_index()
+    )
+
+    plt.figure(figsize=(8, 5))
+
+    language_success.plot(kind="bar")
+
+    plt.ylabel("Success Rate")
+    plt.xlabel("Language")
+    plt.title("Python vs C++ Success Rate")
+
+    save_current_figure("language_success_rate.png")
+
+    # --------------------------------------------------
+    # First Attempt Success Rate
+    # --------------------------------------------------
+
+    first_try_success = (
+        problems_df
+        .groupby("language")["first_try_success"]
+        .mean()
+        .sort_index()
+    )
+
+    plt.figure(figsize=(8, 5))
+
+    first_try_success.plot(kind="bar")
+
+    plt.ylabel("First Attempt Success Rate")
+    plt.xlabel("Language")
+    plt.title("First Attempt Success Rate")
+
+    save_current_figure("first_attempt_success_rate.png")
+
+    # --------------------------------------------------
+    # Difficulty vs Failure Type
+    # --------------------------------------------------
+
+    difficulty_failures = (
+        attempt_df[attempt_df["result"] == "failed"]
+        .groupby(["difficulty", "error_type"])
+        .size()
+        .unstack(fill_value=0)
+    )
+
+    plt.figure(figsize=(10, 6))
+
+    difficulty_failures.plot(kind="bar", stacked=True)
+
+    plt.ylabel("Failure Count")
+    plt.xlabel("Difficulty")
+    plt.title("Difficulty vs Failure Type")
+
+    save_current_figure("difficulty_vs_failure_type.png")
+
+    # --------------------------------------------------
+    # Tag vs Success Rate
+    # --------------------------------------------------
+
+    tag_success = (
+        problems_df
+        .groupby("tags")["eventually_passed"]
+        .mean()
+        .sort_values(ascending=False)
+    )
+
+    plt.figure(figsize=(12, 6))
+
+    tag_success.plot(kind="bar")
+
+    plt.ylabel("Success Rate")
+    plt.xlabel("Tag")
+    plt.title("Tag vs Success Rate")
+
+    save_current_figure("tag_success_rate.png")
+
+    print(f"Saved graphs to: {GRAPH_OUTPUT_DIR}")
 
 def run_and_store_unittests_separately() -> int:
     """
@@ -583,18 +683,19 @@ def main():
     print(f"Created attempt dataframe with {len(attempts_df)} rows")
 
     print("Converting problems into the dataframe...")
-    problem_df = generate_problem_dataframe(merged_results)
-    print(f"Created problem dataframe with {len(attempts_df)} rows")
+    problems_df = generate_problem_dataframe(merged_results)
+    print(f"Created problem dataframe with {len(problems_df)} rows")
 
     print_dataframe(attempts_df, 10)
-    print_dataframe(problem_df, 10)
+    print_dataframe(problems_df, 10)
+
     """
     print("Generating summary report..")
     generate_summary_report(CPP_UNITTEST_RESULTS_FILE, PY_UNITTEST_RESULTS_FILE)
-
-    generate_graph_report(CPP_UNITTEST_RESULTS_FILE, PY_UNITTEST_RESULTS_FILE)
-    print("Summary report generated.")
     """
+
+    generate_graph_report(attempts_df, problems_df)
+    print("Summary report generated.")
 
 if __name__ == "__main__":
     main()
