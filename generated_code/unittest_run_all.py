@@ -72,6 +72,7 @@ CPP_UNITTESTS_DIR = "cpp/"
 
 PY_UNITTEST_RESULTS_FILE = "python_test_results.json"
 CPP_UNITTEST_RESULTS_FILE = "cpp_test_results.json"
+FINAL_UNITTEST_RESULTS_FILE = "test_results.json"
 
 # Helper to load library metadata
 def get_metadata(problem_id):
@@ -319,23 +320,118 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
 
     return tests_added
 
+def merge_test_results(python_results_source: str, cpp_results_source) -> int:
+    """
+    Merges the results of cpp and python unittest runs on each leetcode problem into a single file
 
-def evaluate_cpp_test_results(result_file_path: str):
+    Args:
+        python_results_source (str): file path to the python unittest results
+        cpp_results_source (str): file path to the cpp unittest results 
+    
+    Returns: 
+        The amount of records stored in the final results file `FINAL_UNITTEST_RESULTS_FILE`
     """
-    Evaluates the results of the C++ unit tests.
+    python_results = None
+    cpp_results = None
+    with open(python_results_source, "r") as f:
+        python_results = json.load(f)
 
-    This function should be implemented to analyze the stored C++ test results
-    and generate a summary or report.
-    """
-    pass
+    with open(cpp_results_source, "r") as f:
+        cpp_results = json.load(f)
 
-def evaluate_python_test_results(result_file_path: str):
-    """
-    Evaluates the results of the Python unit tests.
-    This function should be implemented to analyze the stored Python test results
-    and generate a summary or report.
-    """
-    pass
+    # -----------------------------
+    # Merge each problem
+    # -----------------------------
+
+    python_by_id = {
+        record["id"]: record
+        for record in python_results
+    }
+
+    cpp_by_id = {
+        record["id"]: record
+        for record in cpp_results
+    }
+
+    # -----------------------------
+    # Union of all problem ids
+    # -----------------------------
+
+    all_problem_ids = set(python_by_id.keys()) | set(cpp_by_id.keys())
+
+    merged_results = []
+
+    # -----------------------------
+    # Merge each problem
+    # -----------------------------
+
+    for problem_id in sorted(all_problem_ids):
+
+        py_record = python_by_id.get(problem_id)
+        cpp_record = cpp_by_id.get(problem_id)
+
+        # Use whichever exists for metadata
+        metadata_source = py_record or cpp_record
+
+        merged_entry = {
+            "id": problem_id,
+            "difficulty": metadata_source.get("difficulty"),
+            "examples_count": metadata_source.get("examples_count"),
+            "constraints_count": metadata_source.get("constraints_count"),
+            "tags": metadata_source.get("tags", []),
+
+            "python": {
+                "attempts": [],
+                "total_attempts": 0,
+                "passed_attempts": 0,
+                "failed_attempts": 0
+            },
+
+            "cpp": {
+                "attempts": [],
+                "total_attempts": 0,
+                "passed_attempts": 0,
+                "failed_attempts": 0
+            }
+        }
+
+        # -----------------------------
+        # Insert python results
+        # -----------------------------
+
+        if py_record:
+
+            merged_entry["python"] = {
+                "attempts": py_record.get("attempts", []),
+                "total_attempts": py_record.get("total_attempts", 0),
+                "passed_attempts": py_record.get("passed_attempts", 0),
+                "failed_attempts": py_record.get("failed_attempts", 0)
+            }
+
+        # -----------------------------
+        # Insert cpp results
+        # -----------------------------
+
+        if cpp_record:
+
+            merged_entry["cpp"] = {
+                "attempts": cpp_record.get("attempts", []),
+                "total_attempts": cpp_record.get("total_attempts", 0),
+                "passed_attempts": cpp_record.get("passed_attempts", 0),
+                "failed_attempts": cpp_record.get("failed_attempts", 0)
+            }
+
+        merged_results.append(merged_entry)
+
+    # -----------------------------
+    # Save final merged dataset
+    # -----------------------------
+
+    with open(FINAL_UNITTEST_RESULTS_FILE, "w") as f:
+        json.dump(merged_results, f, indent=4)
+
+    return len(merged_results)
+
 
 def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str):
     """
@@ -344,6 +440,8 @@ def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str)
     This function should be implemented to compile the evaluation results from both
     C++ and Python tests into a comprehensive summary report.
     """
+
+    
     pass
 
 def generate_graph_report(result_file_path_cpp: str, result_file_path_py: str):
@@ -368,12 +466,10 @@ def main():
     tests_added_cpp = run_and_store_cpp_tests(CPP_UNITTESTS_DIR, CPP_UNITTEST_RESULTS_FILE)
     print(f"Added {tests_added_cpp} C++ tests to results.")
 
-    """
-    print("Evaluating Python test results...")
-    evaluate_python_test_results(PY_UNITTEST_RESULTS_FILE)
-    print("Evaluating C++ test results...")
-    evaluate_cpp_test_results(CPP_UNITTEST_RESULTS_FILE)
+    tests_added_total: int = merge_test_results(python_results_source=PY_UNITTEST_RESULTS_FILE, cpp_results_source=CPP_UNITTEST_RESULTS_FILE)
+    print(f"Merged {tests_added_total} tests in total.")
 
+    """
     print("Generating summary report..")
     generate_summary_report(CPP_UNITTEST_RESULTS_FILE, PY_UNITTEST_RESULTS_FILE)
 
