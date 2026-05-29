@@ -1,7 +1,7 @@
 import time, json, os, random
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from playwright._impl._errors import TargetClosedError
+from playwright._impl._errors import TargetClosedError, TimeoutError
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from constants import (
     BASE_DIR, SITES, LOCATOR, SELECTORS
@@ -192,6 +192,8 @@ def generate_program(prompt, context, is_unittest: bool) -> None:
     time.sleep(WAIT_FOR_NEW_PAGE)
 
 def process_prompt(prompt):
+    if prompt["file_counter"] > 3: # does not go above 3 attempts
+        return
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True) # create new headless browser (browser that does not pop up)
         context = browser.new_context() # create new browser context that doesnt share cookies/cache with other browser context
@@ -203,6 +205,8 @@ def process_prompt(prompt):
             # skip unittest if it exists (we only need one)
             if not (CODE_ROOT / UNITTEST_FILENAME).exists():
                 generate_program(prompt, context, True) # generate unittest
+        except TimeoutError:
+            pass
         finally:
             context.close() # close context
             browser.close() # close browser
