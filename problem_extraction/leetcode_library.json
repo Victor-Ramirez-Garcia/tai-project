@@ -1,0 +1,223 @@
+[
+    {
+        "id": "1895",
+        "title": "Minimum Number of Operations to Move All Balls to Each Box",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "String",
+            "Prefix Sum"
+        ],
+        "question": "You have n boxes. You are given a binary string boxes of length n, where boxes[i] is '0' if the ith box is empty, and '1' if it contains one ball.\nIn one operation, you can move one ball from a box to an adjacent box. Box i is adjacent to box j if abs(i - j) == 1. Note that after doing so, there may be more than one ball in some boxes.\nReturn an array answer of size n, where answer[i] is the minimum number of operations needed to move all the balls to the ith box.\nEach answer[i] is calculated considering the initial state of the boxes.",
+        "examples": [
+            "Input: boxes = \"110\"\nOutput: [1,1,3]\nExplanation: The answer for each box is as follows:\n1) First box: you will have to move one ball from the second box to the first box in one operation.\n2) Second box: you will have to move one ball from the first box to the second box in one operation.\n3) Third box: you will have to move one ball from the first box to the third box in two operations, and move one ball from the second box to the third box in one operation.",
+            "Input: boxes = \"001011\"\nOutput: [11,8,5,4,3,4]"
+        ],
+        "constraints": [
+            "n == boxes.length",
+            "1 <= n <= 2000",
+            "boxes[i] is either '0' or '1'."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def minOperations(self, boxes: str) -> List[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> minOperations(string boxes) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2265",
+        "title": "Partition Array According to Given Pivot",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Two Pointers",
+            "Simulation"
+        ],
+        "question": "You are given a 0-indexed integer array nums and an integer pivot. Rearrange nums such that the following conditions are satisfied:\nEvery element less than pivot appears before every element greater than pivot.\nEvery element equal to pivot appears in between the elements less than and greater than pivot.\nThe relative order of the elements less than pivot and the elements greater than pivot is maintained.\n\t\nMore formally, consider every pi, pj where pi is the new position of the ith element and pj is the new position of the jth element. If i < j and both elements are smaller (or larger) than pivot, then pi < pj.\nReturn nums after the rearrangement.",
+        "examples": [
+            "Input: nums = [9,12,5,10,14,3,10], pivot = 10\nOutput: [9,5,3,10,10,12,14]\nExplanation: \nThe elements 9, 5, and 3 are less than the pivot so they are on the left side of the array.\nThe elements 12 and 14 are greater than the pivot so they are on the right side of the array.\nThe relative ordering of the elements less than and greater than pivot is also maintained. [9, 5, 3] and [12, 14] are the respective orderings.",
+            "Input: nums = [-3,4,3,2], pivot = 2\nOutput: [-3,2,4,3]\nExplanation: \nThe element -3 is less than the pivot so it is on the left side of the array.\nThe elements 4 and 3 are greater than the pivot so they are on the right side of the array.\nThe relative ordering of the elements less than and greater than pivot is also maintained. [-3] and [4, 3] are the respective orderings."
+        ],
+        "constraints": [
+            "Every element less than pivot appears before every element greater than pivot.",
+            "Every element equal to pivot appears in between the elements less than and greater than pivot.",
+            "The relative order of the elements less than pivot and the elements greater than pivot is maintained.\n\t\nMore formally, consider every pi, pj where pi is the new position of the i^th element and pj is the new position of the j^th element. If i < j and both elements are smaller (or larger) than pivot, then pi < pj.",
+            "More formally, consider every pi, pj where pi is the new position of the i^^th element and pj is the new position of the j^^th element. If i < j and both elements are smaller (or larger) than pivot, then pi < pj."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def pivotArray(self, nums: List[int], pivot: int) -> List[int]:\n        ",
+            "cpp": "class Solution {\npublic:\n    vector<int> pivotArray(vector<int>& nums, int pivot) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3877",
+        "title": "Two-Letter Card Game",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Hash Table",
+            "String",
+            "Counting",
+            "Enumeration"
+        ],
+        "question": "You are given a deck of cards represented by a string array cards, and each card displays two lowercase letters.\nYou are also given a letter x. You play a game with the following rules:\nStart with 0 points.\nOn each turn, you must find two compatible cards from the deck that both contain the letter x in any position.\nRemove the pair of cards and earn 1 point.\nThe game ends when you can no longer find a pair of compatible cards.\nReturn the maximum number of points you can gain with optimal play.\nTwo cards are compatible if the strings differ in exactly 1 position.",
+        "examples": [],
+        "constraints": [
+            "Start with 0 points.",
+            "On each turn, you must find two compatible cards from the deck that both contain the letter x in any position.",
+            "Remove the pair of cards and earn 1 point.",
+            "The game ends when you can no longer find a pair of compatible cards."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def score(self, cards: List[str], x: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int score(vector<string>& cards, char x) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "3915",
+        "title": "Maximum Product of Two Integers With No Common Bits",
+        "difficulty": "Medium",
+        "tags": [
+            "Array",
+            "Dynamic Programming",
+            "Bit Manipulation"
+        ],
+        "question": "You are given an integer array nums.\nYour task is to find two distinct indices i and j such that the product nums[i] * nums[j] is maximized, and the binary representations of nums[i] and nums[j] do not share any common set bits.\nReturn the maximum possible product of such a pair. If no such pair exists, return 0.",
+        "examples": [],
+        "constraints": [
+            "2 <= nums.length <= 10^5",
+            "1 <= nums[i] <= 10^6"
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    long long maxProduct(vector<int>& nums) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "4087",
+        "title": "Maximum Substrings With Distinct Start",
+        "difficulty": "Medium",
+        "tags": [
+            "Hash Table",
+            "String"
+        ],
+        "question": "You are given a string s consisting of lowercase English letters.\nReturn an integer denoting the maximum number of substrings you can split s into such that each substring starts with a distinct character (i.e., no two substrings start with the same character).",
+        "examples": [],
+        "constraints": [
+            "Split \"abab\" into \"a\" and \"bab\".",
+            "Each substring starts with a distinct character i.e 'a' and 'b'. Thus, the answer is 2."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def maxDistinct(self, s: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int maxDistinct(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "1807",
+        "title": "Partitioning Into Minimum Number Of Deci-Binary Numbers",
+        "difficulty": "Medium",
+        "tags": [
+            "String",
+            "Greedy"
+        ],
+        "question": "A decimal number is called deci-binary if each of its digits is either 0 or 1 without any leading zeros. For example, 101 and 1100 are deci-binary, while 112 and 3001 are not.\nGiven a string n that represents a positive decimal integer, return the minimum number of positive deci-binary numbers needed so that they sum up to n.",
+        "examples": [
+            "Input: n = \"32\"\nOutput: 3\nExplanation: 10 + 11 + 11 = 32",
+            "Input: n = \"82734\"\nOutput: 8",
+            "Input: n = \"27346209830709182346\"\nOutput: 9"
+        ],
+        "constraints": [
+            "1 <= n.length <= 10^5",
+            "n consists of only digits.",
+            "n does not contain any leading zeros and represents a positive integer."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def minPartitions(self, n: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int minPartitions(string n) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "4220",
+        "title": "Minimum Operations to Sort a String",
+        "difficulty": "Medium",
+        "tags": [
+            "String"
+        ],
+        "question": "You are given a string s consisting of lowercase English letters.\nIn one operation, you can select any substring of s that is not the entire string and sort it in non-descending alphabetical order.\nReturn the minimum number of operations required to make s sorted in non-descending order. If it is not possible, return -1.",
+        "examples": [],
+        "constraints": [
+            "Sort substring \"og\" to \"go\".",
+            "Now, s = \"dgo\", which is sorted in ascending order. Thus, the answer is 1."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def minOperations(self, s: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int minOperations(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "4265",
+        "title": "Longest Balanced Substring After One Swap",
+        "difficulty": "Medium",
+        "tags": [
+            "Hash Table",
+            "String",
+            "Prefix Sum"
+        ],
+        "question": "You are given a binary string s consisting only of characters '0' and '1'.\nA string is balanced if it contains an equal number of '0's and '1's.\nYou can perform at most one swap between any two characters in s. Then, you select a balanced substring from s.\nReturn an integer representing the maximum length of the balanced substring you can select.",
+        "examples": [],
+        "constraints": [
+            "Swap \"100001\". The string becomes \"101000\".",
+            "Select the substring \"101000\", which is balanced because it has two '0's and two '1's."
+        ],
+        "starter_code": {
+            "python": "class Solution:\n    def longestBalanced(self, s: str) -> int:\n        ",
+            "cpp": "class Solution {\npublic:\n    int longestBalanced(string s) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2903",
+        "title": "Insert Greatest Common Divisors in Linked List",
+        "difficulty": "Medium",
+        "tags": [
+            "Linked List",
+            "Math",
+            "Number Theory"
+        ],
+        "question": "Given the head of a linked list head, in which each node contains an integer value.\nBetween every pair of adjacent nodes, insert a new node with a value equal to the greatest common divisor of them.\nReturn the linked list after insertion.\nThe greatest common divisor of two numbers is the largest positive integer that evenly divides both numbers.",
+        "examples": [
+            "Input: head = [18,6,10,3]\nOutput: [18,6,6,2,10,1,3]\nExplanation: The 1st diagram denotes the initial linked list and the 2nd diagram denotes the linked list after inserting the new nodes (nodes in blue are the inserted nodes).\n- We insert the greatest common divisor of 18 and 6 = 6 between the 1st and the 2nd nodes.\n- We insert the greatest common divisor of 6 and 10 = 2 between the 2nd and the 3rd nodes.\n- We insert the greatest common divisor of 10 and 3 = 1 between the 3rd and the 4th nodes.\nThere are no more adjacent nodes, so we return the linked list.",
+            "Input: head = [7]\nOutput: [7]\nExplanation: The 1st diagram denotes the initial linked list and the 2nd diagram denotes the linked list after inserting the new nodes.\nThere are no pairs of adjacent nodes, so we return the initial linked list."
+        ],
+        "constraints": [
+            "The number of nodes in the list is in the range [1, 5000].",
+            "1 <= Node.val <= 1000"
+        ],
+        "starter_code": {
+            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def insertGreatestCommonDivisors(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
+            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* insertGreatestCommonDivisors(ListNode* head) {\n        \n    }\n};"
+        }
+    },
+    {
+        "id": "2299",
+        "title": "Merge Nodes in Between Zeros",
+        "difficulty": "Medium",
+        "tags": [
+            "Linked List",
+            "Simulation"
+        ],
+        "question": "You are given the head of a linked list, which contains a series of integers separated by 0's. The beginning and end of the linked list will have Node.val == 0.\nFor every two consecutive 0's, merge all the nodes lying in between them into a single node whose value is the sum of all the merged nodes. The modified list should not contain any 0's.\nReturn the head of the modified linked list.",
+        "examples": [
+            "Input: head = [0,3,1,0,4,5,2,0]\nOutput: [4,11]\nExplanation: \nThe above figure represents the given linked list. The modified list contains\n- The sum of the nodes marked in green: 3 + 1 = 4.\n- The sum of the nodes marked in red: 4 + 5 + 2 = 11.",
+            "Input: head = [0,1,0,3,0,2,2,0]\nOutput: [1,3,4]\nExplanation: \nThe above figure represents the given linked list. The modified list contains\n- The sum of the nodes marked in green: 1 = 1.\n- The sum of the nodes marked in red: 3 = 3.\n- The sum of the nodes marked in yellow: 2 + 2 = 4."
+        ],
+        "constraints": [
+            "The number of nodes in the list is in the range [3, 2 * 10^5].",
+            "0 <= Node.val <= 1000",
+            "There are no two consecutive nodes with Node.val == 0.",
+            "The beginning and end of the linked list have Node.val == 0."
+        ],
+        "starter_code": {
+            "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
+            "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeNodes(ListNode* head) {\n        \n    }\n};"
+        }
+    }
+]
