@@ -36,7 +36,6 @@ def save_to_library(problem_data, filename=OUTPUT_LIBRARY_FILE) -> bool:
         library.append(problem_data)
         with open(filename, "w") as f:
             json.dump(library, f, indent=4)
-        print(f"Successfully added '{problem_data['title']}' to {filename}")
         return True
     else:
         print(f"Problem '{problem_data['title']}' is already in the library.")
