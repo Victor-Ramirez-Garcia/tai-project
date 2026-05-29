@@ -67,6 +67,7 @@ import shutil
 from pathlib import Path
 import time
 import pandas as pd
+import argparse
 
 
 PY_UNITTESTS_DIR = "python/"
@@ -531,11 +532,12 @@ def generate_graph_report(result_file_path_cpp: str, result_file_path_py: str):
     """
     pass
 
-def main():
+
+def run_and_store_unittests_separately() -> int:
     """
-    Main function to run all unit tests for generated code.
+    Returns:
+        int: results of cpp and python tests stored separate files
     """
-    
     print("Running Python unit tests...")
     tests_added_py = run_and_store_python_tests(PY_UNITTESTS_DIR, PY_UNITTEST_RESULTS_FILE)
     print(f"Added {tests_added_py} Python tests to results.")
@@ -543,6 +545,23 @@ def main():
     print("Running C++ unit tests...")
     tests_added_cpp = run_and_store_cpp_tests(CPP_UNITTESTS_DIR, CPP_UNITTEST_RESULTS_FILE)
     print(f"Added {tests_added_cpp} C++ tests to results.")
+
+    return tests_added_cpp + tests_added_py
+
+def main():
+    """
+    Main function to run all unit tests for generated code.
+    """
+
+    parser = argparse.ArgumentParser(description="Cherry pick specific functionality")
+    # 4. Define an optional boolean flag to not run cpp and python unittests (True if present, False if absent)
+    parser.add_argument("-a", "--analysis_only", action="store_true", help="Skip creation of unittest results to start analysis")
+ 
+    if parser.analysis_only:
+        print("Skipping to analysis...")
+    else:
+        tests_added_total = run_and_store_unittests_separately()
+        print(f"Added {tests_added_total} tests in total")
 
     print("Merging C++ and Python unit test results...")
     merged_results: list = merge_test_results(python_results_source=PY_UNITTEST_RESULTS_FILE, 
