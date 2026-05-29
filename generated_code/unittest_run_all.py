@@ -469,10 +469,11 @@ def generate_attempts_dataframe(merged_results: list) -> pd.DataFrame:
                 })
     attempt_df: pd.Dataframe = pd.DataFrame(attempt_rows)
     attempt_df = attempt_df.explode("tags")
+    attempt_df.attrs['name'] = 'Leetcode Attempts Results'
 
     return attempt_df
 
-def generate_problem_dataframe():
+def generate_problem_dataframe(merged_results):
     problem_rows = []
 
     for problem in merged_results:
@@ -511,6 +512,7 @@ def generate_problem_dataframe():
             })
     problem_df = pd.DataFrame(problem_rows)
     problem_df = problem_df.explode("tags")
+    problem_df.attrs['name'] = 'Leetcode Problems Results'
 
     return problem_df
 
@@ -548,6 +550,13 @@ def run_and_store_unittests_separately() -> int:
 
     return tests_added_cpp + tests_added_py
 
+def print_dataframe(df, first_rows):
+    dashes = "-"*5
+    print(f"\n\n{dashes} {df.attrs['name']}\n")
+    print(df.head(first_rows))
+    print(f"\n\n{dashes}")
+
+
 def main():
     """
     Main function to run all unit tests for generated code.
@@ -556,8 +565,9 @@ def main():
     parser = argparse.ArgumentParser(description="Cherry pick specific functionality")
     # 4. Define an optional boolean flag to not run cpp and python unittests (True if present, False if absent)
     parser.add_argument("-a", "--analysis_only", action="store_true", help="Skip creation of unittest results to start analysis")
+    args = parser.parse_args()
  
-    if parser.analysis_only:
+    if args.analysis_only:
         print("Skipping to analysis...")
     else:
         tests_added_total = run_and_store_unittests_separately()
@@ -566,16 +576,18 @@ def main():
     print("Merging C++ and Python unit test results...")
     merged_results: list = merge_test_results(python_results_source=PY_UNITTEST_RESULTS_FILE, 
     cpp_results_source=CPP_UNITTEST_RESULTS_FILE)
-    print(f"Merged {len(tests_added_total)} tests in total.")
+    print(f"Merged {len(merged_results)} tests in total.")
 
     print("Converting attempts into the dataframe...")
     attempts_df = generate_attempts_dataframe(merged_results)
-    print("Created attempt dataframe")
+    print(f"Created attempt dataframe with {len(attempts_df)} rows")
 
     print("Converting problems into the dataframe...")
     problem_df = generate_problem_dataframe(merged_results)
-    print("Created problems dataframe")
+    print(f"Created problem dataframe with {len(attempts_df)} rows")
 
+    print_dataframe(attempts_df, 10)
+    print_dataframe(problem_df, 10)
     """
     print("Generating summary report..")
     generate_summary_report(CPP_UNITTEST_RESULTS_FILE, PY_UNITTEST_RESULTS_FILE)
