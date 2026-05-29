@@ -101,3 +101,12 @@ cmake --build . -- -k
 
 # Or  ./run_tests_401
 ```
+
+### Check how many files were generated
+```bash
+ls -R cpp/ python/ | egrep '(solution_.+|test_unittest_.+)\.(py|cpp)$'
+```
+### Check how many solutions being generated as a 4+ attempt
+```bash
+ls -R cpp/ python/ | egrep 'solution_.+_[4-9]\.(py|cpp)$'
+```
