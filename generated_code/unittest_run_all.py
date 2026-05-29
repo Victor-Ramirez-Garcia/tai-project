@@ -123,6 +123,7 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     problem_map = {}
     solution_files = sorted(list(source_dir.glob("solution_*.cpp")))
 
+    # Many this loop should be handled with multiple threads?
     for sol_file in solution_files:
         match = re.search(r"solution_(\d+)_(\d+)", sol_file.name)
         if not match: continue
@@ -436,7 +437,7 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
 
     return merged_results
 
-def generate_dataframe(merged_results: list) -> pd.DataFrame:
+def generate_attempts_dataframe(merged_results: list) -> pd.DataFrame:
     """
 
     Returns:
@@ -466,6 +467,51 @@ def generate_dataframe(merged_results: list) -> pd.DataFrame:
                     "error_type": attempt["error_type"]
                 })
     attempt_df: pd.Dataframe = pd.DataFrame(attempt_rows)
+    attempt_df = attempt_df.explode("tags")
+
+    return attempt_df
+
+def generate_problem_dataframe():
+    problem_rows = []
+
+    for problem in merged_results:
+
+        for language in ["python", "cpp"]:
+
+            lang_data = problem[language]
+
+            attempts = lang_data["attempts"]
+
+            eventually_passed = (
+                lang_data["passed_attempts"] > 0
+            )
+
+            first_try_success = False
+
+            if attempts:
+                first_try_success = (
+                    attempts[0]["result"] == "pass"
+                )
+
+            problem_rows.append({
+                "id": problem["id"],
+                "language": language,
+                "difficulty": problem["difficulty"],
+                "examples_count": problem["examples_count"],
+                "constraints_count": problem["constraints_count"],
+                "tags": problem["tags"],
+
+                "eventually_passed": eventually_passed,
+                "first_try_success": first_try_success,
+
+                "total_attempts": lang_data["total_attempts"],
+                "passed_attempts": lang_data["passed_attempts"],
+                "failed_attempts": lang_data["failed_attempts"]
+            })
+    problem_df = pd.DataFrame(problem_rows)
+    problem_df = problem_df.explode("tags")
+
+    return problem_df
 
 def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str):
     """
@@ -503,8 +549,13 @@ def main():
     cpp_results_source=CPP_UNITTEST_RESULTS_FILE)
     print(f"Merged {len(tests_added_total)} tests in total.")
 
-    print("Converting final results into the dataframe...")
-    
+    print("Converting attempts into the dataframe...")
+    attempts_df = generate_attempts_dataframe(merged_results)
+    print("Created attempt dataframe")
+
+    print("Converting problems into the dataframe...")
+    problem_df = generate_problem_dataframe(merged_results)
+    print("Created problems dataframe")
 
     """
     print("Generating summary report..")
