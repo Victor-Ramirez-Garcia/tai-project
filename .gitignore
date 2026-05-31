@@ -4,3 +4,4 @@ high-level/__pycache__/
 generated_code/py/__pycache__/
 *__pycache__/
 generated_code/cpp/build
+generated_code/cpp/builds_parallel

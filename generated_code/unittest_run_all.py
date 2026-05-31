@@ -127,8 +127,11 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
     problem_map = {}
     solution_files = sorted(list(source_dir.glob("solution_*.cpp")))
 
+    sol_files_counter = 0
+    sol_files_total = len(solution_files)
     # Many this loop should be handled with multiple threads?
     for sol_file in solution_files:
+        sol_files_counter += 1
         match = re.search(r"solution_(\d+)_(\d+)", sol_file.name)
         if not match: continue
         
@@ -173,6 +176,7 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
             ["cmake", "--build", str(build_dir), "--target", binary_name], 
             capture_output=True, text=True
         )
+        print(f"Processed {binary_name} ({sol_files_counter}/{sol_files_total})")
 
         attempt_result: str = None
         # 5. Execute and Record
@@ -221,6 +225,141 @@ def run_and_store_cpp_tests(unittest_files_dir: str, output_file_path: str):
 
     return tests_added
 
+
+import concurrent.futures
+import shutil
+import subprocess
+import os
+import json
+from pathlib import Path
+
+# --- Constants ---
+TIMEOUT_COMPILE = 60  # seconds
+TIMEOUT_EXECUTE = 10  # seconds
+import re
+import subprocess
+from pathlib import Path
+
+def run_single_task(sol_file, source_dir, base_build_dir):
+    # 1. Reliable metadata extraction
+    match = re.search(r"solution_(\d+)_(\d+)", sol_file.name)
+    if not match:
+        return {"error": f"Invalid filename format: {sol_file.name}"}
+    
+    prob_id, attempt_num = match.group(1), int(match.group(2))
+    
+    # 2. Workspace setup
+    work_dir = base_build_dir / f"work_{sol_file.stem}"
+    work_dir.mkdir(exist_ok=True, parents=True)
+    
+    # 3. Create proxy header
+    proxy_header = work_dir / "solution_proxy.h"
+    with open(proxy_header, "w") as f:
+        f.write(f'#include "{sol_file.resolve()}"')
+    
+    # 4. Configure (Only if cache missing)
+    if not (work_dir / "CMakeCache.txt").exists():
+        subprocess.run(["cmake", "-S", str(source_dir), "-B", str(work_dir)], 
+                       capture_output=True, check=True)
+
+    # 5. Build
+    binary_name = f"run_test_unittest_{prob_id}"
+    error_type = "None"
+    
+    try:
+        build_result = subprocess.run(
+            ["cmake", "--build", str(work_dir), "--target", binary_name], 
+            capture_output=True, text=True, timeout=TIMEOUT_COMPILE
+        )
+    except subprocess.TimeoutExpired:
+        return {"prob_id": prob_id, "attempt_num": attempt_num, "result": "failed", 
+                "error_type": "Timeout (Compilation)", "raw_stderr": "Build timed out"}
+
+    # 6. Execute
+    if build_result.returncode == 0:
+        try:
+            binary_path = work_dir / binary_name
+            proc = subprocess.run([str(binary_path)], capture_output=True, text=True, timeout=TIMEOUT_EXECUTE)
+            result = "pass" if proc.returncode == 0 else "failed"
+            error_type = "None" if proc.returncode == 0 else "Assertion Failure"
+            stderr_output = proc.stdout
+        except subprocess.TimeoutExpired:
+            result, error_type, stderr_output = "failed", "Timeout (Runtime)", "Execution timed out"
+    else:
+        result, stderr_output = "failed", build_result.stderr
+        error_type = "Syntax/Compilation Error"
+        
+    return {
+        "prob_id": prob_id,
+        "attempt_num": attempt_num,
+        "result": result,
+        "error_type": error_type,
+        "raw_stderr": stderr_output
+    }
+def run_parallel_tests(unittest_files_dir: str):
+    source_dir = Path(unittest_files_dir)
+    base_build_dir = source_dir / "builds_parallel"
+    base_build_dir.mkdir(exist_ok=True)
+    
+    solution_files = list(source_dir.glob("solution_*.cpp"))
+    
+    # Parallel processing
+    results = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+        futures = [executor.submit(run_single_task, f, source_dir, base_build_dir) for f in solution_files]
+        for future in concurrent.futures.as_completed(futures):
+            results.append(future.result())
+            print(f"Added {len(results)} results")
+            
+    # Cleanup: remove the workspace folder after task is done
+    # shutil.rmtree(base_build_dir) # Optional: uncomment if you want to clear after run
+    return results
+
+import json
+from collections import defaultdict
+
+def aggregate_and_save(results, output_file_path):
+    # Using defaultdict simplifies the initialization of the nested structure
+    # Structure: problem_map[prob_id] = { ... }
+    problem_map = {}
+
+    for res in results:
+        prob_id = res["prob_id"]
+        
+        # Initialize entry if new
+        if prob_id not in problem_map:
+            meta = get_metadata(prob_id) # Ensure this is thread-safe or cached
+            problem_map[prob_id] = {
+                "id": prob_id,
+                "difficulty": meta.get("difficulty"),
+                "attempts": [],
+                "passed_attempts": 0,
+                "failed_attempts": 0
+            }
+            
+        # Update attempt stats
+        problem_map[prob_id]["attempts"].append({
+            "attempt_number": res["attempt_num"],
+            "result": res["result"],
+            "error_type": res["error_type"],
+            "raw_stderr": res["raw_stderr"]
+        })
+        
+        if res["result"] == "pass":
+            problem_map[prob_id]["passed_attempts"] += 1
+        else:
+            problem_map[prob_id]["failed_attempts"] += 1
+            
+        # Finalize total
+        problem_map[prob_id]["total_attempts"] = len(problem_map[prob_id]["attempts"])
+
+    # Save to JSON
+    with open(output_file_path, "w") as f:
+        json.dump(list(problem_map.values()), f, indent=4)
+        
+    print(f"Successfully saved {len(problem_map)} problem results to {output_file_path}")
+
+    return len(problem_map)
 
 def classify_python_error(stderr: str) -> str:
     """
@@ -640,13 +779,16 @@ def run_and_store_unittests_separately() -> int:
     Returns:
         int: results of cpp and python tests stored separate files
     """
+    print("Running C++ unit tests...")
+    all_results = run_parallel_tests(CPP_UNITTESTS_DIR)
+    print(f"Added {len(all_results)} C++ tests to results. Not yet saved to the file")
+    # 2. Aggregate and save
+    tests_added_cpp = aggregate_and_save(all_results, CPP_UNITTEST_RESULTS_FILE)
+    print(f"Added {tests_added_cpp} C++ tests to results.")
+
     print("Running Python unit tests...")
     tests_added_py = run_and_store_python_tests(PY_UNITTESTS_DIR, PY_UNITTEST_RESULTS_FILE)
     print(f"Added {tests_added_py} Python tests to results.")
-
-    print("Running C++ unit tests...")
-    tests_added_cpp = run_and_store_cpp_tests(CPP_UNITTESTS_DIR, CPP_UNITTEST_RESULTS_FILE)
-    print(f"Added {tests_added_cpp} C++ tests to results.")
 
     return tests_added_cpp + tests_added_py
 
