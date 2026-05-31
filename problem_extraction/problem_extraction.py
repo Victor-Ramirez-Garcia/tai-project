@@ -108,6 +108,7 @@ def get_leetcode_problem_structured(url):
                 "cpp": snippets.get('cpp', 'Not available')
             }
     }
+    print(f"Couldn't retrieve the problem under this url: `{url}`")
     return None
 
 def clean_text(text):

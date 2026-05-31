@@ -11,7 +11,7 @@ https://leetcode.com/problems/middle-of-the-linked-list
 https://leetcode.com/problems/linked-list-cycle
 https://leetcode.com/problems/remove-linked-list-elements
 https://leetcode.com/problems/range-sum-of-bst
-https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tre
+https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree
 https://leetcode.com/problems/second-minimum-node-in-a-binary-tree
 https://leetcode.com/problems/subtree-of-another-tree
 https://leetcode.com/problems/final-array-state-after-k-multiplication-operations-i
