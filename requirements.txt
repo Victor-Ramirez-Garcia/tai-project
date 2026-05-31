@@ -2,3 +2,4 @@ pytest-playwright
 requests
 bs4
 pandas
+matplotlib
