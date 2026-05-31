@@ -1,10 +1,10 @@
+#include "solution_proxy.h"
 #include <gtest/gtest.h>
 #include <vector>
 #include <queue>
 #include <string>
 #include <sstream>
 #include <iostream>
-#include "solution_proxy.h"
 
 // Helper function to build a tree from a level-order traversal vector (including nulls as -1001)
 // Since node values range from -1000 to 1000, we can use -1001 to represent nullptr.

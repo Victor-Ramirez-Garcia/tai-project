@@ -7,7 +7,7 @@ include(GoogleTest)
 
 # IMPORTANT: Ensure the compiler looks in the current directory for 
 # the 'solution_proxy.h' file that your Python runner generates.
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 # 1. Gather all test runners
 file(GLOB TEST_RUNNERS "test_unittest_*.cpp")

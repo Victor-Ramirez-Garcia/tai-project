@@ -1,3 +1,4 @@
+#error "COMPILER IS READING THIS FILE"
 #include <vector>
 #include <queue>
 #include <algorithm>
