@@ -154,7 +154,8 @@ def run_single_task(sol_file, source_dir, base_build_dir):
             result, error_type, stderr_output = "failed", "Timeout (Runtime)", "Execution timed out"
     else:
         result, stderr_output = "failed", build_result.stderr
-        error_type = "Syntax/Compilation Error"
+        #error_type = "Syntax/Compilation Error"
+        error_type = "Exception"
         
     return {
         "prob_id": prob_id,
@@ -243,7 +244,8 @@ def classify_python_error(stderr: str) -> str:
     ]
     
     if any(pattern in stderr for pattern in crash_patterns):
-        return "Syntax/Import/Runtime Error"
+        #return "Syntax/Import/Runtime Error"
+        return "Exception"
     
     # If it's not a crash but it failed, it's an assertion error
     if "AssertionError" in stderr or "FAILED" in stderr:
