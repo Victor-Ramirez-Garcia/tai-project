@@ -177,7 +177,9 @@ def run_parallel_tests(unittest_files_dir: str):
         futures = [executor.submit(run_single_task, f, source_dir, base_build_dir) for f in solution_files]
         for future in concurrent.futures.as_completed(futures):
             results.append(future.result())
-            print(f"Added {len(results)} results")
+            results_num = len(results)
+            if results_num % 30 or results_num == 1:
+                print(f"Added {len(results)}/{len(solution_files)} results")
             
     # Cleanup: remove the workspace folder after task is done
     # shutil.rmtree(base_build_dir) # Optional: uncomment if you want to clear after run
