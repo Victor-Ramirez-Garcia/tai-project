@@ -42,11 +42,11 @@ This file retrieves the LLM's code attempts at solving the leetcode problems and
     
 - Evaluates the results of the tests and generates a summary or report of the results
     - Important list of analysis metrics
-        - Tag vs success rate
-        - Difficulty vs failure type
-        - Python vs C++ comparison
-        - First-attempt success rate
-        - Failure progression analysis
+        -X Tag vs success rate
+        -X Difficulty vs failure type
+        -X Python vs C++ comparison
+        -X First-attempt success rate
+        - Failure progression analysis?
         - Constraint complexity correlation
         - Examples/constraints impact on correctness
     - The evaluation report should include metrics such as 
