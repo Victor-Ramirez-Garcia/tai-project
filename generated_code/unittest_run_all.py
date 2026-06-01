@@ -103,65 +103,62 @@ TIMEOUT_ERROR = "Timeout Failure"
 RUN_TIME_ERROR = "Runtime Error"
 ASSERTION_FAILURE = "Assertion Failure"
 
-# Refined Error Mappings
 ERROR_MAPPINGS = {
-    "Assertion Failure": [r"Failure", r"FAILED", r"Expected equality", r"Value of:", r"Assertion `.*' failed"],
-    
-    # Strictly code grammar errors
+    "Assertion Failure": [
+        r"Failure", r"FAILED", r"Expected equality", r"Value of:", 
+        r"Assertion `.*' failed", r"AssertionError"
+    ],
     "Syntax Error": [
-        r"expected ';'", 
-        r"expected '\)'", 
-        r"expected expression", 
-        r"unbalanced parenthesis",
-        r"unterminated function-like macro", 
+        r"SyntaxError", r"IndentationError", 
+        r"expected ';'", r"expected '\)'", r"expected expression", 
+        r"unbalanced parenthesis", r"unterminated function-like macro", 
         r"expected '\}'"
     ],
-    # Missing headers, undeclared types, or missing imports
     "Dependency/Definition Error": [
-        r"unknown type name", 
-        r"use of undeclared identifier", 
-        r"no matching function", 
-        r"undefined reference",
-        r"no member named"
+        r"unknown type name", r"use of undeclared identifier", 
+        r"no matching function", r"undefined reference", 
+        r"no member named", r"ImportError", r"ModuleNotFoundError"
     ],
-    
-    "API Hallucination": [r"AttributeError", r"ImportError", r"member .* does not exist"],
-    "Memory/Pointer": [r"MemoryError", r"RecursionError", r"Segmentation fault", r"std::bad_alloc", r"free\(\)"],
-    "Logic/Boundary": [r"IndexError", r"KeyError", r"std::out_of_range", r"out of bounds"],
-    "Arithmetic": [r"ZeroDivisionError", r"Floating point exception", r"divide by zero"],
+    "API Hallucination": [
+        r"AttributeError", r"member .* does not exist"
+    ],
+    "Memory/Pointer": [
+        r"MemoryError", r"RecursionError", r"Segmentation fault", 
+        r"std::bad_alloc", r"free\(\)"
+    ],
+    "Logic/Boundary": [
+        r"IndexError", r"KeyError", r"TypeError", r"NameError", 
+        r"std::out_of_range", r"out of bounds"
+    ],
+    "Arithmetic": [
+        r"ZeroDivisionError", r"Floating point exception", r"divide by zero"
+    ],
 }
 
 def get_unified_error_type(output: str, returncode: int = 0) -> str:
-    """
-    Categorizes errors using multiline matching.
-    """
     if not output:
         return "Unknown/Logical Failure"
     
-    # 1. Prioritize Assertion Failures
+    # 1. PRIORITY 1: Assertions (Logic checks)
     for pattern in ERROR_MAPPINGS["Assertion Failure"]:
         if re.search(pattern, output, re.IGNORECASE | re.DOTALL):
             return "Assertion Failure"
 
-        # 2. Dependency/Definition Errors (Specific compiler feedback)
-    for pattern in ERROR_MAPPINGS["Dependency/Definition Error"]:
-        if re.search(pattern, output, re.IGNORECASE | re.DOTALL):
-            return "Dependency/Definition Error"
-
-    # 3. Syntax Errors (Check these AFTER definition errors)
-    for pattern in ERROR_MAPPINGS["Syntax Error"]:
-        if re.search(pattern, output, re.IGNORECASE | re.DOTALL):
-            return "Syntax Error"
-    
-    # Runtime and memory errors
+    # 2. PRIORITY 2: System Crashes (Signal based)
+    # This works for compiled languages; Python typically returns 1 on error, 
+    # so we keep this check conditional.
     if returncode < 0:
         if returncode == -11: return "Memory Error (Segfault)"
         if returncode == -6: return "Memory Error (Abort/Assertion)"
-        return f"Runtime Crash"
+        return f"Runtime Crash (Signal {abs(returncode)})"
 
-    # Debugging Fallback
-    # If it falls through here, print the start of the output so you can see why
-    print(f"DEBUG: Uncategorized error output: {output[:100]}...")
+    # 3. PRIORITY 3: Everything Else (Regex based)
+    # We iterate through the dictionary categories.
+    for category, patterns in ERROR_MAPPINGS.items():
+        if category == "Assertion Failure": continue
+        for pattern in patterns:
+            if re.search(pattern, output, re.IGNORECASE | re.DOTALL):
+                return category
     
     return "Unknown/Logical Failure"
 
@@ -354,23 +351,6 @@ def aggregate_and_save(results, output_file_path):
 
     return len(problem_map)
 
-def classify_python_error(stderr: str) -> str:
-    if not stderr: return "Unknown Failure"
-    
-    # 1. Syntax/Import Issues (Code doesn't start)
-    if any(e in stderr for e in ["SyntaxError", "ImportError", "ModuleNotFoundError"]):
-        return "Import/Syntax Error"
-    
-    # 2. Runtime (Code starts, then crashes)
-    if any(e in stderr for e in ["NameError", "AttributeError", "TypeError", "IndexError"]):
-        return "Runtime Exception"
-    
-    # 3. Logic (Code runs, tests finish, but assert fails)
-    if "AssertionError" in stderr or "FAILED" in stderr:
-        return "Assertion Failure"
-        
-    return "Unknown Error"
-
 def analyze_test_file(file_path):
     """
     Statically analyzes the test file to count total test methods 
@@ -463,7 +443,7 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
             error_type = "None"
         else:
             passed_tests = get_passed_test_count(proc.stderr, total_tests)
-            error_type = classify_python_error(proc.stderr)
+            error_type = get_unified_error_type(proc.stderr, proc.returncode)
 
             
         attempt_data = {
