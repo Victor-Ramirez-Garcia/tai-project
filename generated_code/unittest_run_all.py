@@ -98,6 +98,73 @@ CPP_UNITTEST_RESULTS_FILE = "cpp_test_results.json"
 FINAL_UNITTEST_RESULTS_FILE = "test_results.json"
 GRAPH_OUTPUT_DIR = Path("analysis/figures")
 
+
+TIMEOUT_ERROR = "Timeout Failure"
+RUN_TIME_ERROR = "Runtime Error"
+ASSERTION_FAILURE = "Assertion Failure"
+
+# Refined Error Mappings
+ERROR_MAPPINGS = {
+    "Assertion Failure": [r"Failure", r"FAILED", r"Expected equality", r"Value of:", r"Assertion `.*' failed"],
+    
+    # Strictly code grammar errors
+    "Syntax Error": [
+        r"expected ';'", 
+        r"expected '\)'", 
+        r"expected expression", 
+        r"unbalanced parenthesis",
+        r"unterminated function-like macro", 
+        r"expected '\}'"
+    ],
+    # Missing headers, undeclared types, or missing imports
+    "Dependency/Definition Error": [
+        r"unknown type name", 
+        r"use of undeclared identifier", 
+        r"no matching function", 
+        r"undefined reference",
+        r"no member named"
+    ],
+    
+    "API Hallucination": [r"AttributeError", r"ImportError", r"member .* does not exist"],
+    "Memory/Pointer": [r"MemoryError", r"RecursionError", r"Segmentation fault", r"std::bad_alloc", r"free\(\)"],
+    "Logic/Boundary": [r"IndexError", r"KeyError", r"std::out_of_range", r"out of bounds"],
+    "Arithmetic": [r"ZeroDivisionError", r"Floating point exception", r"divide by zero"],
+}
+
+def get_unified_error_type(output: str, returncode: int = 0) -> str:
+    """
+    Categorizes errors using multiline matching.
+    """
+    if not output:
+        return "Unknown/Logical Failure"
+    
+    # 1. Prioritize Assertion Failures
+    for pattern in ERROR_MAPPINGS["Assertion Failure"]:
+        if re.search(pattern, output, re.IGNORECASE | re.DOTALL):
+            return "Assertion Failure"
+
+        # 2. Dependency/Definition Errors (Specific compiler feedback)
+    for pattern in ERROR_MAPPINGS["Dependency/Definition Error"]:
+        if re.search(pattern, output, re.IGNORECASE | re.DOTALL):
+            return "Dependency/Definition Error"
+
+    # 3. Syntax Errors (Check these AFTER definition errors)
+    for pattern in ERROR_MAPPINGS["Syntax Error"]:
+        if re.search(pattern, output, re.IGNORECASE | re.DOTALL):
+            return "Syntax Error"
+    
+    # Runtime and memory errors
+    if returncode < 0:
+        if returncode == -11: return "Memory Error (Segfault)"
+        if returncode == -6: return "Memory Error (Abort/Assertion)"
+        return f"Runtime Crash"
+
+    # Debugging Fallback
+    # If it falls through here, print the start of the output so you can see why
+    print(f"DEBUG: Uncategorized error output: {output[:100]}...")
+    
+    return "Unknown/Logical Failure"
+
 # Helper to load library metadata
 def get_metadata(problem_id):
     # Adjust this path to your actual leetcode_library.json
@@ -110,6 +177,7 @@ def get_metadata(problem_id):
     except:
         return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
     return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
+
 
 def parse_gtest_xml(xml_path: Path):
     """
@@ -143,8 +211,6 @@ def run_single_task(sol_file, source_dir, base_build_dir):
         return {"error": f"Invalid filename format: {sol_file.name}"}
     
     prob_id, attempt_num = match.group(1), int(match.group(2))
-    
-    # 2. Workspace setup
     work_dir = base_build_dir / f"work_{sol_file.stem}"
     work_dir.mkdir(exist_ok=True, parents=True)
     
@@ -153,66 +219,70 @@ def run_single_task(sol_file, source_dir, base_build_dir):
     with open(proxy_header, "w") as f:
         f.write(f'#include "{sol_file.resolve()}"')
     
-    # 4. Configure (Only if cache missing)
+    # 4. Configure
     if not (work_dir / "CMakeCache.txt").exists():
-        subprocess.run(["cmake", "-S", str(source_dir), "-B", str(work_dir)], 
-                       capture_output=True, check=True)
+        subprocess.run(["cmake", "-S", str(source_dir), "-B", str(work_dir)], capture_output=True)
 
     # 5. Build
     binary_name = f"run_test_unittest_{prob_id}"
-    error_type = "None"
-    
-    try:
-        build_result = subprocess.run(
-            ["cmake", "--build", str(work_dir), "--target", binary_name], 
-            capture_output=True, text=True, timeout=TIMEOUT_COMPILE
-        )
-    except subprocess.TimeoutExpired:
-        return {"prob_id": prob_id, "attempt_num": attempt_num, "result": "failed", 
-                "error_type": "Timeout (Compilation)", "raw_stderr": "Build timed out"}
+    build_result = subprocess.run(
+        ["cmake", "--build", str(work_dir), "--target", binary_name], 
+        capture_output=True, text=True, timeout=TIMEOUT_COMPILE
+    )
 
-    # 6. Execute
+    # 6. Execution and Triage Logic
     binary_path = work_dir / binary_name
     xml_report = work_dir / "report.xml"
     
-    # The flag --gtest_output=xml: generates the artifact
-    cmd = [str(binary_path), f"--gtest_output=xml:{xml_report}"]
-    total_tests, total_assertions, passed_tests = parse_gtest_xml(xml_report)
-    stderr_output = ""
+    # Defaults
+    result, stderr_output, stdout_output = "failed", "", ""
+    total_tests, total_assertions, passed_tests = 0, 0, 0
+    error_type = "None"
+    has_compiled = None
 
-    if build_result.returncode == 0:
-        try:
-            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT_EXECUTE)
-            result = "pass" if proc.returncode == 0 else "failed"
-            
-            # Extract metrics from XML
-            
-            # Determine Error Type
-            if proc.returncode == 0:
-                error_type = "None"
-            elif proc.returncode < 0:
-                error_type = f"Runtime Error (Signal {abs(proc.returncode)})"
-            else:
-                error_type = "Assertion Failure"
-            stderr_output = proc.stdout
-        except subprocess.TimeoutExpired:
-            result, error_type = "failed", "Timeout (Runtime)"
-            total_tests, total_assertions, passed_tests = 0, 0, 0
-            proc = None
+    if build_result.returncode != 0:
+        # BUILD FAILED
+        stderr_output = build_result.stderr
+        stdout_output = build_result.stdout
+        combined_output = f"{stdout_output}\n{stderr_output}"
+        has_compiled = False
+        error_type = get_unified_error_type(combined_output, build_result.returncode)
     else:
-        result, stderr_output = "failed", build_result.stderr
-        #error_type = "Syntax/Compilation Error"
-        error_type = "Exception"
+        # BUILD SUCCESS -> EXECUTE
+        try:
+            has_compiled = True 
+            cmd = [str(binary_path), f"--gtest_output=xml:{xml_report}"]
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT_EXECUTE)
 
+            # Now parse XML safely
+            total_tests, total_assertions, passed_tests = parse_gtest_xml(xml_report)
+            
+            if proc.returncode == 0:
+                result = "pass"
+                stderr_output = proc.stderr
+                stdout_output = proc.stdout
+            else:
+                result = "failed"
+                # Use unified triage for runtime errors
+                stderr_output = proc.stderr
+                stdout_output = proc.stdout
+                combined_output = f"{stdout_output}\n{stderr_output}"
+                error_type = get_unified_error_type(combined_output, proc.returncode)
+                
+        except subprocess.TimeoutExpired:
+            result, error_type = "failed", "Timeout"
+            stderr_output = "Execution timed out"
 
     return {
         "prob_id": prob_id,
         "attempt_num": attempt_num,
+        "has_compiled": has_compiled,
         "result": result,
         "total_tests": total_tests,
         "total_assertions": total_assertions,
         "passed_tests": passed_tests,
         "error_type": error_type,
+        "raw_stdout": stdout_output,
         "raw_stderr": stderr_output
     }
 
@@ -250,7 +320,6 @@ def aggregate_and_save(results, output_file_path):
             meta = get_metadata(prob_id) # Ensure this is thread-safe or cached
             problem_map[prob_id] = {
                 "id": prob_id,
-                "difficulty": meta.get("difficulty"),
                 "attempts": [],
                 "total_assertions": res["total_assertions"],
                 "passed_attempts": 0,
@@ -260,9 +329,11 @@ def aggregate_and_save(results, output_file_path):
         # Update attempt stats
         problem_map[prob_id]["attempts"].append({
             "attempt_number": res["attempt_num"],
+            "has_compiled": res["has_compiled"],
             "result": res["result"],
             "passed_tests": res["passed_tests"],
             "error_type": res["error_type"],
+            "raw_stdout": res["raw_stdout"],
             "raw_stderr": res["raw_stderr"]
         })
         
@@ -282,7 +353,6 @@ def aggregate_and_save(results, output_file_path):
     print(f"Successfully saved {len(problem_map)} problem results to {output_file_path}")
 
     return len(problem_map)
-
 
 def classify_python_error(stderr: str) -> str:
     if not stderr: return "Unknown Failure"
@@ -341,7 +411,6 @@ def get_passed_test_count(stderr_output, total_tests):
     num_errors = int(errors.group(1)) if errors else 0
     
     return total_tests - (num_failures + num_errors)
-
 
 def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -> int:
     """
