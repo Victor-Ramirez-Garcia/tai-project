@@ -449,6 +449,7 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
                 "id": prob_id,
                 "total_tests": total_tests,
                 "total_assertions": total_assertions, # Added requirement
+                "total_attempts": 0,
                 "attempts": []
             }
 
@@ -564,6 +565,8 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
 
             "python": {
                 "attempts": [],
+                "total_tests": 0,
+                "total_assertions": 0,
                 "total_attempts": 0,
                 "passed_attempts": 0,
                 "failed_attempts": 0
@@ -571,6 +574,8 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
 
             "cpp": {
                 "attempts": [],
+                "total_tests": 0,
+                "total_assertions": 0,
                 "total_attempts": 0,
                 "passed_attempts": 0,
                 "failed_attempts": 0
