@@ -232,28 +232,64 @@ def aggregate_and_save(results, output_file_path):
     return len(problem_map)
 
 def classify_python_error(stderr: str) -> str:
-    """
-    Analyzes the stderr text to determine the category of the failure.
-    """
-    # These are code crashes, not logical assertions
-    crash_patterns = [
-        "NameError", 
-        "SyntaxError", 
-        "ImportError", 
-        "ModuleNotFoundError", 
-        "AttributeError", 
-        "TypeError"
-    ]
+    if not stderr: return "Unknown Failure"
     
-    if any(pattern in stderr for pattern in crash_patterns):
-        #return "Syntax/Import/Runtime Error"
-        return "Exception"
+    # 1. Syntax/Import Issues (Code doesn't start)
+    if any(e in stderr for e in ["SyntaxError", "ImportError", "ModuleNotFoundError"]):
+        return "Import/Syntax Error"
     
-    # If it's not a crash but it failed, it's an assertion error
+    # 2. Runtime (Code starts, then crashes)
+    if any(e in stderr for e in ["NameError", "AttributeError", "TypeError", "IndexError"]):
+        return "Runtime Exception"
+    
+    # 3. Logic (Code runs, tests finish, but assert fails)
     if "AssertionError" in stderr or "FAILED" in stderr:
         return "Assertion Failure"
         
     return "Unknown Error"
+
+import ast
+
+def analyze_test_file(file_path):
+    """
+    Statically analyzes the test file to count total test methods 
+    and total assertions, without running the code.
+    """
+    with open(file_path, "r") as source:
+        tree = ast.parse(source.read())
+    
+    total_tests = 0
+    total_assertions = 0
+    
+    for node in ast.walk(tree):
+        # 1. Count Methods starting with 'test_'
+        if isinstance(node, ast.FunctionDef):
+            if node.name.startswith('test_'):
+                total_tests += 1
+        
+        # 2. Count Assertion calls
+        if isinstance(node, ast.Call):
+            if isinstance(node.func, ast.Attribute):
+                if node.func.attr.startswith('assert'):
+                    total_assertions += 1
+            elif isinstance(node.func, ast.Name):
+                if node.func.id == 'assert':
+                    total_assertions += 1
+                    
+    return total_tests, total_assertions
+
+def get_passed_test_count(stderr_output, total_tests):
+    """
+    Parses unittest output (e.g., 'Ran 4 tests... FAILED (failures=1)')
+    """
+    # Find number of failures and errors
+    failures = re.search(r"failures=(\d+)", stderr_output)
+    errors = re.search(r"errors=(\d+)", stderr_output)
+    
+    num_failures = int(failures.group(1)) if failures else 0
+    num_errors = int(errors.group(1)) if errors else 0
+    
+    return total_tests - (num_failures + num_errors)
 
 
 def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -> int:
@@ -269,54 +305,57 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
     Returns:
         int: The number of tests that were added to the results.
     """
-    # 1. Structure to hold results grouped by ID
     problem_map = {}
     tests_added = 0
-    
-    # 2. Get all solution files (e.g., solution_1_1.py, solution_1_2.py)
-    # Sort them to ensure attempts are processed in order
     solution_files = sorted(Path(unittest_files_dir).glob("solution_*.py"))
 
     for sol_file in solution_files:
         match = re.search(r"solution_(\d+)_(\d+)", sol_file.name)
         if not match: continue
-        
         prob_id, attempt_num = match.group(1), match.group(2)
         
-        # 3. Initialize entry if ID not seen yet
-        if prob_id not in problem_map:
-            meta = get_metadata(prob_id)
-            problem_map[prob_id] = {
-                "id": prob_id,
-                "difficulty": meta.get("difficulty"),
-                "examples_count": len(meta.get("examples", [])),
-                "constraints_count": len(meta.get("constraints", [])),
-                "tags": meta.get("tags", []),
-                "attempts": []
-            }
-        
-        # 4. Prepare execution environment
-        # Point to the existing unittest file for this specific ID
         test_file = Path(unittest_files_dir) / f"test_unittest_{prob_id}.py"
         
-        # Pass the specific solution file path to the test via environment variable
+        # Get Static Assertion Count (Done once per problem)
+        if prob_id not in problem_map:
+            meta = get_metadata(prob_id)
+            total_tests, total_assertions = analyze_test_file(test_file)
+            # 4. Store
+            problem_map[prob_id] = {
+                "id": prob_id,
+                "total_tests": total_tests,
+                "total_assertions": total_assertions, # Added requirement
+                "attempts": []
+            }
+
+        #  Execution
         env = os.environ.copy()
         env["TEST_SOLUTION_FILE"] = str(sol_file.absolute())
-        
-        # 5. Run test
         cmd = ["python3", "-m", "unittest", str(test_file)]
-        proc = subprocess.run(cmd, capture_output=True, text=True, env=env)
         
-        attempt_result: str = "pass" if proc.returncode == 0 else "failed"
-        # 6. Store attempt result
-        problem_map[prob_id]["attempts"].append({
-            "attempt_number": int(attempt_num),
-            "result": attempt_result,
-            "error_type": classify_python_error(proc.stderr) if proc.returncode != 0 else "None",
-            "raw_stderr": proc.stderr if proc.returncode != 0 else ""
-        })
 
+        # 2. Run test
+        proc = subprocess.run(cmd, capture_output=True, text=True, env=env)
+
+        # 3. Calculate metrics
+        if proc.returncode == 0:
+            passed_tests = total_tests
+            error_type = "None"
+        else:
+            passed_tests = get_passed_test_count(proc.stderr, total_tests)
+            error_type = classify_python_error(proc.stderr)
+
+            
+        attempt_data = {
+            "attempt_number": int(attempt_num),
+            "result": "pass" if proc.returncode == 0 else "failed",
+            "passed_tests": passed_tests, # Renamed as requested
+            "error_type": error_type,
+            "raw_stderr": proc.stderr if proc.returncode != 0 else ""
+        }
+        problem_map[prob_id]["attempts"].append(attempt_data)
         total_attempts = len(problem_map[prob_id]["attempts"])
+        attempt_result = attempt_data["result"]
 
         #print('Running on problem ID:', prob_id, 'Attempt:', attempt_num, 'Result:', attempt_result)
         problem_map[prob_id]["total_attempts"] = total_attempts
@@ -650,12 +689,14 @@ def run_and_store_unittests_separately() -> int:
     Returns:
         int: results of cpp and python tests stored separate files
     """
+    """
     print("Running C++ unit tests...")
     all_results = run_parallel_tests(CPP_UNITTESTS_DIR)
     print(f"Added {len(all_results)} C++ tests to results. Not yet saved to the file")
     # 2. Aggregate and save
     tests_added_cpp = aggregate_and_save(all_results, CPP_UNITTEST_RESULTS_FILE)
     print(f"Added {tests_added_cpp} C++ tests to results.")
+    """
 
     print("Running Python unit tests...")
     tests_added_py = run_and_store_python_tests(PY_UNITTESTS_DIR, PY_UNITTEST_RESULTS_FILE)
