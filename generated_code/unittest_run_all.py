@@ -70,6 +70,22 @@ import pandas as pd
 from pathlib import Path
 import matplotlib.pyplot as plt
 import argparse
+import concurrent.futures
+import shutil
+import subprocess
+import os
+import json
+from pathlib import Path
+import re
+import subprocess
+from pathlib import Path
+import json
+from collections import defaultdict
+import ast
+
+# --- Constants ---
+TIMEOUT_COMPILE = 60  # seconds
+TIMEOUT_EXECUTE = 10  # seconds
 
 
 PY_UNITTESTS_DIR = "python/"
@@ -92,20 +108,6 @@ def get_metadata(problem_id):
     except:
         return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
     return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
-
-import concurrent.futures
-import shutil
-import subprocess
-import os
-import json
-from pathlib import Path
-
-# --- Constants ---
-TIMEOUT_COMPILE = 60  # seconds
-TIMEOUT_EXECUTE = 10  # seconds
-import re
-import subprocess
-from pathlib import Path
 
 def run_single_task(sol_file, source_dir, base_build_dir):
     # 1. Reliable metadata extraction
@@ -185,8 +187,6 @@ def run_parallel_tests(unittest_files_dir: str):
     # shutil.rmtree(base_build_dir) # Optional: uncomment if you want to clear after run
     return results
 
-import json
-from collections import defaultdict
 
 def aggregate_and_save(results, output_file_path):
     # Using defaultdict simplifies the initialization of the nested structure
@@ -248,7 +248,6 @@ def classify_python_error(stderr: str) -> str:
         
     return "Unknown Error"
 
-import ast
 
 def analyze_test_file(file_path):
     """
