@@ -201,6 +201,19 @@ def parse_gtest_xml(xml_path: Path):
     except Exception:
         return 0, 0, 0
 
+import re
+
+def parse_gtest_from_stdout(stdout: str):
+    """Fallback if XML is missing: Regex extract tests ran from GTest output."""
+    # Matches: [==========] 10 tests from 1 test suite ran.
+    match = re.search(r"\[==========\] (\d+) tests from", stdout)
+    if match:
+        total_tests = int(match.group(1))
+        # Note: We can't easily get passed_tests without parsing the "[  PASSED  ] N tests." line 
+        # or assuming failures based on return code, but this prevents 0 counts.
+        return total_tests, 0
+    return 0, 0
+
 def run_single_task(sol_file, source_dir, base_build_dir):
     # 1. Reliable metadata extraction
     match = re.search(r"solution_(\d+)_(\d+)", sol_file.name)
@@ -230,6 +243,10 @@ def run_single_task(sol_file, source_dir, base_build_dir):
     # 6. Execution and Triage Logic
     binary_path = work_dir / binary_name
     xml_report = work_dir / "report.xml"
+
+    # FIX: Ensure we are not reading a stale XML from a previous attempt
+    if xml_report.exists():
+        xml_report.unlink()
     
     # Defaults
     result, stderr_output, stdout_output = "failed", "", ""
@@ -254,16 +271,23 @@ def run_single_task(sol_file, source_dir, base_build_dir):
             # Now parse XML safely
             total_tests, total_assertions, passed_tests = parse_gtest_xml(xml_report)
             
+            stderr_output = proc.stderr
+            stdout_output = proc.stdout
+            combined_output = f"{stdout_output}\n{stderr_output}"
+
+            # Check if XML was generated
+            if xml_report.exists():
+                total_tests, total_assertions, passed_tests = parse_gtest_xml(xml_report)
+            else:
+                # FALLBACK: Parse from stdout if XML is missing (common in crashes)
+                total_tests, passed_tests = parse_gtest_from_stdout(stdout_output)
+                total_assertions = 0 # Cannot get assertions from stdout reliably
+
             if proc.returncode == 0:
                 result = "pass"
-                stderr_output = proc.stderr
-                stdout_output = proc.stdout
             else:
                 result = "failed"
                 # Use unified triage for runtime errors
-                stderr_output = proc.stderr
-                stdout_output = proc.stdout
-                combined_output = f"{stdout_output}\n{stderr_output}"
                 error_type = get_unified_error_type(combined_output, proc.returncode)
                 
         except subprocess.TimeoutExpired:
