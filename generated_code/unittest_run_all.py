@@ -82,6 +82,8 @@ from pathlib import Path
 import json
 from collections import defaultdict
 import ast
+import xml.etree.ElementTree as ET
+from pathlib import Path
 
 # --- Constants ---
 TIMEOUT_COMPILE = 60  # seconds
@@ -108,6 +110,31 @@ def get_metadata(problem_id):
     except:
         return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
     return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
+
+def parse_gtest_xml(xml_path: Path):
+    """
+    Parses GTest XML output to extract test metrics.
+    GTest XML structure: <testsuites tests="X" assertions="Y" failures="Z" ...>
+    """
+    if not xml_path.exists():
+        return 0, 0, 0
+    
+    try:
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+        
+        # GTest root is usually <testsuites>
+        # Attributes are at the root level
+        total_tests = int(root.attrib.get('tests', 0))
+        total_assertions = int(root.attrib.get('assertions', 0))
+        failures = int(root.attrib.get('failures', 0))
+        errors = int(root.attrib.get('errors', 0))
+        
+        passed_tests = total_tests - (failures + errors)
+        
+        return total_tests, total_assertions, passed_tests
+    except Exception:
+        return 0, 0, 0
 
 def run_single_task(sol_file, source_dir, base_build_dir):
     # 1. Reliable metadata extraction
@@ -145,27 +172,50 @@ def run_single_task(sol_file, source_dir, base_build_dir):
                 "error_type": "Timeout (Compilation)", "raw_stderr": "Build timed out"}
 
     # 6. Execute
+    binary_path = work_dir / binary_name
+    xml_report = work_dir / "report.xml"
+    
+    # The flag --gtest_output=xml: generates the artifact
+    cmd = [str(binary_path), f"--gtest_output=xml:{xml_report}"]
+    total_tests, total_assertions, passed_tests = parse_gtest_xml(xml_report)
+    stderr_output = ""
+
     if build_result.returncode == 0:
         try:
-            binary_path = work_dir / binary_name
-            proc = subprocess.run([str(binary_path)], capture_output=True, text=True, timeout=TIMEOUT_EXECUTE)
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT_EXECUTE)
             result = "pass" if proc.returncode == 0 else "failed"
-            error_type = "None" if proc.returncode == 0 else "Assertion Failure"
+            
+            # Extract metrics from XML
+            
+            # Determine Error Type
+            if proc.returncode == 0:
+                error_type = "None"
+            elif proc.returncode < 0:
+                error_type = f"Runtime Error (Signal {abs(proc.returncode)})"
+            else:
+                error_type = "Assertion Failure"
             stderr_output = proc.stdout
         except subprocess.TimeoutExpired:
-            result, error_type, stderr_output = "failed", "Timeout (Runtime)", "Execution timed out"
+            result, error_type = "failed", "Timeout (Runtime)"
+            total_tests, total_assertions, passed_tests = 0, 0, 0
+            proc = None
     else:
         result, stderr_output = "failed", build_result.stderr
         #error_type = "Syntax/Compilation Error"
         error_type = "Exception"
-        
+
+
     return {
         "prob_id": prob_id,
         "attempt_num": attempt_num,
         "result": result,
+        "total_tests": total_tests,
+        "total_assertions": total_assertions,
+        "passed_tests": passed_tests,
         "error_type": error_type,
         "raw_stderr": stderr_output
     }
+
 def run_parallel_tests(unittest_files_dir: str):
     source_dir = Path(unittest_files_dir)
     base_build_dir = source_dir / "builds_parallel"
@@ -175,18 +225,17 @@ def run_parallel_tests(unittest_files_dir: str):
     
     # Parallel processing
     results = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         futures = [executor.submit(run_single_task, f, source_dir, base_build_dir) for f in solution_files]
         for future in concurrent.futures.as_completed(futures):
             results.append(future.result())
             results_num = len(results)
-            if results_num % 30 or results_num == 1:
-                print(f"Added {len(results)}/{len(solution_files)} results")
+            #if results_num % 30 or results_num == 1:
+            print(f"Added {len(results)}/{len(solution_files)} results")
             
     # Cleanup: remove the workspace folder after task is done
     # shutil.rmtree(base_build_dir) # Optional: uncomment if you want to clear after run
     return results
-
 
 def aggregate_and_save(results, output_file_path):
     # Using defaultdict simplifies the initialization of the nested structure
@@ -203,18 +252,21 @@ def aggregate_and_save(results, output_file_path):
                 "id": prob_id,
                 "difficulty": meta.get("difficulty"),
                 "attempts": [],
+                "total_assertions": res["total_assertions"],
                 "passed_attempts": 0,
                 "failed_attempts": 0
             }
-            
+        
         # Update attempt stats
         problem_map[prob_id]["attempts"].append({
             "attempt_number": res["attempt_num"],
             "result": res["result"],
+            "passed_tests": res["passed_tests"],
             "error_type": res["error_type"],
             "raw_stderr": res["raw_stderr"]
         })
         
+        problem_map[prob_id]["total_tests"] = res["total_tests"]
         if res["result"] == "pass":
             problem_map[prob_id]["passed_attempts"] += 1
         else:
@@ -230,6 +282,7 @@ def aggregate_and_save(results, output_file_path):
     print(f"Successfully saved {len(problem_map)} problem results to {output_file_path}")
 
     return len(problem_map)
+
 
 def classify_python_error(stderr: str) -> str:
     if not stderr: return "Unknown Failure"
@@ -247,7 +300,6 @@ def classify_python_error(stderr: str) -> str:
         return "Assertion Failure"
         
     return "Unknown Error"
-
 
 def analyze_test_file(file_path):
     """
@@ -428,13 +480,13 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
         cpp_record = cpp_by_id.get(problem_id)
 
         # Use whichever exists for metadata
-        metadata_source = py_record or cpp_record
+        metadata_source = get_metadata(problem_id=problem_id)
 
         merged_entry = {
             "id": problem_id,
             "difficulty": metadata_source.get("difficulty"),
-            "examples_count": metadata_source.get("examples_count"),
-            "constraints_count": metadata_source.get("constraints_count"),
+            "examples_count": len(metadata_source.get("examples")),
+            "constraints_count": len(metadata_source.get("constraints")),
             "tags": metadata_source.get("tags", []),
 
             "python": {
@@ -688,14 +740,12 @@ def run_and_store_unittests_separately() -> int:
     Returns:
         int: results of cpp and python tests stored separate files
     """
-    """
     print("Running C++ unit tests...")
     all_results = run_parallel_tests(CPP_UNITTESTS_DIR)
     print(f"Added {len(all_results)} C++ tests to results. Not yet saved to the file")
     # 2. Aggregate and save
     tests_added_cpp = aggregate_and_save(all_results, CPP_UNITTEST_RESULTS_FILE)
     print(f"Added {tests_added_cpp} C++ tests to results.")
-    """
 
     print("Running Python unit tests...")
     tests_added_py = run_and_store_python_tests(PY_UNITTESTS_DIR, PY_UNITTEST_RESULTS_FILE)
