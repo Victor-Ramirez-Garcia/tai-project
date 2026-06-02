@@ -152,7 +152,7 @@ def get_unified_error_type(output: str, returncode: int = 0) -> str:
         if returncode == -11: return "Memory Error (Segfault)"
         if returncode == -6: return "Memory Error (Abort/Assertion)"
         """
-        return f"Runtime Crash (Signal {abs(returncode)})"
+        return f"Runtime Crash"
 
     # 3. PRIORITY 3: Everything Else (Regex based)
     # We iterate through the dictionary categories.
