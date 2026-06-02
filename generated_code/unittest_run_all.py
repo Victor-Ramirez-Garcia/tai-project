@@ -148,10 +148,10 @@ def get_unified_error_type(output: str, returncode: int = 0) -> str:
     # This works for compiled languages; Python typically returns 1 on error, 
     # so we keep this check conditional.
     if returncode < 0:
-"""
+        """
         if returncode == -11: return "Memory Error (Segfault)"
         if returncode == -6: return "Memory Error (Abort/Assertion)"
-"""
+        """
         return f"Runtime Crash (Signal {abs(returncode)})"
 
     # 3. PRIORITY 3: Everything Else (Regex based)
@@ -267,6 +267,8 @@ def run_single_task(sol_file, source_dir, base_build_dir):
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT_EXECUTE)
         
+        stderr_output = proc.stderr
+        stdout_output = proc.stdout
         combined_output = f"{proc.stdout}\n{proc.stderr}"
         
         # Clean, singular point of truth for metrics
