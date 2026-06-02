@@ -175,43 +175,42 @@ def get_metadata(problem_id):
         return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
     return {"difficulty": "Unknown", "tags": [], "examples": [], "constraints": []}
 
-
-def parse_gtest_xml(xml_path: Path):
+def parse_gtest_metrics(stdout: str, xml_path: Path):
     """
-    Parses GTest XML output to extract test metrics.
-    GTest XML structure: <testsuites tests="X" assertions="Y" failures="Z" ...>
+    Consolidated helper to get metrics.
+    Prioritizes stdout, falls back to XML.
+    Returns (total_tests, passed_tests)
     """
-    if not xml_path.exists():
-        return 0, 0, 0
+    # 1. Try Stdout (Primary)
+    total_match = re.search(r"\[==========\] (\d+) tests from", stdout)
+    passed_match = re.search(r"\[\s+PASSED\s+\] (\d+) tests", stdout)
     
-    try:
-        tree = ET.parse(xml_path)
-        root = tree.getroot()
-        
-        # GTest root is usually <testsuites>
-        # Attributes are at the root level
-        total_tests = int(root.attrib.get('tests', 0))
-        total_assertions = int(root.attrib.get('assertions', 0))
-        failures = int(root.attrib.get('failures', 0))
-        errors = int(root.attrib.get('errors', 0))
-        
-        passed_tests = total_tests - (failures + errors)
-        
-        return total_tests, total_assertions, passed_tests
-    except Exception:
-        return 0, 0, 0
+    total = int(total_match.group(1)) if total_match else 0
+    passed = int(passed_match.group(1)) if passed_match else 0
+    
+    if total > 0:
+        return total, passed
 
-import re
-
-def parse_gtest_from_stdout(stdout: str):
-    """Fallback if XML is missing: Regex extract tests ran from GTest output."""
-    # Matches: [==========] 10 tests from 1 test suite ran.
-    match = re.search(r"\[==========\] (\d+) tests from", stdout)
-    if match:
-        total_tests = int(match.group(1))
-        # Note: We can't easily get passed_tests without parsing the "[  PASSED  ] N tests." line 
-        # or assuming failures based on return code, but this prevents 0 counts.
-        return total_tests, 0
+    # 2. Fallback to XML (Secondary)
+    if xml_path.exists():
+        try:
+            tree = ET.parse(xml_path)
+            root = tree.getroot()
+            # Sum up from all testsuites
+            t, p = 0, 0
+            for ts in root.findall('.//testsuite'):
+                t += int(ts.attrib.get('tests', 0))
+                # passed = tests - (failures + errors)
+                f = int(ts.attrib.get('failures', 0))
+                e = int(ts.attrib.get('errors', 0))
+                p += (int(ts.attrib.get('tests', 0)) - (f + e))
+            return t, p
+        except Exception:
+            print("Error parsing XML report:", xml_path)
+            pass
+    else:
+        print(f"Warning: XML report not found at {xml_path}")
+            
     return 0, 0
 
 def run_single_task(sol_file, source_dir, base_build_dir):
@@ -240,59 +239,47 @@ def run_single_task(sol_file, source_dir, base_build_dir):
         capture_output=True, text=True, timeout=TIMEOUT_COMPILE
     )
 
+    if build_result.returncode != 0:
+        return {
+            "prob_id": prob_id,
+            "attempt_num": attempt_num,
+            "has_compiled": False,
+            "result": "failed",
+            "total_tests": 0,
+            "passed_tests": 0,
+            "error_type": get_unified_error_type(build_result.stderr, build_result.returncode),
+            "raw_stdout": build_result.stdout,
+            "raw_stderr": build_result.stderr
+        }
+
     # 6. Execution and Triage Logic
     binary_path = work_dir / binary_name
     xml_report = work_dir / "report.xml"
-
-    # FIX: Ensure we are not reading a stale XML from a previous attempt
-    if xml_report.exists():
-        xml_report.unlink()
     
-    # Defaults
     result, stderr_output, stdout_output = "failed", "", ""
-    total_tests, total_assertions, passed_tests = 0, 0, 0
-    error_type = "None"
-    has_compiled = None
-
-    if build_result.returncode != 0:
-        # BUILD FAILED
-        stderr_output = build_result.stderr
-        stdout_output = build_result.stdout
-        combined_output = f"{stdout_output}\n{stderr_output}"
-        has_compiled = False
-        error_type = get_unified_error_type(combined_output, build_result.returncode)
-    else:
-        # BUILD SUCCESS -> EXECUTE
-        try:
-            has_compiled = True 
-            cmd = [str(binary_path), f"--gtest_output=xml:{xml_report}"]
-            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT_EXECUTE)
-
-            # Now parse XML safely
-            total_tests, total_assertions, passed_tests = parse_gtest_xml(xml_report)
-            
-            stderr_output = proc.stderr
-            stdout_output = proc.stdout
-            combined_output = f"{stdout_output}\n{stderr_output}"
-
-            # Check if XML was generated
-            if xml_report.exists():
-                total_tests, total_assertions, passed_tests = parse_gtest_xml(xml_report)
-            else:
-                # FALLBACK: Parse from stdout if XML is missing (common in crashes)
-                total_tests, passed_tests = parse_gtest_from_stdout(stdout_output)
-                total_assertions = 0 # Cannot get assertions from stdout reliably
-
-            if proc.returncode == 0:
-                result = "pass"
-            else:
-                result = "failed"
-                # Use unified triage for runtime errors
-                error_type = get_unified_error_type(combined_output, proc.returncode)
-                
-        except subprocess.TimeoutExpired:
-            result, error_type = "failed", "Timeout"
-            stderr_output = "Execution timed out"
+    total_tests, passed_tests = 0, 0
+    has_compiled = True
+    
+    # Run the test
+    cmd = [str(binary_path), f"--gtest_output=xml:{xml_report}"]
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT_EXECUTE)
+        
+        combined_output = f"{proc.stdout}\n{proc.stderr}"
+        
+        # Clean, singular point of truth for metrics
+        total_tests, passed_tests = parse_gtest_metrics(combined_output, xml_report)
+        
+        error_type = -1
+        if proc.returncode == 0:
+            result = "pass"
+            error_type = "None"
+        else:
+            result = "failed"
+            error_type = get_unified_error_type(combined_output, proc.returncode)
+    except subprocess.TimeoutExpired as e:
+        result, error_type = "failed", "Timeout"
+        stderr_output = "Execution timed out"
 
     return {
         "prob_id": prob_id,
@@ -300,11 +287,10 @@ def run_single_task(sol_file, source_dir, base_build_dir):
         "has_compiled": has_compiled,
         "result": result,
         "total_tests": total_tests,
-        "total_assertions": total_assertions,
         "passed_tests": passed_tests,
         "error_type": error_type,
-        "raw_stdout": stdout_output,
-        "raw_stderr": stderr_output
+        "raw_stdout": stderr_output,
+        "raw_stderr": stdout_output
     }
 
 def run_parallel_tests(unittest_files_dir: str):
@@ -342,7 +328,8 @@ def aggregate_and_save(results, output_file_path):
             problem_map[prob_id] = {
                 "id": prob_id,
                 "attempts": [],
-                "total_assertions": res["total_assertions"],
+                #"total_assertions": res["total_assertions"],
+                "total_tests": 0,
                 "passed_attempts": 0,
                 "failed_attempts": 0
             }
@@ -358,7 +345,11 @@ def aggregate_and_save(results, output_file_path):
             "raw_stderr": res["raw_stderr"]
         })
         
-        problem_map[prob_id]["total_tests"] = res["total_tests"]
+        # 1. Update total_tests with the MAX observed (The "High-Water Mark")
+        problem_map[prob_id]["total_tests"] = max(
+            problem_map[prob_id]["total_tests"], 
+            res["total_tests"]
+        )
         if res["result"] == "pass":
             problem_map[prob_id]["passed_attempts"] += 1
         else:
@@ -366,6 +357,9 @@ def aggregate_and_save(results, output_file_path):
             
         # Finalize total
         problem_map[prob_id]["total_attempts"] = len(problem_map[prob_id]["attempts"])
+
+    # Sorting before saving makes the JSON file readable and deterministic
+    sorted_results = sorted(problem_map.values(), key=lambda x: x["id"])
 
     # Save to JSON
     with open(output_file_path, "w") as f:
@@ -566,7 +560,7 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
             "python": {
                 "attempts": [],
                 "total_tests": 0,
-                "total_assertions": 0,
+                #"total_assertions": 0,
                 "total_attempts": 0,
                 "passed_attempts": 0,
                 "failed_attempts": 0
@@ -575,7 +569,7 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
             "cpp": {
                 "attempts": [],
                 "total_tests": 0,
-                "total_assertions": 0,
+                #"total_assertions": 0,
                 "total_attempts": 0,
                 "passed_attempts": 0,
                 "failed_attempts": 0
@@ -717,10 +711,7 @@ def save_current_figure(filename: str) -> None:
     plt.savefig(GRAPH_OUTPUT_DIR / filename)
     plt.close()
 
-def generate_graph_report(
-    attempt_df: pd.DataFrame,
-    problems_df: pd.DataFrame
-) -> None:
+def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -> None:
     """
     Generates graphical analysis reports and saves them to disk.
     """
@@ -836,7 +827,6 @@ def print_dataframe(df, first_rows):
     print(f"\n\n{dashes} {df.attrs['name']}\n")
     print(df.head(first_rows))
     print(f"\n\n{dashes}")
-
 
 def main():
     """
