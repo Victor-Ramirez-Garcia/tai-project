@@ -84,6 +84,7 @@ from collections import defaultdict
 import ast
 import xml.etree.ElementTree as ET
 from pathlib import Path
+import seaborn as sns
 
 # --- Constants ---
 TIMEOUT_COMPILE = 60  # seconds
@@ -231,8 +232,6 @@ def parse_gtest_metrics(stdout: str, xml_path: Path):
         except Exception:
             print("Error parsing XML report:", xml_path)
             pass
-    else:
-        print(f"Warning: XML report not found at {xml_path}")
             
     return 0, 0
 
@@ -367,6 +366,7 @@ def aggregate_and_save(results, output_file_path):
         problem_map[prob_id]["attempts"].append({
             "attempt_number": res["attempt_num"],
             "has_compiled": res["has_compiled"],
+            "loc": res["loc"],
             "result": res["result"],
             "passed_tests": res["passed_tests"],
             "error_type": res["error_type"],
@@ -756,6 +756,45 @@ def save_current_figure(filename: str) -> None:
 # Individual Plotting Functions
 # --------------------------------------------------
 
+def plot_loc_difficulty_heatmap(attempt_df: pd.DataFrame):
+    """
+    Shows which Difficulty/Language combination produces the longest code.
+    """
+    # Create the matrix: Difficulty (rows) vs Language (columns)
+    matrix = attempt_df.pivot_table(
+        index="difficulty", 
+        columns="language", 
+        values="loc", 
+        aggfunc="mean"
+    )
+    
+    plt.figure(figsize=(8, 6))
+    # annot=True puts the actual LOC numbers in the boxes
+    sns.heatmap(matrix, annot=True, cmap="YlOrRd", fmt=".0f", cbar_kws={'label': 'Avg Lines of Code'})
+    
+    plt.title("Code Bloat: Difficulty vs. Language")
+    save_current_figure("loc_difficulty_heatmap.png")
+
+def plot_loc_failure_heatmap(attempt_df: pd.DataFrame):
+    """
+    Shows which Error Type/Language combination correlates with code length.
+    """
+    failed_attempts = attempt_df[attempt_df['result'] == 'failed']
+    
+    matrix = failed_attempts.pivot_table(
+        index="error_type", 
+        columns="language", 
+        values="loc", 
+        aggfunc="mean"
+    )
+    
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(matrix, annot=True, cmap="coolwarm", fmt=".0f", cbar_kws={'label': 'Avg Lines of Code'})
+    
+    plt.title("Failure Complexity: Error Type vs. Language")
+    plt.tight_layout()
+    save_current_figure("loc_failure_heatmap.png")
+
 def plot_loc_volatility_histogram(attempt_df: pd.DataFrame):
     """
     Shows the distribution of LOC standard deviation across all problems.
@@ -1062,6 +1101,8 @@ def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -
     plot_loc_volatility_histogram(attempt_df)
     plot_success_by_difficulty(problems_df)
     plot_success_vs_constraints(problems_df)
+    plot_loc_difficulty_heatmap(attempt_df)
+    plot_loc_failure_heatmap(attempt_df)
 
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
