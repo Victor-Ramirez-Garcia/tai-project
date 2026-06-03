@@ -87,7 +87,7 @@ TEST_F(ReverseKGroupTest, KEqualsLengthOfList) {
 TEST_F(ReverseKGroupTest, KEqualsOne) {
     ListNode* head = createLinkedList({1, 2, 3, 4, 5, 6});
     int k = 1;
-    ListNode* resultHead = solution.solution.reverseKGroup(head, k);
+    ListNode* resultHead = solution.reverseKGroup(head, k);
     std::vector<int> resultVec = linkedListToVector(resultHead);
     std::vector<int> expected = {1, 2, 3, 4, 5, 6};
     EXPECT_EQ(resultVec, expected);

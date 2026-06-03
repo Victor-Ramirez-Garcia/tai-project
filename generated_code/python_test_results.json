@@ -761,7 +761,7 @@
                 "result": "failed",
                 "passed_tests": 11,
                 "error_type": "Assertion Failure",
-                "raw_stderr": "..........F.\n======================================================================\nFAIL: test_single_character (python.test_unittest_2532.TestEqualFrequency.test_single_character)\nConstraint: Minimum length string. Removing the only char leaves an empty set (equal).\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/python/test_unittest_2532.py\", line 26, in test_single_character\n    self.assertTrue(self.sol.equalFrequency(\"a\"))\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 12 tests in 0.002s\n\nFAILED (failures=1)\n"
+                "raw_stderr": "..........F.\n======================================================================\nFAIL: test_single_character (python.test_unittest_2532.TestEqualFrequency.test_single_character)\nConstraint: Minimum length string. Removing the only char leaves an empty set (equal).\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/python/test_unittest_2532.py\", line 26, in test_single_character\n    self.assertTrue(self.sol.equalFrequency(\"a\"))\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 12 tests in 0.001s\n\nFAILED (failures=1)\n"
             },
             {
                 "attempt_number": 2,
@@ -1671,7 +1671,7 @@
                 "result": "failed",
                 "passed_tests": 7,
                 "error_type": "Assertion Failure",
-                "raw_stderr": "....F...\n======================================================================\nFAIL: test_negative_values (python.test_unittest_687.TestLongestUnivaluePath.test_negative_values)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/python/test_unittest_687.py\", line 97, in test_negative_values\n    self.assertEqual(sol.longestUnivaluePath(root), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n\n----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nFAILED (failures=1)\n"
+                "raw_stderr": "....F...\n======================================================================\nFAIL: test_negative_values (python.test_unittest_687.TestLongestUnivaluePath.test_negative_values)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/arturagalarian/PSU/CS401/tai-project/generated_code/python/test_unittest_687.py\", line 97, in test_negative_values\n    self.assertEqual(sol.longestUnivaluePath(root), 2)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 3 != 2\n\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nFAILED (failures=1)\n"
             },
             {
                 "attempt_number": 3,

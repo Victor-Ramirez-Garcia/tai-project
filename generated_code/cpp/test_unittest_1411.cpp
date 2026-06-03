@@ -7,7 +7,7 @@ ListNode* createLinkedList(const std::vector<int>& values) {
     if (values.empty()) return nullptr;
     ListNode* head = new ListNode(values[0]);
     ListNode* current = head;
-    for (size_size i = 1; i < values.size(); ++i) {
+    for (size_t i = 1; i < values.size(); ++i) {
         current->next = new ListNode(values[i]);
         current = current->next;
     }
