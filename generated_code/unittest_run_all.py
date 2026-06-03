@@ -593,6 +593,7 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
 
             merged_entry["python"] = {
                 "attempts": py_record.get("attempts", []),
+                "total_tests": py_record.get("total_tests", 0),
                 "total_attempts": py_record.get("total_attempts", 0),
                 "passed_attempts": py_record.get("passed_attempts", 0),
                 "failed_attempts": py_record.get("failed_attempts", 0)
@@ -606,6 +607,7 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
 
             merged_entry["cpp"] = {
                 "attempts": cpp_record.get("attempts", []),
+                "total_tests": cpp_record.get("total_tests", 0),
                 "total_attempts": cpp_record.get("total_attempts", 0),
                 "passed_attempts": cpp_record.get("passed_attempts", 0),
                 "failed_attempts": cpp_record.get("failed_attempts", 0)
