@@ -844,6 +844,50 @@ def plot_graph_c_failed_vs_error_type(attempt_df: pd.DataFrame):
     plt.xticks(rotation=0)
     save_current_figure("graph_c_failed_vs_error_type.png")
 
+
+# d. HEATMAP: Failed attempts vs Lines of Code (LOC)
+def plot_graph_d_failed_vs_loc(attempt_df: pd.DataFrame):
+    """
+    Measures # of failed attempts vs binned Lines of Code.
+    """
+    failures = attempt_df[attempt_df['result'] == 'failed'].copy()
+    
+    # Create LOC bins (0-50, 50-100, 100-200, etc.)
+    # You can adjust these bins based on your specific codebase size
+    bins = [0, 50, 100, 200, 500, 1000, 5000]
+    labels = ['0-50', '51-100', '101-200', '201-500', '501-1000', '1000+']
+    failures['loc_bin'] = pd.cut(failures['loc'], bins=bins, labels=labels)
+    
+    # Pivot for Heatmap
+    matrix = failures.pivot_table(index='loc_bin', columns='language', aggfunc='size', fill_value=0)
+    
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='OrRd', cbar_kws={'label': 'Failed Count'})
+    plt.title("Failed Attempts by Lines of Code (LOC)")
+    plt.ylabel("LOC Range")
+    plt.xticks(rotation=0)
+    save_current_figure("graph_d_failed_vs_loc.png")
+
+# e. HEATMAP: Failed attempts vs Number of Tags
+def plot_graph_e_failed_vs_tags(attempt_df: pd.DataFrame):
+    """
+    Measures # of failed attempts vs the number of tags assigned to the problem.
+    """
+    failures = attempt_df[attempt_df['result'] == 'failed'].copy()
+    
+    # Count the number of tags (assuming 'tags' is a list)
+    failures['tag_count'] = failures['tags'].apply(lambda x: len(x) if isinstance(x, list) else 0)
+    
+    # Pivot for Heatmap
+    matrix = failures.pivot_table(index='tag_count', columns='language', aggfunc='size', fill_value=0)
+    
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='PuBu', cbar_kws={'label': 'Failed Count'})
+    plt.title("Failed Attempts by Number of Tags")
+    plt.ylabel("Number of Tags")
+    plt.xticks(rotation=0)
+    save_current_figure("graph_e_failed_vs_tags.png")
+
 # --------------------------------------------------
 # Main Orchestrator
 # --------------------------------------------------
@@ -858,6 +902,8 @@ def generate_graph_report(attempt_df, problems_df):
     plot_graph_b_failed_vs_difficulty(attempt_df)
     plot_graph_bc_failures_difficulty_error(attempt_df)
     plot_graph_c_failed_vs_error_type(attempt_df)
+    plot_graph_d_failed_vs_loc(attempt_df)
+    plot_graph_e_failed_vs_tags(attempt_df)
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
