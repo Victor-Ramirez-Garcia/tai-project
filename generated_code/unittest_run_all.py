@@ -647,65 +647,57 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
     return merged_results
 
 def generate_attempts_dataframe(merged_results: list) -> pd.DataFrame:
-    """
-    Generates a dataframe where each row is a specific attempt at a problem.
-    """
     attempt_rows = []
 
     for problem in merged_results:
         for language in ["python", "cpp"]:
             lang_data = problem.get(language, {})
+            # Ensure we are looking at a sorted list of attempts
+            attempts = sorted(lang_data.get("attempts", []), key=lambda x: x.get("attempt_number", 0))
             
-            # Use .get() to handle cases where a language key might be missing
-            for attempt in lang_data.get("attempts", []):
+            for attempt in attempts:
                 attempt_rows.append({
                     "id": problem["id"],
                     "language": language,
                     "difficulty": problem["difficulty"],
                     "examples_count": problem["examples_count"],
                     "constraints_count": problem["constraints_count"],
-                    "loc": attempt.get("loc", 0), # Added newest data
-                    "tags": problem["tags"],
-                    
+                    # Keep tags as a list or join to a string, DO NOT EXPLODE YET
+                    "tags": problem["tags"], 
                     "attempt_number": attempt["attempt_number"],
                     "result": attempt["result"],
                     "error_type": attempt["error_type"],
-                    "passed_tests": attempt.get("passed_tests", 0) # Added newest data
+                    "passed_tests": attempt.get("passed_tests", 0),
+                    "loc": attempt.get("loc", 0)
                 })
 
+    # No .explode() here!
     attempt_df = pd.DataFrame(attempt_rows)
-    
-    if not attempt_df.empty:
-        attempt_df = attempt_df.explode("tags")
-    
     attempt_df.attrs['name'] = 'Leetcode Attempts Results'
     return attempt_df
 
 def generate_problem_dataframe(merged_results: list) -> pd.DataFrame:
-    """
-    Generates a dataframe where each row is a summary of a problem (by language).
-    """
     problem_rows = []
 
     for problem in merged_results:
         for language in ["python", "cpp"]:
             lang_data = problem.get(language, {})
-            attempts = lang_data.get("attempts", [])
+            attempts = sorted(lang_data.get("attempts", []), key=lambda x: x.get("attempt_number", 0))
 
+            # Integrity Check
             passed_count_from_list = sum(1 for a in attempts if a.get("result") == "pass")
-            stored_passed_count = lang_data.get("passed_attempts")
+            stored_passed_count = lang_data.get("passed_attempts", 0)
 
             if passed_count_from_list != stored_passed_count:
-                print(f"CRITICAL: Integrity Mismatch on Problem {problem['id']}. "
-                    f"List says {passed_count_from_list}, but summary says {stored_passed_count}")
+                print(f"Warning: Integrity Mismatch on ID {problem['id']} ({language}). "
+                      f"Calculated: {passed_count_from_list}, Stored: {stored_passed_count}")
 
-            # Logic for success calculation
-            eventually_passed = lang_data.get("passed_attempts", 0) > 0
-            
+            # Define First Try Success: Must exist, be attempt 1, and pass
             first_try_success = False
             if attempts:
-                # Assuming attempts are ordered or you want the status of the first one
-                first_try_success = (attempts[0]["result"] == "pass")
+                first_attempt = attempts[0]
+                if first_attempt.get("attempt_number") == 1 and first_attempt.get("result") == "pass":
+                    first_try_success = True
 
             problem_rows.append({
                 "id": problem["id"],
@@ -713,34 +705,59 @@ def generate_problem_dataframe(merged_results: list) -> pd.DataFrame:
                 "difficulty": problem["difficulty"],
                 "examples_count": problem["examples_count"],
                 "constraints_count": problem["constraints_count"],
-                "tags": problem["tags"],
-
-                "eventually_passed": eventually_passed,
+                "tags": problem["tags"], # Keep as list
+                "eventually_passed": stored_passed_count > 0,
                 "first_try_success": first_try_success,
-
-                # Included the newest summary data fields
                 "total_attempts": lang_data.get("total_attempts", 0),
-                "passed_attempts": lang_data.get("passed_attempts", 0),
+                "passed_attempts": stored_passed_count,
                 "failed_attempts": lang_data.get("failed_attempts", 0),
                 "total_tests": lang_data.get("total_tests", 0)
             })
 
     problems_df = pd.DataFrame(problem_rows)
-    
-    if not problems_df.empty:
-        problems_df = problems_df.explode("tags")
-    
     problems_df.attrs['name'] = 'Leetcode Problems Results'
     return problems_df
 
-def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str):
+def generate_comparison_summary(attempt_df: pd.DataFrame, problems_df: pd.DataFrame, output_file="summary_comparison.csv"): 
     """
-    Generates a summary report for both C++ and Python unit tests.
+    Creates a summary table to audit data quality and performance metrics.
+    """
+    # 1. Clean the data for the audit (Remove suspected duplicates if needed)
+    # Check for duplicates before aggregating
+    # print(f"Total rows in attempt_df: {len(attempt_df)}")
+    print(f"Duplicates detected: {attempt_df.duplicated().sum()}")
 
-    This function should be implemented to compile the evaluation results from both
-    C++ and Python tests into a comprehensive summary report.
-    """
-    pass
+    # Use a working copy
+    df = attempt_df.copy()
+
+    # 2. Build the Comparison Table
+    summary = df.groupby('language').agg(
+        total_attempts=('id', 'count'),
+        unique_problems=('id', 'nunique'),
+        avg_loc=('loc', 'mean'),
+        pass_rate=('result', lambda x: (x == 'passed').mean()),
+        fail_rate=('result', lambda x: (x == 'failed').mean())
+    )
+
+    # 3. Add Problem-level metadata (optional, requires merge)
+    # This helps confirm if the number of problems matches your expected 180
+    prob_summary = problems_df.groupby('language').agg(
+        total_problems_in_catalog=('id', 'nunique'),
+        avg_eventually_passed=('eventually_passed', 'mean')
+    )
+
+    # Merge and format
+    final_summary = pd.concat([summary, prob_summary], axis=1)
+
+    # 4. Save to File
+    final_summary.to_csv(output_file)
+    print(f"\n--- Summary Table Saved to {output_file} ---")
+    print(final_summary)
+    return final_summary
+
+# --------------------------------------------------
+# Individual Plotting Functions
+# --------------------------------------------------
 
 def save_current_figure(filename: str) -> None:
     """Saves the current matplotlib figure and closes it."""
@@ -748,12 +765,7 @@ def save_current_figure(filename: str) -> None:
     plt.tight_layout()
     plt.savefig(GRAPH_OUTPUT_DIR / filename)
     plt.close()
-# --------------------------------------------------
-# Individual Plotting Functions
-# --------------------------------------------------
 
-import matplotlib.pyplot as plt
-import seaborn as sns
 # 1. Bar Graph: Measure # of failed attempts in C++ vs Python
 def plot_graph_1_failed_attempts(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed']
@@ -765,12 +777,26 @@ def plot_graph_1_failed_attempts(attempt_df: pd.DataFrame):
 
 # 1a. HEATMAP: Measure # of failed attempts vs passed attempts in C++ vs Python
 def plot_graph_1a_failed_vs_passed(attempt_df: pd.DataFrame):
-    # Pivot table: Index=Language, Column=Result
-    matrix = attempt_df.groupby(['language', 'result']).size().unstack(fill_value=0)
+    # 1. Update these to match your actual data (e.g., 'pass', 'failed')
+    # Use the print statement above to confirm the exact spelling
+    valid_results = ['pass', 'failed'] 
+    
+    # 2. Filter
+    df_clean = attempt_df[attempt_df['result'].isin(valid_results)].copy()
+    
+    # 3. Use countplot (it's cleaner for binary comparison)
     plt.figure(figsize=(8, 6))
-    sns.heatmap(matrix, annot=True, fmt='d', cmap='Blues', cbar_kws={'label': 'Count'})
-    plt.title("Failures vs Passed Attempts")
+    sns.countplot(
+        data=df_clean, 
+        x='language', 
+        hue='result', 
+        palette={'pass': 'green', 'failed': 'red'}
+    )
+    
+    plt.title("Performance: Pass vs. Fail Count by Language")
+    plt.ylabel("Number of Attempts")
     plt.xticks(rotation=0)
+    
     save_current_figure("graph_1a_failed_vs_passed.png")
 
 # 2b. HEATMAP: Measure # of failed attempts vs difficulty type in C++ vs Python
@@ -883,10 +909,7 @@ def main():
     print_dataframe(attempts_df, 10)
     print_dataframe(problems_df, 10)
 
-    """
-    print("Generating summary report..")
-    generate_summary_report(CPP_UNITTEST_RESULTS_FILE, PY_UNITTEST_RESULTS_FILE)
-    """
+    print("generating validation tables..")
 
     generate_graph_report(attempts_df, problems_df)
     print("Summary report generated.")
