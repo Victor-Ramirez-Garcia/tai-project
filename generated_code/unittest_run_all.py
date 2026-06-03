@@ -743,17 +743,6 @@ def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str)
     pass
 
 def save_current_figure(filename: str) -> None:
-    """
-    Saves the current matplotlib figure and closes it.
-    """
-
-    GRAPH_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    plt.tight_layout()
-    plt.savefig(GRAPH_OUTPUT_DIR / filename)
-    plt.close()
-
-def save_current_figure(filename: str) -> None:
     """Saves the current matplotlib figure and closes it."""
     GRAPH_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     plt.tight_layout()
@@ -763,91 +752,62 @@ def save_current_figure(filename: str) -> None:
 # Individual Plotting Functions
 # --------------------------------------------------
 
-import seaborn as sns
 import matplotlib.pyplot as plt
-
-# Ensure uniform ordering for Difficulty
-DIFFICULTY_ORDER = ['Easy', 'Medium', 'Hard']
-
-def plot_total_failure_count(attempt_df: pd.DataFrame):
-    """
-    Measures the raw number of failures in C++ vs Python.
-    """
-    # Filter only for failed attempts
+import seaborn as sns
+# 1. Bar Graph: Measure # of failed attempts in C++ vs Python
+def plot_graph_1_failed_attempts(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed']
-    
-    plt.figure(figsize=(8, 5))
-    
-    # Use countplot to visualize the raw counts
-    sns.countplot(data=failures, x='language', palette='viridis', order=['python', 'cpp'])
-    
-    plt.title("Baseline: Total Number of Failed Attempts by Language")
-    plt.ylabel("Number of Failures")
-    plt.xlabel("Language")
-    plt.grid(axis='y', linestyle='--', alpha=0.5)
-    
-    save_current_figure("baseline_failure_count.png")
-
-
-def plot_pass_fail_comparison(attempt_df: pd.DataFrame):
-    """ 1a. Measure # of failed vs. passed attempts in C++ vs. Python """
-    plt.figure(figsize=(8, 5))
-    sns.countplot(data=attempt_df, x='language', hue='result')
-    plt.title("Productivity Gap: Passed vs. Failed Attempts")
-    plt.ylabel("Number of Attempts")
-    save_current_figure("1a_pass_fail_comparison.png")
-
-def plot_error_profile_heatmap(attempt_df: pd.DataFrame):
-    failures = attempt_df[attempt_df['result'] == 'failed']
-    
-    # Create Matrix: Error Type vs Language
-    matrix = failures.pivot_table(
-        index='error_type', 
-        columns='language', 
-        aggfunc='size', 
-        fill_value=0
-    )
-    
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(matrix, annot=True, cmap='YlGnBu', fmt='d')
-    plt.title("Error Distribution: Language Profiles")
-    plt.tight_layout()
-    save_current_figure("heatmap_error_profile.png")
-
-def plot_failure_complexity_heatmap(attempt_df: pd.DataFrame):
-    # Filter to failures
-    failures = attempt_df[attempt_df['result'] == 'failed']
-    
-    # Create Matrix: Difficulty vs Language
-    matrix = failures.pivot_table(
-        index='difficulty', 
-        columns='language', 
-        aggfunc='size', 
-        fill_value=0
-    )
-    
     plt.figure(figsize=(8, 6))
-    sns.heatmap(matrix, annot=True, cmap='Reds', fmt='d')
-    plt.title("Failure Density: Complexity Matrix")
-    save_current_figure("heatmap_failure_complexity.png")
+    sns.countplot(data=failures, x='language', palette='viridis')
+    plt.title("Total Failed Attempts by Language")
+    plt.xticks(rotation=0)
+    save_current_figure("graph_1_failed_attempts.png")
 
-def plot_deep_diagnostic_heatmap(attempt_df: pd.DataFrame):
+# 1a. HEATMAP: Measure # of failed attempts vs passed attempts in C++ vs Python
+def plot_graph_1a_failed_vs_passed(attempt_df: pd.DataFrame):
+    # Pivot table: Index=Language, Column=Result
+    matrix = attempt_df.groupby(['language', 'result']).size().unstack(fill_value=0)
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='Blues', cbar_kws={'label': 'Count'})
+    plt.title("Failures vs Passed Attempts")
+    plt.xticks(rotation=0)
+    save_current_figure("graph_1a_failed_vs_passed.png")
+
+# 2b. HEATMAP: Measure # of failed attempts vs difficulty type in C++ vs Python
+def plot_graph_2b_failed_vs_difficulty(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed']
-    
-    # Create two separate matrices or a nested structure
-    # Here we show a heatmap specifically for the hardest Language/Error interactions
+    matrix = failures.pivot_table(index='difficulty', columns='language', aggfunc='size', fill_value=0)
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='Reds', cbar_kws={'label': 'Failed Count'})
+    plt.title("Failures by Difficulty & Language")
+    plt.xticks(rotation=0)
+    save_current_figure("graph_2b_failed_vs_difficulty.png")
+
+# 2bi. HEATMAP: Measure # of failures vs difficulty type vs error type in C++ vs Python
+def plot_graph_2bi_failures_difficulty_error(attempt_df: pd.DataFrame):
+    failures = attempt_df[attempt_df['result'] == 'failed']
+    # Create multi-index pivot
     matrix = failures.pivot_table(
-        index='error_type', 
-        columns=['language', 'difficulty'], 
+        index=['difficulty', 'error_type'], 
+        columns='language', 
         aggfunc='size', 
         fill_value=0
     )
-    
-    plt.figure(figsize=(12, 8))
-    sns.heatmap(matrix, annot=True, cmap='Purples', fmt='d')
-    plt.title("Deep Diagnostic: Language/Difficulty vs Error Type")
-    plt.tight_layout()
-    save_current_figure("heatmap_deep_diagnostic.png")
+    plt.figure(figsize=(10, 10))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='Purples', cbar_kws={'label': 'Failed Count'})
+    plt.title("Failures: Difficulty & Error Type by Language")
+    plt.xticks(rotation=0)
+    save_current_figure("graph_2bi_failures_difficulty_error.png")
+
+# 2c. HEATMAP: Measure # of failed attempts vs error type in C++ vs Python
+def plot_graph_2c_failed_vs_error_type(attempt_df: pd.DataFrame):
+    failures = attempt_df[attempt_df['result'] == 'failed']
+    matrix = failures.pivot_table(index='error_type', columns='language', aggfunc='size', fill_value=0)
+    plt.figure(figsize=(8, 8))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='YlGnBu', cbar_kws={'label': 'Failed Count'})
+    plt.title("Failed Attempts by Error Type")
+    plt.xticks(rotation=0)
+    save_current_figure("graph_2c_failed_vs_error_type.png")
 
 # --------------------------------------------------
 # Main Orchestrator
@@ -858,11 +818,11 @@ def generate_graph_report(attempt_df, problems_df):
     Categorized execution of all plotting functions.
     """
     
-    plot_total_failure_count(attempt_df)
-    plot_pass_fail_comparison(attempt_df)
-    plot_error_profile_heatmap(attempt_df)
-    plot_failure_complexity_heatmap(attempt_df)
-    plot_deep_diagnostic_heatmap(attempt_df)
+    plot_graph_1_failed_attempts(attempt_df)
+    plot_graph_1a_failed_vs_passed(attempt_df)
+    plot_graph_2b_failed_vs_difficulty(attempt_df)
+    plot_graph_2bi_failures_difficulty_error(attempt_df)
+    plot_graph_2c_failed_vs_error_type(attempt_df)
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
