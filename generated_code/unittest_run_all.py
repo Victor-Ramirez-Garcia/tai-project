@@ -731,6 +731,47 @@ def save_current_figure(filename: str) -> None:
 # Individual Plotting Functions
 # --------------------------------------------------
 
+def plot_constraints_vs_error_types(attempt_df: pd.DataFrame, problems_df: pd.DataFrame):
+    """
+    Shows if higher constraint counts correlate with specific error types.
+    """
+    # Simply use the existing column in attempt_df
+    # We filter only failed results
+    failures = attempt_df[attempt_df["result"] == "failed"]
+    
+    # Ensure the column exists before grouping
+    if "constraints_count" not in failures.columns:
+        print("Error: 'constraints_count' column not found in attempt_df. Skipping plot.")
+        return
+
+    # Grouping
+    data = failures.groupby(["constraints_count", "error_type"]).size().unstack(fill_value=0)
+    
+    plt.figure(figsize=(10, 6))
+    data.plot(kind="bar", stacked=True)
+    plt.ylabel("Number of Failures")
+    plt.xlabel("Number of Constraints")
+    plt.title("Error Type Distribution by Constraint Complexity")
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()
+    save_current_figure("constraints_vs_errors.png")
+
+def plot_examples_vs_success(problems_df: pd.DataFrame):
+    """
+    Analyzes if having more examples correlates with higher first-try success.
+    """
+    # Group by number of examples and check success rate
+    data = problems_df.groupby("examples_count")["first_try_success"].mean()
+    
+    plt.figure(figsize=(8, 5))
+    data.plot(kind="line", marker='o', linewidth=2)
+    plt.ylabel("First Attempt Success Rate")
+    plt.xlabel("Number of Examples Provided")
+    plt.title("Do more examples help the model pass the first time?")
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.ylim(0, 1.1)
+    save_current_figure("examples_impact_analysis.png")
+
 def plot_tag_success_by_language(problems_df: pd.DataFrame, top_n=10):
     """
     Side-by-side comparison of success rates for the most common tags.
@@ -898,10 +939,13 @@ def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -
     # --------------------------------------------------
     # Compare performance per tag split by language
     plot_tag_success_by_language(problems_df)
-    
+
     # Identify hotspots/blindspots across difficulties
     plot_tag_difficulty_heatmap(problems_df)
 
+    # NEW: Constraint Analysis
+    plot_constraints_vs_error_types(attempt_df, problems_df)
+    plot_examples_vs_success(problems_df)
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
