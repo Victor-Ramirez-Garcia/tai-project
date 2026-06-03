@@ -662,7 +662,7 @@ def generate_attempts_dataframe(merged_results: list) -> pd.DataFrame:
             lang_data = problem.get(language, {})
             # Ensure we are looking at a sorted list of attempts
             attempts = sorted(lang_data.get("attempts", []), key=lambda x: x.get("attempt_number", 0))
-            
+                        
             for attempt in attempts:
                 attempt_rows.append({
                     "id": problem["id"],
@@ -675,6 +675,7 @@ def generate_attempts_dataframe(merged_results: list) -> pd.DataFrame:
                     "attempt_number": attempt["attempt_number"],
                     "result": attempt["result"],
                     "error_type": attempt["error_type"],
+                    "total_tests": lang_data.get("total_tests", 0), 
                     "passed_tests": attempt.get("passed_tests", 0),
                     "loc": attempt.get("loc", 0)
                 })
