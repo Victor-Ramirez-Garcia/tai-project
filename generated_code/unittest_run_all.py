@@ -692,6 +692,13 @@ def generate_problem_dataframe(merged_results: list) -> pd.DataFrame:
             lang_data = problem.get(language, {})
             attempts = lang_data.get("attempts", [])
 
+            passed_count_from_list = sum(1 for a in attempts if a.get("result") == "pass")
+            stored_passed_count = lang_data.get("passed_attempts", 0)
+
+            if passed_count_from_list != stored_passed_count:
+                print(f"CRITICAL: Integrity Mismatch on Problem {problem['id']}. "
+                    f"List says {passed_count_from_list}, but summary says {stored_passed_count}")
+
             # Logic for success calculation
             eventually_passed = lang_data.get("passed_attempts", 0) > 0
             
