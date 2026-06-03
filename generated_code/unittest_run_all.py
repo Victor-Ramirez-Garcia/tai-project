@@ -721,150 +721,133 @@ def save_current_figure(filename: str) -> None:
     plt.savefig(GRAPH_OUTPUT_DIR / filename)
     plt.close()
 
-def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -> None:
-    """
-    Generates graphical analysis reports and saves them to disk.
-    """
-
+def save_current_figure(filename: str) -> None:
+    """Saves the current matplotlib figure and closes it."""
     GRAPH_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    plt.tight_layout()
+    plt.savefig(GRAPH_OUTPUT_DIR / filename)
+    plt.close()
+# --------------------------------------------------
+# Individual Plotting Functions
+# --------------------------------------------------
 
-    # --------------------------------------------------
-    # Python vs C++ Success Rate
-    # --------------------------------------------------
-
-    language_success = (
-        problems_df
-        .groupby("language")["eventually_passed"]
-        .mean()
-        .sort_index()
+def plot_difficulty_vs_language_failures(attempt_df: pd.DataFrame):
+    """
+    Plots failures by difficulty, split by language and stacked by error type.
+    """
+    # Group by difficulty, language, and error type
+    data = (
+        attempt_df[attempt_df["result"] == "failed"]
+        .groupby(["difficulty", "language", "error_type"])
+        .size()
+        .unstack(fill_value=0)
     )
+    
+    plt.figure(figsize=(12, 7))
+    # kind='bar' with stacked=True works on multi-index DataFrames
+    data.plot(kind="bar", stacked=True, ax=plt.gca())
+    
+    plt.ylabel("Failure Count")
+    plt.xlabel("Difficulty & Language")
+    plt.title("Difficulty vs Failure Type (Python vs C++)")
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()
+    save_current_figure("difficulty_language_failure_comparison.png")
 
+def plot_language_success(problems_df: pd.DataFrame):
+    data = problems_df.groupby("language")["eventually_passed"].mean().sort_index()
     plt.figure(figsize=(8, 5))
-
-    language_success.plot(kind="bar")
-
+    data.plot(kind="bar", rot=0)
     plt.ylabel("Success Rate")
     plt.xlabel("Language")
     plt.title("Python vs C++ Success Rate")
-
     save_current_figure("language_success_rate.png")
 
-    # --------------------------------------------------
-    # First Attempt Success Rate
-    # --------------------------------------------------
-
-    first_try_success = (
-        problems_df
-        .groupby("language")["first_try_success"]
-        .mean()
-        .sort_index()
-    )
-
+def plot_first_attempt_success(problems_df: pd.DataFrame):
+    data = problems_df.groupby("language")["first_try_success"].mean().sort_index()
     plt.figure(figsize=(8, 5))
-
-    first_try_success.plot(kind="bar")
-
+    data.plot(kind="bar", rot=0)
     plt.ylabel("First Attempt Success Rate")
     plt.xlabel("Language")
     plt.title("First Attempt Success Rate")
-
     save_current_figure("first_attempt_success_rate.png")
 
-    # --------------------------------------------------
-    # Difficulty vs Failure Type
-    # --------------------------------------------------
-
-    difficulty_failures = (
-        attempt_df[attempt_df["result"] == "failed"]
-        .groupby(["difficulty", "error_type"])
-        .size()
-        .unstack(fill_value=0)
-    )
-
+def plot_difficulty_vs_failures(attempt_df: pd.DataFrame):
+    data = attempt_df[attempt_df["result"] == "failed"].groupby(["difficulty", "error_type"]).size().unstack(fill_value=0)
     plt.figure(figsize=(10, 6))
-
-    difficulty_failures.plot(kind="bar", stacked=True)
-
+    data.plot(kind="bar", stacked=True)
     plt.ylabel("Failure Count")
     plt.xlabel("Difficulty")
     plt.title("Difficulty vs Failure Type")
-
     save_current_figure("difficulty_vs_failure_type.png")
 
-    # --------------------------------------------------
-    # Tag vs Success Rate
-    # --------------------------------------------------
-
-    tag_success = (
-        problems_df
-        .groupby("tags")["eventually_passed"]
-        .mean()
-        .sort_values(ascending=False)
-    )
-
+def plot_tag_success(problems_df: pd.DataFrame):
+    data = problems_df.groupby("tags")["eventually_passed"].mean().sort_values(ascending=False)
     plt.figure(figsize=(12, 6))
-
-    tag_success.plot(kind="bar")
-
+    data.plot(kind="bar")
     plt.ylabel("Success Rate")
     plt.xlabel("Tag")
     plt.title("Tag vs Success Rate")
-
     save_current_figure("tag_success_rate.png")
-    
-    # --------------------------------------------------
-    # NEW: Error Type Distribution (Python vs C++)
-    # --------------------------------------------------
-    # This highlights the "Type" of friction each language creates.
-    error_dist = (
-        attempt_df[attempt_df["result"] == "failed"]
-        .groupby(["language", "error_type"])
-        .size()
-        .unstack(fill_value=0)
-    )
-    
+
+def plot_error_comparison(attempt_df: pd.DataFrame):
+    data = attempt_df[attempt_df["result"] == "failed"].groupby(["language", "error_type"]).size().unstack(fill_value=0)
     plt.figure(figsize=(10, 6))
-    error_dist.plot(kind="bar", stacked=True)
+    data.plot(kind="bar", stacked=True)
     plt.ylabel("Number of Failures")
     plt.title("Error Types: Python vs C++")
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.tight_layout()
     save_current_figure("error_type_comparison.png")
 
-    # --------------------------------------------------
-    # NEW: Average Attempts per Difficulty (Python vs C++)
-    # --------------------------------------------------
-    # Are C++ solutions harder to finish?
-    avg_attempts = (
-        problems_df.groupby(["language", "difficulty"])["total_attempts"]
-        .mean()
-        .unstack()
-    )
-    
+def plot_success_by_difficulty(problems_df: pd.DataFrame):
+    data = problems_df.groupby(["language", "difficulty"])["eventually_passed"].mean().unstack()
     plt.figure(figsize=(10, 6))
-    avg_attempts.plot(kind="bar", rot=0)
-    plt.ylabel("Avg Attempts to Finish")
-    plt.title("Average Attempts required by Difficulty & Language")
-    save_current_figure("avg_attempts_difficulty.png")
-
-    # --------------------------------------------------
-    # NEW: Pass Rate by Difficulty & Language
-    # --------------------------------------------------
-    # Compare success probability directly
-    success_by_diff = (
-        problems_df.groupby(["language", "difficulty"])["eventually_passed"]
-        .mean()
-        .unstack()
-    )
-    
-    plt.figure(figsize=(10, 6))
-    success_by_diff.plot(kind="bar", rot=0)
+    data.plot(kind="bar", rot=0)
     plt.ylabel("Success Rate")
     plt.title("Success Rate by Difficulty (Python vs C++)")
     plt.ylim(0, 1.1)
     save_current_figure("success_rate_by_difficulty.png")
 
-    print(f"Saved graphs to: {GRAPH_OUTPUT_DIR}")
+def plot_learning_curve(attempt_df: pd.DataFrame):
+    # Ensure total_tests exists (merge if necessary)
+    df = attempt_df.copy()
+    if 'pass_ratio' not in df.columns:
+        df['pass_ratio'] = df['passed_tests'] / df['total_tests']
+    
+    data = df.groupby(['language', 'attempt_number'])['pass_ratio'].mean().unstack(0)
+    plt.figure(figsize=(10, 6))
+    data.plot(kind='line', marker='o')
+    plt.title("Learning Curve: Test Pass Ratio by Attempt")
+    plt.ylabel("Avg % of Tests Passed")
+    plt.xticks([1, 2, 3])
+    save_current_figure("learning_curve.png")
+
+# --------------------------------------------------
+# Main Orchestrator
+# --------------------------------------------------
+
+def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -> None:
+    """
+    Generates graphical analysis reports and saves them to disk.
+    """
+    # High-level overview
+    plot_language_success(problems_df)
+    plot_first_attempt_success(problems_df)
+    
+    # Granular analysis
+    plot_difficulty_vs_failures(attempt_df)
+    plot_difficulty_vs_language_failures(attempt_df)
+    plot_tag_success(problems_df)
+    
+    # Python vs C++ comparison
+    plot_error_comparison(attempt_df)
+    plot_success_by_difficulty(problems_df)
+    
+    # Attempt-specific insights
+    if 'total_tests' in attempt_df.columns:
+        plot_learning_curve(attempt_df)
+
+    print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
 def run_and_store_unittests_separately() -> int:
     """
