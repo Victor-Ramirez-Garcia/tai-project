@@ -756,6 +756,56 @@ def save_current_figure(filename: str) -> None:
 # Individual Plotting Functions
 # --------------------------------------------------
 
+def plot_loc_volatility_histogram(attempt_df: pd.DataFrame):
+    """
+    Shows the distribution of LOC standard deviation across all problems.
+    A wide spread here means the model is very inconsistent in its coding style.
+    """
+    # Calculate standard deviation of LOC for each unique problem
+    volatility = attempt_df.groupby('id')['loc'].std().fillna(0)
+    
+    plt.figure(figsize=(10, 6))
+    volatility.hist(bins=20, edgecolor='black', alpha=0.7)
+    
+    plt.title("Model Volatility: Consistency of Code Length per Problem")
+    plt.xlabel("Standard Deviation of LOC (Higher = More Volatile)")
+    plt.ylabel("Number of Problems")
+    save_current_figure("loc_volatility_dist.png")
+
+def plot_success_by_difficulty(problems_df: pd.DataFrame):
+    """
+    Shows the 'Difficulty Gap' between Python and C++.
+    """
+    # Group by difficulty and language to calculate success rate
+    data = problems_df.groupby(['difficulty', 'language'])['eventually_passed'].mean().unstack()
+    
+    plt.figure(figsize=(8, 6))
+    data.plot(kind='bar', ax=plt.gca(), rot=0)
+    
+    plt.title("Success Rate: Difficulty vs. Language")
+    plt.ylabel("Success Rate (0.0 to 1.0)")
+    plt.xlabel("Problem Difficulty")
+    plt.legend(title="Language")
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    save_current_figure("success_by_difficulty.png")
+
+def plot_success_vs_constraints(problems_df: pd.DataFrame):
+    """
+    Visualizes the performance 'cliff' as constraint count increases.
+    """
+    # Group by number of constraints
+    data = problems_df.groupby('constraints_count')['eventually_passed'].mean()
+    
+    plt.figure(figsize=(8, 5))
+    data.plot(kind='line', marker='o', linewidth=2, linestyle='-')
+    
+    plt.title("Performance Threshold: Success vs. Constraints")
+    plt.ylabel("Success Rate")
+    plt.xlabel("Number of Constraints")
+    plt.ylim(-0.05, 1.05)
+    plt.grid(True, linestyle='--')
+    save_current_figure("success_vs_constraints.png")
+
 def plot_loc_by_language(attempt_df: pd.DataFrame):
     """
     Shows the distribution of code length for Python vs C++.
@@ -1009,6 +1059,10 @@ def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -
     # NEW: Code Length Analysis
     plot_loc_by_language(attempt_df)
     plot_loc_by_failure_type(attempt_df)
+    plot_loc_volatility_histogram(attempt_df)
+    plot_success_by_difficulty(problems_df)
+    plot_success_vs_constraints(problems_df)
+
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
