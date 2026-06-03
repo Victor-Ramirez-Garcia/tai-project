@@ -624,21 +624,16 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
 
 def generate_attempts_dataframe(merged_results: list) -> pd.DataFrame:
     """
-
-    Returns:
-        int: total records/rows stored
+    Generates a dataframe where each row is a specific attempt at a problem.
     """
-
     attempt_rows = []
 
     for problem in merged_results:
-
         for language in ["python", "cpp"]:
-
-            lang_data = problem[language]
-
-            for attempt in lang_data["attempts"]:
-
+            lang_data = problem.get(language, {})
+            
+            # Use .get() to handle cases where a language key might be missing
+            for attempt in lang_data.get("attempts", []):
                 attempt_rows.append({
                     "id": problem["id"],
                     "language": language,
@@ -646,38 +641,39 @@ def generate_attempts_dataframe(merged_results: list) -> pd.DataFrame:
                     "examples_count": problem["examples_count"],
                     "constraints_count": problem["constraints_count"],
                     "tags": problem["tags"],
-
+                    
                     "attempt_number": attempt["attempt_number"],
                     "result": attempt["result"],
-                    "error_type": attempt["error_type"]
+                    "error_type": attempt["error_type"],
+                    "passed_tests": attempt.get("passed_tests", 0) # Added newest data
                 })
-    attempt_df: pd.Dataframe = pd.DataFrame(attempt_rows)
-    attempt_df = attempt_df.explode("tags")
-    attempt_df.attrs['name'] = 'Leetcode Attempts Results'
 
+    attempt_df = pd.DataFrame(attempt_rows)
+    
+    if not attempt_df.empty:
+        attempt_df = attempt_df.explode("tags")
+    
+    attempt_df.attrs['name'] = 'Leetcode Attempts Results'
     return attempt_df
 
-def generate_problem_dataframe(merged_results):
+def generate_problem_dataframe(merged_results: list) -> pd.DataFrame:
+    """
+    Generates a dataframe where each row is a summary of a problem (by language).
+    """
     problem_rows = []
 
     for problem in merged_results:
-
         for language in ["python", "cpp"]:
+            lang_data = problem.get(language, {})
+            attempts = lang_data.get("attempts", [])
 
-            lang_data = problem[language]
-
-            attempts = lang_data["attempts"]
-
-            eventually_passed = (
-                lang_data["passed_attempts"] > 0
-            )
-
+            # Logic for success calculation
+            eventually_passed = lang_data.get("passed_attempts", 0) > 0
+            
             first_try_success = False
-
             if attempts:
-                first_try_success = (
-                    attempts[0]["result"] == "pass"
-                )
+                # Assuming attempts are ordered or you want the status of the first one
+                first_try_success = (attempts[0]["result"] == "pass")
 
             problem_rows.append({
                 "id": problem["id"],
@@ -690,14 +686,19 @@ def generate_problem_dataframe(merged_results):
                 "eventually_passed": eventually_passed,
                 "first_try_success": first_try_success,
 
-                "total_attempts": lang_data["total_attempts"],
-                "passed_attempts": lang_data["passed_attempts"],
-                "failed_attempts": lang_data["failed_attempts"]
+                # Included the newest summary data fields
+                "total_attempts": lang_data.get("total_attempts", 0),
+                "passed_attempts": lang_data.get("passed_attempts", 0),
+                "failed_attempts": lang_data.get("failed_attempts", 0),
+                "total_tests": lang_data.get("total_tests", 0)
             })
-    problems_df = pd.DataFrame(problem_rows)
-    problems_df = problems_df.explode("tags")
-    problems_df.attrs['name'] = 'Leetcode Problems Results'
 
+    problems_df = pd.DataFrame(problem_rows)
+    
+    if not problems_df.empty:
+        problems_df = problems_df.explode("tags")
+    
+    problems_df.attrs['name'] = 'Leetcode Problems Results'
     return problems_df
 
 def generate_summary_report(result_file_path_cpp: str, result_file_path_py: str):
