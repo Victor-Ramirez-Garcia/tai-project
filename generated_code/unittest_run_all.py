@@ -731,6 +731,52 @@ def save_current_figure(filename: str) -> None:
 # Individual Plotting Functions
 # --------------------------------------------------
 
+def plot_tag_success_by_language(problems_df: pd.DataFrame, top_n=10):
+    """
+    Side-by-side comparison of success rates for the most common tags.
+    """
+    # Get top N tags by frequency to keep graph readable
+    top_tags = problems_df['tags'].value_counts().nlargest(top_n).index
+    filtered_df = problems_df[problems_df['tags'].isin(top_tags)]
+    
+    # Pivot for grouped bar chart
+    data = filtered_df.pivot_table(
+        index="tags", 
+        columns="language", 
+        values="eventually_passed", 
+        aggfunc="mean"
+    )
+    
+    plt.figure(figsize=(12, 7))
+    data.plot(kind="bar", rot=45)
+    plt.ylabel("Success Rate")
+    plt.title(f"Success Rate by Tag & Language (Top {top_n} Tags)")
+    plt.tight_layout()
+    save_current_figure("tag_success_by_language.png")
+
+def plot_tag_difficulty_heatmap(problems_df: pd.DataFrame):
+    """
+    Matrix view of Success Rates for Tags broken down by Difficulty.
+    """
+    # Create the matrix
+    matrix = problems_df.pivot_table(
+        index="difficulty", 
+        columns="tags", 
+        values="eventually_passed", 
+        aggfunc="mean"
+    )
+    
+    plt.figure(figsize=(14, 6))
+    # Using imshow to create a heatmap-like visualization
+    plt.imshow(matrix, cmap='RdYlGn', aspect='auto')
+    
+    plt.colorbar(label='Success Rate')
+    plt.xticks(ticks=range(len(matrix.columns)), labels=matrix.columns, rotation=45, ha='right')
+    plt.yticks(ticks=range(len(matrix.index)), labels=matrix.index)
+    plt.title("Success Rate: Difficulty vs Tag")
+    plt.tight_layout()
+    save_current_figure("tag_difficulty_heatmap.png")
+
 def plot_difficulty_vs_language_failures(attempt_df: pd.DataFrame):
     """
     Plots failures by difficulty, split by language and stacked by error type.
@@ -846,6 +892,16 @@ def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -
     # Attempt-specific insights
     if 'total_tests' in attempt_df.columns:
         plot_learning_curve(attempt_df)
+
+    # --------------------------------------------------
+    # NEW: In-depth Tag Analysis
+    # --------------------------------------------------
+    # Compare performance per tag split by language
+    plot_tag_success_by_language(problems_df)
+    
+    # Identify hotspots/blindspots across difficulties
+    plot_tag_difficulty_heatmap(problems_df)
+
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
