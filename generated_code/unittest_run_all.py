@@ -107,62 +107,70 @@ ASSERTION_FAILURE = "Assertion Failure"
 # Order these keys in the order you want to check them (Highest priority first)
 ERROR_MAPPINGS = {
     "Infrastructure/Build": [
-        r"make: \*\*\*", r"cmake error", r"permission denied", 
+r"make: \*\*\*", r"cmake error", r"permission denied", 
         r"no space left on device", r"fatal error: .* file not found"
     ],
     "Dependency/Definition": [
-        r"unknown type name", r"use of undeclared identifier", 
-        r"no matching function", r"undefined reference", 
-        r"no member named", r"ImportError", r"ModuleNotFoundError",
+        r"unknown type name", 
+        r"use of undeclared identifier", 
+        r"no matching function", 
+        r"undefined reference", 
+        r"no member named", 
+        r"ImportError", 
+        r"ModuleNotFoundError",
         r"is not a member of",
-        r"AttributeError", r"member .* does not exist"
+        r"AttributeError" 
     ],
     "Syntax Error": [
-        r"SyntaxError", r"IndentationError", 
-        r"expected ';'", r"expected '\)'", r"expected expression", 
-        r"unbalanced parenthesis", r"expected '\}'"
+        # Keep this list strictly about Grammar/Parsing
+        r"SyntaxError", 
+        r"IndentationError", 
+        r"expected ';'", 
+        r"expected '\)'", 
+        r"unbalanced parenthesis",
+        r"expected '\}'",
+        r"expected expression" # Added back here, but only after Dependency is checked
     ],
     "Memory/Pointer": [
         r"MemoryError", r"RecursionError", r"Segmentation fault", 
-        r"std::bad_alloc", r"free\(\)", r"heap-use-after-free"
-    ],
+r"std::bad_alloc", r"free\(\)", r"heap-use-after-free"
+],
     "Logic/Boundary": [
-        r"IndexError", r"KeyError", r"TypeError", r"NameError", 
+r"IndexError", r"KeyError", r"TypeError", r"NameError", 
         r"std::out_of_range", r"out of bounds"
     ],
     "Assertion Failure": [
-        r"Failure", r"FAILED", r"Expected equality", r"Value of:", 
+r"Failure", r"FAILED", r"Expected equality", r"Value of:", 
         r"Assertion `.*' failed", r"AssertionError"
     ],
     "Arithmetic": [
         r"ZeroDivisionError", r"Floating point exception", r"divide by zero"
     ],
 }
+ERROR_PRIORITY_ORDER = [
+    "Memory/Pointer",     # Includes RecursionError, Segfault
+    "Syntax Error",
+    "Dependency/Definition",
+    "Infrastructure/Build",
+    "Logic/Boundary",
+    "Arithmetic",
+    "Assertion Failure"   # Symptom, not root cause
+]
 
 def get_unified_error_type(output: str, returncode: int = 0) -> str:
     if not output:
         return "Unknown/Logical Failure"
-    
-    # 1. PRIORITY 1: Assertions (Logic checks)
-    for pattern in ERROR_MAPPINGS["Assertion Failure"]:
-        if re.search(pattern, output, re.IGNORECASE | re.DOTALL):
-            return "Assertion Failure"
 
-    # 2. PRIORITY 2: System Crashes (Signal based)
-    # This works for compiled languages; Python typically returns 1 on error, 
-    # so we keep this check conditional.
+    # 1. PRIORITY: System Crashes (Signal based - Hard check)
     if returncode < 0:
-        """
-        if returncode == -11: return "Memory Error (Segfault)"
-        if returncode == -6: return "Memory Error (Abort/Assertion)"
-        """
-        return f"Runtime Crash"
+        return "Runtime Crash (Signal)"
 
-    # 3. PRIORITY 3: Everything Else (Regex based)
-    # We iterate through the dictionary categories.
-    for category, patterns in ERROR_MAPPINGS.items():
-        if category == "Assertion Failure": continue
+    # 2. PRIORITY: Root Cause Analysis (Waterfall)
+    # We loop through our defined priority list
+    for category in ERROR_PRIORITY_ORDER:
+        patterns = ERROR_MAPPINGS.get(category, [])
         for pattern in patterns:
+            # We use re.IGNORECASE to ensure we catch 'recursionerror' and 'RecursionError'
             if re.search(pattern, output, re.IGNORECASE | re.DOTALL):
                 return category
     
@@ -779,8 +787,8 @@ def plot_graph_1_failed_attempts(attempt_df: pd.DataFrame):
 def plot_graph_1a_failed_vs_passed(attempt_df: pd.DataFrame):
     # 1. Update these to match your actual data (e.g., 'pass', 'failed')
     # Use the print statement above to confirm the exact spelling
-    valid_results = ['pass', 'failed'] 
-    
+    valid_results = ['pass', 'failed']
+
     # 2. Filter
     df_clean = attempt_df[attempt_df['result'].isin(valid_results)].copy()
     
@@ -796,7 +804,7 @@ def plot_graph_1a_failed_vs_passed(attempt_df: pd.DataFrame):
     plt.title("Performance: Pass vs. Fail Count by Language")
     plt.ylabel("Number of Attempts")
     plt.xticks(rotation=0)
-    
+
     save_current_figure("graph_1a_failed_vs_passed.png")
 
 # 2b. HEATMAP: Measure # of failed attempts vs difficulty type in C++ vs Python
