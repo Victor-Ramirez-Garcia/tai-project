@@ -40,7 +40,7 @@ protected:
 };
 
 // Test Case: Example 1 from problem description
-TEST_FID(MergeNodesTest, Example1) {
+TEST_F(MergeNodesTest, Example1) {
     std::vector<int> input = {0, 3, 1, 0, 4, 5, 2, 0};
     std::vector<int> expected = {4, 11};
     
@@ -53,7 +53,7 @@ TEST_FID(MergeNodesTest, Example1) {
 }
 
 // Test Case: Example 2 from problem description
-TEST_FID(MergeNodesTest, Example2) {
+TEST_F(MergeNodesTest, Example2) {
     std::vector<int> input = {0, 1, 0, 3, 0, 2, 2, 0};
     std::vector<int> expected = {1, 3, 4};
     
@@ -66,7 +66,7 @@ TEST_FID(MergeNodesTest, Example2) {
 }
 
 // Test Case: Minimum constraints (3 nodes: [0, X, 0])
-TEST_FID(MergeNodesTest, MinimumNodes) {
+TEST_F(MergeNodesTest, MinimumNodes) {
     std::vector<int> input = {0, 5, 0};
     std::vector<int> expected = {5};
     
@@ -79,7 +79,7 @@ TEST_FID(MergeNodesTest, MinimumNodes) {
 }
 
 // Test Case: Node values are 0 (e.g., [0, 0, 0] is invalid per constraints, but nodes between 0s can be 0)
-TEST_FID(MergeNodesTest, ZeroValuesBetweenZeros) {
+TEST_F(MergeNodesTest, ZeroValuesBetweenZeros) {
     std::vector<int> input = {0, 0, 0, 0}; // Wait, constraint says "no two consecutive nodes with Node.val == 0"
     // So valid input with 0 value between 0s must be separated like: [0, 0, 1, 0] -> invalid consecutive.
     // "0 <= Node.val <= 1000". If value is 0, it cannot be consecutive. Thus, {0, 0...} is invalid.
@@ -99,7 +99,7 @@ TEST_FID(MergeNodesTest, ZeroValuesBetweenZeros) {
 }
 
 // Test Case: Large number of nodes to ensure no stack overflow or timeout (within limit)
-TEST_FID(MergeNodesTest, LargeList) {
+TEST_F(MergeNodesTest, LargeList) {
     std::vector<int> input = {0};
     std::vector<int> expected;
     
@@ -119,7 +119,7 @@ TEST_FID(MergeNodesTest, LargeList) {
 }
 
 // Test Case: Multiple nodes between zeros summing up to a large value
-TEST_FID(MergeNodesTest, ManyNodesInSingleBlock) {
+TEST_F(MergeNodesTest, ManyNodesInSingleBlock) {
     std::vector<int> input = {0};
     int expected_sum = 0;
     for (int i = 0; i < 1000; ++i) {
