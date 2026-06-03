@@ -113,15 +113,13 @@ ERROR_MAPPINGS = {
         r"unknown type name", r"use of undeclared identifier", 
         r"no matching function", r"undefined reference", 
         r"no member named", r"ImportError", r"ModuleNotFoundError",
-        r"is not a member of"
+        r"is not a member of",
+        r"AttributeError", r"member .* does not exist"
     ],
     "Syntax Error": [
         r"SyntaxError", r"IndentationError", 
         r"expected ';'", r"expected '\)'", r"expected expression", 
         r"unbalanced parenthesis", r"expected '\}'"
-    ],
-    "API Hallucination": [
-        r"AttributeError", r"member .* does not exist"
     ],
     "Memory/Pointer": [
         r"MemoryError", r"RecursionError", r"Segmentation fault", 
