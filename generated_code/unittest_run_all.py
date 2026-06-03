@@ -811,6 +811,58 @@ def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -
     plt.title("Tag vs Success Rate")
 
     save_current_figure("tag_success_rate.png")
+    
+    # --------------------------------------------------
+    # NEW: Error Type Distribution (Python vs C++)
+    # --------------------------------------------------
+    # This highlights the "Type" of friction each language creates.
+    error_dist = (
+        attempt_df[attempt_df["result"] == "failed"]
+        .groupby(["language", "error_type"])
+        .size()
+        .unstack(fill_value=0)
+    )
+    
+    plt.figure(figsize=(10, 6))
+    error_dist.plot(kind="bar", stacked=True)
+    plt.ylabel("Number of Failures")
+    plt.title("Error Types: Python vs C++")
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()
+    save_current_figure("error_type_comparison.png")
+
+    # --------------------------------------------------
+    # NEW: Average Attempts per Difficulty (Python vs C++)
+    # --------------------------------------------------
+    # Are C++ solutions harder to finish?
+    avg_attempts = (
+        problems_df.groupby(["language", "difficulty"])["total_attempts"]
+        .mean()
+        .unstack()
+    )
+    
+    plt.figure(figsize=(10, 6))
+    avg_attempts.plot(kind="bar", rot=0)
+    plt.ylabel("Avg Attempts to Finish")
+    plt.title("Average Attempts required by Difficulty & Language")
+    save_current_figure("avg_attempts_difficulty.png")
+
+    # --------------------------------------------------
+    # NEW: Pass Rate by Difficulty & Language
+    # --------------------------------------------------
+    # Compare success probability directly
+    success_by_diff = (
+        problems_df.groupby(["language", "difficulty"])["eventually_passed"]
+        .mean()
+        .unstack()
+    )
+    
+    plt.figure(figsize=(10, 6))
+    success_by_diff.plot(kind="bar", rot=0)
+    plt.ylabel("Success Rate")
+    plt.title("Success Rate by Difficulty (Python vs C++)")
+    plt.ylim(0, 1.1)
+    save_current_figure("success_rate_by_difficulty.png")
 
     print(f"Saved graphs to: {GRAPH_OUTPUT_DIR}")
 
