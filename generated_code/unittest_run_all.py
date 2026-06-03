@@ -756,6 +756,40 @@ def save_current_figure(filename: str) -> None:
 # Individual Plotting Functions
 # --------------------------------------------------
 
+def plot_loc_by_language(attempt_df: pd.DataFrame):
+    """
+    Shows the distribution of code length for Python vs C++.
+    """
+    plt.figure(figsize=(8, 6))
+    # Boxplot shows median (red line) and spread of LOC
+    attempt_df.boxplot(column='loc', by='language', grid=False, patch_artist=True, figsize=(8, 6))
+    
+    plt.title("Code Length (LOC) Distribution by Language")
+    plt.suptitle("") # Remove default pandas suptitle
+    plt.ylabel("Lines of Code")
+    plt.xlabel("Language")
+    save_current_figure("loc_by_language.png")
+
+def plot_loc_by_failure_type(attempt_df: pd.DataFrame):
+    """
+    Compares if certain errors happen in significantly longer (more complex) code.
+    """
+    failed_attempts = attempt_df[attempt_df['result'] == 'failed']
+    
+    if failed_attempts.empty:
+        print("No failed attempts to plot for LOC analysis.")
+        return
+
+    plt.figure(figsize=(10, 6))
+    failed_attempts.boxplot(column='loc', by='error_type', grid=False, rot=45, figsize=(10, 6))
+    
+    plt.title("Code Length (LOC) per Failure Type")
+    plt.suptitle("")
+    plt.ylabel("Lines of Code")
+    plt.xlabel("Error Type")
+    plt.tight_layout()
+    save_current_figure("loc_by_failure_type.png")
+
 def plot_constraints_vs_error_types(attempt_df: pd.DataFrame, problems_df: pd.DataFrame):
     """
     Shows if higher constraint counts correlate with specific error types.
@@ -971,6 +1005,10 @@ def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -
     # NEW: Constraint Analysis
     plot_constraints_vs_error_types(attempt_df, problems_df)
     plot_examples_vs_success(problems_df)
+
+    # NEW: Code Length Analysis
+    plot_loc_by_language(attempt_df)
+    plot_loc_by_failure_type(attempt_df)
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
