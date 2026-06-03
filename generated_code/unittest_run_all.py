@@ -167,6 +167,24 @@ def get_unified_error_type(output: str, returncode: int = 0) -> str:
     
     return "Unknown/Logical Failure"
 
+def get_lines_of_code(file_path: str) -> int:
+    """
+    Counts the number of non-empty lines in a file.
+    Works for any text-based source code file (.py, .cpp, .h, etc.)
+    """
+    if not os.path.exists(file_path):
+        return 0
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            # We filter out blank lines and whitespace-only lines 
+            # to get a more accurate measure of 'code' density.
+            lines = [line for line in f if line.strip()]
+            return len(lines)
+    except Exception as e:
+        print(f"Could not read file {file_path}: {e}")
+        return 0
+
 # Helper to load library metadata
 def get_metadata(problem_id):
     # Adjust this path to your actual leetcode_library.json
@@ -244,6 +262,8 @@ def run_single_task(sol_file, source_dir, base_build_dir):
         capture_output=True, text=True, timeout=TIMEOUT_COMPILE
     )
 
+    loc = get_lines_of_code(sol_file)
+
     if build_result.returncode != 0:
         return {
             "prob_id": prob_id,
@@ -252,6 +272,7 @@ def run_single_task(sol_file, source_dir, base_build_dir):
             "result": "failed",
             "total_tests": 0,
             "passed_tests": 0,
+            "loc": loc,
             "error_type": get_unified_error_type(build_result.stderr, build_result.returncode),
             "raw_stdout": build_result.stdout,
             "raw_stderr": build_result.stderr
@@ -293,6 +314,7 @@ def run_single_task(sol_file, source_dir, base_build_dir):
         "attempt_num": attempt_num,
         "has_compiled": has_compiled,
         "result": result,
+        "loc": loc,
         "total_tests": total_tests,
         "passed_tests": passed_tests,
         "error_type": error_type,
@@ -471,11 +493,13 @@ def run_and_store_python_tests(unittest_files_dir: str, output_file_path: str) -
             passed_tests = get_passed_test_count(proc.stderr, total_tests)
             error_type = get_unified_error_type(proc.stderr, proc.returncode)
 
-            
+        loc = get_lines_of_code(sol_file)
+
         attempt_data = {
             "attempt_number": int(attempt_num),
             "result": "pass" if proc.returncode == 0 else "failed",
             "passed_tests": passed_tests, # Renamed as requested
+            "loc": loc, 
             "error_type": error_type,
             "raw_stderr": proc.stderr if proc.returncode != 0 else ""
         }
@@ -640,6 +664,7 @@ def generate_attempts_dataframe(merged_results: list) -> pd.DataFrame:
                     "difficulty": problem["difficulty"],
                     "examples_count": problem["examples_count"],
                     "constraints_count": problem["constraints_count"],
+                    "loc": attempt.get("loc", 0), # Added newest data
                     "tags": problem["tags"],
                     
                     "attempt_number": attempt["attempt_number"],
