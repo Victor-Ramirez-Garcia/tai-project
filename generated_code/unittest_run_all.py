@@ -103,32 +103,37 @@ TIMEOUT_ERROR = "Timeout Failure"
 RUN_TIME_ERROR = "Runtime Error"
 ASSERTION_FAILURE = "Assertion Failure"
 
+# Order these keys in the order you want to check them (Highest priority first)
 ERROR_MAPPINGS = {
-    "Assertion Failure": [
-        r"Failure", r"FAILED", r"Expected equality", r"Value of:", 
-        r"Assertion `.*' failed", r"AssertionError"
+    "Infrastructure/Build": [
+        r"make: \*\*\*", r"cmake error", r"permission denied", 
+        r"no space left on device", r"fatal error: .* file not found"
+    ],
+    "Dependency/Definition": [
+        r"unknown type name", r"use of undeclared identifier", 
+        r"no matching function", r"undefined reference", 
+        r"no member named", r"ImportError", r"ModuleNotFoundError",
+        r"is not a member of"
     ],
     "Syntax Error": [
         r"SyntaxError", r"IndentationError", 
         r"expected ';'", r"expected '\)'", r"expected expression", 
-        r"unbalanced parenthesis", r"unterminated function-like macro", 
-        r"expected '\}'"
-    ],
-    "Dependency/Definition Error": [
-        r"unknown type name", r"use of undeclared identifier", 
-        r"no matching function", r"undefined reference", 
-        r"no member named", r"ImportError", r"ModuleNotFoundError"
+        r"unbalanced parenthesis", r"expected '\}'"
     ],
     "API Hallucination": [
         r"AttributeError", r"member .* does not exist"
     ],
     "Memory/Pointer": [
         r"MemoryError", r"RecursionError", r"Segmentation fault", 
-        r"std::bad_alloc", r"free\(\)"
+        r"std::bad_alloc", r"free\(\)", r"heap-use-after-free"
     ],
     "Logic/Boundary": [
         r"IndexError", r"KeyError", r"TypeError", r"NameError", 
         r"std::out_of_range", r"out of bounds"
+    ],
+    "Assertion Failure": [
+        r"Failure", r"FAILED", r"Expected equality", r"Value of:", 
+        r"Assertion `.*' failed", r"AssertionError"
     ],
     "Arithmetic": [
         r"ZeroDivisionError", r"Floating point exception", r"divide by zero"

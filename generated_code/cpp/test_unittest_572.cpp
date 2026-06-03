@@ -52,7 +52,6 @@ TEST_F(IsSubtreeTest, Example1_ReturnsTrue) {
     EXPECT_TRUE(solution.isSubtree(root, subRoot));
     
     freeTree(root);
-    freeTree(freeTree); // Note: typo corrected below to subRoot
     freeTree(subRoot);
 }
 
