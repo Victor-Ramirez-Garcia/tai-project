@@ -775,17 +775,17 @@ def save_current_figure(filename: str) -> None:
     plt.savefig(GRAPH_OUTPUT_DIR / filename)
     plt.close()
 
-# 1. Bar Graph: Measure # of failed attempts in C++ vs Python
-def plot_graph_1_failed_attempts(attempt_df: pd.DataFrame):
+# Bar Graph: Measure # of failed attempts in C++ vs Python
+def plot_graph_failed_attempts(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed']
     plt.figure(figsize=(8, 6))
     sns.countplot(data=failures, x='language', palette='viridis')
     plt.title("Total Failed Attempts by Language")
     plt.xticks(rotation=0)
-    save_current_figure("graph_1_failed_attempts.png")
+    save_current_figure("graph_failed_attempts.png")
 
-# 1a. HEATMAP: Measure # of failed attempts vs passed attempts in C++ vs Python
-def plot_graph_1a_failed_vs_passed(attempt_df: pd.DataFrame):
+# a. HEATMAP: Measure # of failed attempts vs passed attempts in C++ vs Python
+def plot_graph_a_failed_vs_passed(attempt_df: pd.DataFrame):
     # 1. Update these to match your actual data (e.g., 'pass', 'failed')
     # Use the print statement above to confirm the exact spelling
     valid_results = ['pass', 'failed']
@@ -806,20 +806,20 @@ def plot_graph_1a_failed_vs_passed(attempt_df: pd.DataFrame):
     plt.ylabel("Number of Attempts")
     plt.xticks(rotation=0)
 
-    save_current_figure("graph_1a_failed_vs_passed.png")
+    save_current_figure("graph_a_failed_vs_passed.png")
 
-# 2b. HEATMAP: Measure # of failed attempts vs difficulty type in C++ vs Python
-def plot_graph_2b_failed_vs_difficulty(attempt_df: pd.DataFrame):
+# b. HEATMAP: Measure # of failed attempts vs difficulty type in C++ vs Python
+def plot_graph_b_failed_vs_difficulty(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed']
     matrix = failures.pivot_table(index='difficulty', columns='language', aggfunc='size', fill_value=0)
     plt.figure(figsize=(8, 6))
     sns.heatmap(matrix, annot=True, fmt='d', cmap='Reds', cbar_kws={'label': 'Failed Count'})
     plt.title("Failures by Difficulty & Language")
     plt.xticks(rotation=0)
-    save_current_figure("graph_2b_failed_vs_difficulty.png")
+    save_current_figure("graph_b_failed_vs_difficulty.png")
 
-# 2bi. HEATMAP: Measure # of failures vs difficulty type vs error type in C++ vs Python
-def plot_graph_2bi_failures_difficulty_error(attempt_df: pd.DataFrame):
+# bc. HEATMAP: Measure # of failures vs difficulty type vs error type in C++ vs Python
+def plot_graph_bc_failures_difficulty_error(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed']
     # Create multi-index pivot
     matrix = failures.pivot_table(
@@ -832,17 +832,17 @@ def plot_graph_2bi_failures_difficulty_error(attempt_df: pd.DataFrame):
     sns.heatmap(matrix, annot=True, fmt='d', cmap='Purples', cbar_kws={'label': 'Failed Count'})
     plt.title("Failures: Difficulty & Error Type by Language")
     plt.xticks(rotation=0)
-    save_current_figure("graph_2bi_failures_difficulty_error.png")
+    save_current_figure("graph_bc_failures_difficulty_error.png")
 
-# 2c. HEATMAP: Measure # of failed attempts vs error type in C++ vs Python
-def plot_graph_2c_failed_vs_error_type(attempt_df: pd.DataFrame):
+# c. HEATMAP: Measure # of failed attempts vs error type in C++ vs Python
+def plot_graph_c_failed_vs_error_type(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed']
     matrix = failures.pivot_table(index='error_type', columns='language', aggfunc='size', fill_value=0)
     plt.figure(figsize=(8, 8))
     sns.heatmap(matrix, annot=True, fmt='d', cmap='YlGnBu', cbar_kws={'label': 'Failed Count'})
     plt.title("Failed Attempts by Error Type")
     plt.xticks(rotation=0)
-    save_current_figure("graph_2c_failed_vs_error_type.png")
+    save_current_figure("graph_c_failed_vs_error_type.png")
 
 # --------------------------------------------------
 # Main Orchestrator
@@ -853,11 +853,11 @@ def generate_graph_report(attempt_df, problems_df):
     Categorized execution of all plotting functions.
     """
     
-    plot_graph_1_failed_attempts(attempt_df)
-    plot_graph_1a_failed_vs_passed(attempt_df)
-    plot_graph_2b_failed_vs_difficulty(attempt_df)
-    plot_graph_2bi_failures_difficulty_error(attempt_df)
-    plot_graph_2c_failed_vs_error_type(attempt_df)
+    plot_graph_failed_attempts(attempt_df)
+    plot_graph_a_failed_vs_passed(attempt_df)
+    plot_graph_b_failed_vs_difficulty(attempt_df)
+    plot_graph_bc_failures_difficulty_error(attempt_df)
+    plot_graph_c_failed_vs_error_type(attempt_df)
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
