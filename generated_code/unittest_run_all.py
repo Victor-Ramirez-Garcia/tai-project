@@ -763,354 +763,106 @@ def save_current_figure(filename: str) -> None:
 # Individual Plotting Functions
 # --------------------------------------------------
 
-def plot_loc_difficulty_heatmap(attempt_df: pd.DataFrame):
-    """
-    Shows which Difficulty/Language combination produces the longest code.
-    """
-    # Create the matrix: Difficulty (rows) vs Language (columns)
-    matrix = attempt_df.pivot_table(
-        index="difficulty", 
-        columns="language", 
-        values="loc", 
-        aggfunc="mean"
-    )
-    
-    plt.figure(figsize=(8, 6))
-    # annot=True puts the actual LOC numbers in the boxes
-    sns.heatmap(matrix, annot=True, cmap="YlOrRd", fmt=".0f", cbar_kws={'label': 'Avg Lines of Code'})
-    
-    plt.title("Code Bloat: Difficulty vs. Language")
-    save_current_figure("loc_difficulty_heatmap.png")
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-def plot_loc_failure_heatmap(attempt_df: pd.DataFrame):
+# Ensure uniform ordering for Difficulty
+DIFFICULTY_ORDER = ['Easy', 'Medium', 'Hard']
+
+def plot_total_failure_count(attempt_df: pd.DataFrame):
     """
-    Shows which Error Type/Language combination correlates with code length.
+    Measures the raw number of failures in C++ vs Python.
     """
-    failed_attempts = attempt_df[attempt_df['result'] == 'failed']
+    # Filter only for failed attempts
+    failures = attempt_df[attempt_df['result'] == 'failed']
     
-    matrix = failed_attempts.pivot_table(
-        index="error_type", 
-        columns="language", 
-        values="loc", 
-        aggfunc="mean"
+    plt.figure(figsize=(8, 5))
+    
+    # Use countplot to visualize the raw counts
+    sns.countplot(data=failures, x='language', palette='viridis', order=['python', 'cpp'])
+    
+    plt.title("Baseline: Total Number of Failed Attempts by Language")
+    plt.ylabel("Number of Failures")
+    plt.xlabel("Language")
+    plt.grid(axis='y', linestyle='--', alpha=0.5)
+    
+    save_current_figure("baseline_failure_count.png")
+
+
+def plot_pass_fail_comparison(attempt_df: pd.DataFrame):
+    """ 1a. Measure # of failed vs. passed attempts in C++ vs. Python """
+    plt.figure(figsize=(8, 5))
+    sns.countplot(data=attempt_df, x='language', hue='result')
+    plt.title("Productivity Gap: Passed vs. Failed Attempts")
+    plt.ylabel("Number of Attempts")
+    save_current_figure("1a_pass_fail_comparison.png")
+
+def plot_error_profile_heatmap(attempt_df: pd.DataFrame):
+    failures = attempt_df[attempt_df['result'] == 'failed']
+    
+    # Create Matrix: Error Type vs Language
+    matrix = failures.pivot_table(
+        index='error_type', 
+        columns='language', 
+        aggfunc='size', 
+        fill_value=0
     )
     
     plt.figure(figsize=(10, 8))
-    sns.heatmap(matrix, annot=True, cmap="coolwarm", fmt=".0f", cbar_kws={'label': 'Avg Lines of Code'})
-    
-    plt.title("Failure Complexity: Error Type vs. Language")
+    sns.heatmap(matrix, annot=True, cmap='YlGnBu', fmt='d')
+    plt.title("Error Distribution: Language Profiles")
     plt.tight_layout()
-    save_current_figure("loc_failure_heatmap.png")
+    save_current_figure("heatmap_error_profile.png")
 
-def plot_loc_volatility_histogram(attempt_df: pd.DataFrame):
-    """
-    Shows the distribution of LOC standard deviation across all problems.
-    A wide spread here means the model is very inconsistent in its coding style.
-    """
-    # Calculate standard deviation of LOC for each unique problem
-    volatility = attempt_df.groupby('id')['loc'].std().fillna(0)
+def plot_failure_complexity_heatmap(attempt_df: pd.DataFrame):
+    # Filter to failures
+    failures = attempt_df[attempt_df['result'] == 'failed']
     
-    plt.figure(figsize=(10, 6))
-    volatility.hist(bins=20, edgecolor='black', alpha=0.7)
-    
-    plt.title("Model Volatility: Consistency of Code Length per Problem")
-    plt.xlabel("Standard Deviation of LOC (Higher = More Volatile)")
-    plt.ylabel("Number of Problems")
-    save_current_figure("loc_volatility_dist.png")
-
-def plot_success_by_difficulty(problems_df: pd.DataFrame):
-    """
-    Shows the 'Difficulty Gap' between Python and C++.
-    """
-    # Group by difficulty and language to calculate success rate
-    data = problems_df.groupby(['difficulty', 'language'])['eventually_passed'].mean().unstack()
+    # Create Matrix: Difficulty vs Language
+    matrix = failures.pivot_table(
+        index='difficulty', 
+        columns='language', 
+        aggfunc='size', 
+        fill_value=0
+    )
     
     plt.figure(figsize=(8, 6))
-    data.plot(kind='bar', ax=plt.gca(), rot=0)
-    
-    plt.title("Success Rate: Difficulty vs. Language")
-    plt.ylabel("Success Rate (0.0 to 1.0)")
-    plt.xlabel("Problem Difficulty")
-    plt.legend(title="Language")
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
-    save_current_figure("success_by_difficulty.png")
+    sns.heatmap(matrix, annot=True, cmap='Reds', fmt='d')
+    plt.title("Failure Density: Complexity Matrix")
+    save_current_figure("heatmap_failure_complexity.png")
 
-def plot_success_vs_constraints(problems_df: pd.DataFrame):
-    """
-    Visualizes the performance 'cliff' as constraint count increases.
-    """
-    # Group by number of constraints
-    data = problems_df.groupby('constraints_count')['eventually_passed'].mean()
+def plot_deep_diagnostic_heatmap(attempt_df: pd.DataFrame):
+    failures = attempt_df[attempt_df['result'] == 'failed']
     
-    plt.figure(figsize=(8, 5))
-    data.plot(kind='line', marker='o', linewidth=2, linestyle='-')
-    
-    plt.title("Performance Threshold: Success vs. Constraints")
-    plt.ylabel("Success Rate")
-    plt.xlabel("Number of Constraints")
-    plt.ylim(-0.05, 1.05)
-    plt.grid(True, linestyle='--')
-    save_current_figure("success_vs_constraints.png")
-
-def plot_loc_by_language(attempt_df: pd.DataFrame):
-    """
-    Shows the distribution of code length for Python vs C++.
-    """
-    plt.figure(figsize=(8, 6))
-    # Boxplot shows median (red line) and spread of LOC
-    attempt_df.boxplot(column='loc', by='language', grid=False, patch_artist=True, figsize=(8, 6))
-    
-    plt.title("Code Length (LOC) Distribution by Language")
-    plt.suptitle("") # Remove default pandas suptitle
-    plt.ylabel("Lines of Code")
-    plt.xlabel("Language")
-    save_current_figure("loc_by_language.png")
-
-def plot_loc_by_failure_type(attempt_df: pd.DataFrame):
-    """
-    Compares if certain errors happen in significantly longer (more complex) code.
-    """
-    failed_attempts = attempt_df[attempt_df['result'] == 'failed']
-    
-    if failed_attempts.empty:
-        print("No failed attempts to plot for LOC analysis.")
-        return
-
-    plt.figure(figsize=(10, 6))
-    failed_attempts.boxplot(column='loc', by='error_type', grid=False, rot=45, figsize=(10, 6))
-    
-    plt.title("Code Length (LOC) per Failure Type")
-    plt.suptitle("")
-    plt.ylabel("Lines of Code")
-    plt.xlabel("Error Type")
-    plt.tight_layout()
-    save_current_figure("loc_by_failure_type.png")
-
-def plot_constraints_vs_error_types(attempt_df: pd.DataFrame, problems_df: pd.DataFrame):
-    """
-    Shows if higher constraint counts correlate with specific error types.
-    """
-    # Simply use the existing column in attempt_df
-    # We filter only failed results
-    failures = attempt_df[attempt_df["result"] == "failed"]
-    
-    # Ensure the column exists before grouping
-    if "constraints_count" not in failures.columns:
-        print("Error: 'constraints_count' column not found in attempt_df. Skipping plot.")
-        return
-
-    # Grouping
-    data = failures.groupby(["constraints_count", "error_type"]).size().unstack(fill_value=0)
-    
-    plt.figure(figsize=(10, 6))
-    data.plot(kind="bar", stacked=True)
-    plt.ylabel("Number of Failures")
-    plt.xlabel("Number of Constraints")
-    plt.title("Error Type Distribution by Constraint Complexity")
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.tight_layout()
-    save_current_figure("constraints_vs_errors.png")
-
-def plot_examples_vs_success(problems_df: pd.DataFrame):
-    """
-    Analyzes if having more examples correlates with higher first-try success.
-    """
-    # Group by number of examples and check success rate
-    data = problems_df.groupby("examples_count")["first_try_success"].mean()
-    
-    plt.figure(figsize=(8, 5))
-    data.plot(kind="line", marker='o', linewidth=2)
-    plt.ylabel("First Attempt Success Rate")
-    plt.xlabel("Number of Examples Provided")
-    plt.title("Do more examples help the model pass the first time?")
-    plt.grid(True, linestyle='--', alpha=0.6)
-    plt.ylim(0, 1.1)
-    save_current_figure("examples_impact_analysis.png")
-
-def plot_tag_success_by_language(problems_df: pd.DataFrame, top_n=10):
-    """
-    Side-by-side comparison of success rates for the most common tags.
-    """
-    # Get top N tags by frequency to keep graph readable
-    top_tags = problems_df['tags'].value_counts().nlargest(top_n).index
-    filtered_df = problems_df[problems_df['tags'].isin(top_tags)]
-    
-    # Pivot for grouped bar chart
-    data = filtered_df.pivot_table(
-        index="tags", 
-        columns="language", 
-        values="eventually_passed", 
-        aggfunc="mean"
+    # Create two separate matrices or a nested structure
+    # Here we show a heatmap specifically for the hardest Language/Error interactions
+    matrix = failures.pivot_table(
+        index='error_type', 
+        columns=['language', 'difficulty'], 
+        aggfunc='size', 
+        fill_value=0
     )
     
-    plt.figure(figsize=(12, 7))
-    data.plot(kind="bar", rot=45)
-    plt.ylabel("Success Rate")
-    plt.title(f"Success Rate by Tag & Language (Top {top_n} Tags)")
+    plt.figure(figsize=(12, 8))
+    sns.heatmap(matrix, annot=True, cmap='Purples', fmt='d')
+    plt.title("Deep Diagnostic: Language/Difficulty vs Error Type")
     plt.tight_layout()
-    save_current_figure("tag_success_by_language.png")
-
-def plot_tag_difficulty_heatmap(problems_df: pd.DataFrame):
-    """
-    Matrix view of Success Rates for Tags broken down by Difficulty.
-    """
-    # Create the matrix
-    matrix = problems_df.pivot_table(
-        index="difficulty", 
-        columns="tags", 
-        values="eventually_passed", 
-        aggfunc="mean"
-    )
-    
-    plt.figure(figsize=(14, 6))
-    # Using imshow to create a heatmap-like visualization
-    plt.imshow(matrix, cmap='RdYlGn', aspect='auto')
-    
-    plt.colorbar(label='Success Rate')
-    plt.xticks(ticks=range(len(matrix.columns)), labels=matrix.columns, rotation=45, ha='right')
-    plt.yticks(ticks=range(len(matrix.index)), labels=matrix.index)
-    plt.title("Success Rate: Difficulty vs Tag")
-    plt.tight_layout()
-    save_current_figure("tag_difficulty_heatmap.png")
-
-def plot_difficulty_vs_language_failures(attempt_df: pd.DataFrame):
-    """
-    Plots failures by difficulty, split by language and stacked by error type.
-    """
-    # Group by difficulty, language, and error type
-    data = (
-        attempt_df[attempt_df["result"] == "failed"]
-        .groupby(["difficulty", "language", "error_type"])
-        .size()
-        .unstack(fill_value=0)
-    )
-    
-    plt.figure(figsize=(12, 7))
-    # kind='bar' with stacked=True works on multi-index DataFrames
-    data.plot(kind="bar", stacked=True, ax=plt.gca())
-    
-    plt.ylabel("Failure Count")
-    plt.xlabel("Difficulty & Language")
-    plt.title("Difficulty vs Failure Type (Python vs C++)")
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.tight_layout()
-    save_current_figure("difficulty_language_failure_comparison.png")
-
-def plot_language_success(problems_df: pd.DataFrame):
-    data = problems_df.groupby("language")["eventually_passed"].mean().sort_index()
-    plt.figure(figsize=(8, 5))
-    data.plot(kind="bar", rot=0)
-    plt.ylabel("Success Rate")
-    plt.xlabel("Language")
-    plt.title("Python vs C++ Success Rate")
-    save_current_figure("language_success_rate.png")
-
-def plot_first_attempt_success(problems_df: pd.DataFrame):
-    data = problems_df.groupby("language")["first_try_success"].mean().sort_index()
-    plt.figure(figsize=(8, 5))
-    data.plot(kind="bar", rot=0)
-    plt.ylabel("First Attempt Success Rate")
-    plt.xlabel("Language")
-    plt.title("First Attempt Success Rate")
-    save_current_figure("first_attempt_success_rate.png")
-
-def plot_difficulty_vs_failures(attempt_df: pd.DataFrame):
-    data = attempt_df[attempt_df["result"] == "failed"].groupby(["difficulty", "error_type"]).size().unstack(fill_value=0)
-    plt.figure(figsize=(10, 6))
-    data.plot(kind="bar", stacked=True)
-    plt.ylabel("Failure Count")
-    plt.xlabel("Difficulty")
-    plt.title("Difficulty vs Failure Type")
-    save_current_figure("difficulty_vs_failure_type.png")
-
-def plot_tag_success(problems_df: pd.DataFrame):
-    data = problems_df.groupby("tags")["eventually_passed"].mean().sort_values(ascending=False)
-    plt.figure(figsize=(12, 6))
-    data.plot(kind="bar")
-    plt.ylabel("Success Rate")
-    plt.xlabel("Tag")
-    plt.title("Tag vs Success Rate")
-    save_current_figure("tag_success_rate.png")
-
-def plot_error_comparison(attempt_df: pd.DataFrame):
-    data = attempt_df[attempt_df["result"] == "failed"].groupby(["language", "error_type"]).size().unstack(fill_value=0)
-    plt.figure(figsize=(10, 6))
-    data.plot(kind="bar", stacked=True)
-    plt.ylabel("Number of Failures")
-    plt.title("Error Types: Python vs C++")
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    save_current_figure("error_type_comparison.png")
-
-def plot_success_by_difficulty(problems_df: pd.DataFrame):
-    data = problems_df.groupby(["language", "difficulty"])["eventually_passed"].mean().unstack()
-    plt.figure(figsize=(10, 6))
-    data.plot(kind="bar", rot=0)
-    plt.ylabel("Success Rate")
-    plt.title("Success Rate by Difficulty (Python vs C++)")
-    plt.ylim(0, 1.1)
-    save_current_figure("success_rate_by_difficulty.png")
-
-def plot_learning_curve(attempt_df: pd.DataFrame):
-    # Ensure total_tests exists (merge if necessary)
-    df = attempt_df.copy()
-    if 'pass_ratio' not in df.columns:
-        df['pass_ratio'] = df['passed_tests'] / df['total_tests']
-    
-    data = df.groupby(['language', 'attempt_number'])['pass_ratio'].mean().unstack(0)
-    plt.figure(figsize=(10, 6))
-    data.plot(kind='line', marker='o')
-    plt.title("Learning Curve: Test Pass Ratio by Attempt")
-    plt.ylabel("Avg % of Tests Passed")
-    plt.xticks([1, 2, 3])
-    save_current_figure("learning_curve.png")
+    save_current_figure("heatmap_deep_diagnostic.png")
 
 # --------------------------------------------------
 # Main Orchestrator
 # --------------------------------------------------
 
-def generate_graph_report(attempt_df: pd.DataFrame, problems_df: pd.DataFrame) -> None:
+def generate_graph_report(attempt_df, problems_df):
     """
-    Generates graphical analysis reports and saves them to disk.
+    Categorized execution of all plotting functions.
     """
-    # High-level overview
-    plot_language_success(problems_df)
-    plot_first_attempt_success(problems_df)
     
-    # Granular analysis
-    plot_difficulty_vs_failures(attempt_df)
-    plot_difficulty_vs_language_failures(attempt_df)
-    plot_tag_success(problems_df)
-    
-    # Python vs C++ comparison
-    plot_error_comparison(attempt_df)
-    plot_success_by_difficulty(problems_df)
-    
-    # Attempt-specific insights
-    if 'total_tests' in attempt_df.columns:
-        plot_learning_curve(attempt_df)
-
-    # --------------------------------------------------
-    # NEW: In-depth Tag Analysis
-    # --------------------------------------------------
-    # Compare performance per tag split by language
-    plot_tag_success_by_language(problems_df)
-
-    # Identify hotspots/blindspots across difficulties
-    plot_tag_difficulty_heatmap(problems_df)
-
-    # NEW: Constraint Analysis
-    plot_constraints_vs_error_types(attempt_df, problems_df)
-    plot_examples_vs_success(problems_df)
-
-    # NEW: Code Length Analysis
-    plot_loc_by_language(attempt_df)
-    plot_loc_by_failure_type(attempt_df)
-    plot_loc_volatility_histogram(attempt_df)
-    plot_success_by_difficulty(problems_df)
-    plot_success_vs_constraints(problems_df)
-    plot_loc_difficulty_heatmap(attempt_df)
-    plot_loc_failure_heatmap(attempt_df)
-
+    plot_total_failure_count(attempt_df)
+    plot_pass_fail_comparison(attempt_df)
+    plot_error_profile_heatmap(attempt_df)
+    plot_failure_complexity_heatmap(attempt_df)
+    plot_deep_diagnostic_heatmap(attempt_df)
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
@@ -1136,6 +888,7 @@ def print_dataframe(df, first_rows):
     dashes = "-"*5
     print(f"\n\n{dashes} {df.attrs['name']}\n")
     print(df.head(first_rows))
+    print("Columns: ", df.columns.tolist())
     print(f"\n\n{dashes}")
 
 def main():
