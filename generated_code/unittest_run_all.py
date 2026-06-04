@@ -961,6 +961,48 @@ def plot_graph_d_failed_vs_tag_language(attempt_df: pd.DataFrame):
     plt.tight_layout()
     save_current_figure("graph_d_failed_vs_tag_language.png")
 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def plot_graph_failure_pinpoint_matrix(attempt_df: pd.DataFrame):
+    """
+    Creates a multi-dimensional matrix to pinpoint specific causes of failures.
+    Rows: Error Type
+    Cols: Distributed Tag
+    X-Axis: Difficulty
+    Hue: Language
+    """
+    # 1. Filter only failures
+    failures = attempt_df[attempt_df['result'] == 'failed'].copy()
+    
+    # 2. Create the Faceted Catplot
+    # We use sharey=False because error counts will vary wildly (e.g., Syntax errors 
+    # are usually more common than Memory errors)
+    g = sns.catplot(
+        data=failures,
+        x='difficulty',
+        hue='language',
+        col='distributed_tag',
+        row='error_type',
+        kind='count',
+        order=['Easy', 'Medium', 'Hard'],
+        palette={'python': 'blue', 'cpp': 'red'},
+        height=3, 
+        aspect=1.2,
+        sharey=False, 
+        edgecolor='black'
+    )
+    
+    # 3. Formatting
+    g.set_titles("{row_name} | {col_name}")
+    g.set_axis_labels("Difficulty", "Failure Count")
+    plt.subplots_adjust(top=0.9)
+    g.fig.suptitle('Failure Pinpoint Matrix: Error Type vs Tag vs Difficulty vs Language')
+    
+    save_current_figure("graph_failure_pinpoint_matrix.png")
+
+
+
 # HEATMAP: Failed attempts vs Lines of Code (LOC)
 def plot_graph_failed_vs_loc(attempt_df: pd.DataFrame):
     """
@@ -1054,9 +1096,14 @@ def generate_graph_report(attempt_df, problems_df):
     # Primary analysis
     plot_graph_a_failed_vs_passed(attempt_df)
     plot_graph_b_failed_vs_difficulty(attempt_df)
-    plot_graph_bc_failures_difficulty_error(attempt_df)
     plot_graph_c_failed_vs_error_type(attempt_df)
     plot_graph_d_failed_vs_tag_language(attempt_df)
+
+    # Zoomed in
+    plot_graph_bc_failures_difficulty_error(attempt_df)
+
+    # Complete zoom in
+    plot_graph_failure_pinpoint_matrix(attempt_df)
 
 
     plot_graph_failed_vs_loc(attempt_df)
