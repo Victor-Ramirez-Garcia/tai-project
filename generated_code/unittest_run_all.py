@@ -816,7 +816,7 @@ def save_current_figure(filename: str) -> None:
     plt.savefig(GRAPH_OUTPUT_DIR / filename)
     plt.close()
 
-def plot_graph_h_difficulty_distribution(attempt_df: pd.DataFrame):
+def plot_graph_difficulty_distribution(attempt_df: pd.DataFrame):
     """
     Measures the frequency of 'Easy', 'Medium', and 'Hard' attempts.
     """
@@ -838,9 +838,9 @@ def plot_graph_h_difficulty_distribution(attempt_df: pd.DataFrame):
     plt.xlabel("Difficulty Level")
     plt.ylabel("Number of Attempts")
     
-    save_current_figure("graph_h_difficulty_distribution.png")
+    save_current_figure("graph_difficulty_distribution.png")
 
-def plot_graph_i_distributed_tag_distribution(attempt_df: pd.DataFrame):
+def plot_graph_distributed_tag_distribution(attempt_df: pd.DataFrame):
     """
     Measures how often each 'distributed_tag' appears in your attempts.
     """
@@ -860,7 +860,7 @@ def plot_graph_i_distributed_tag_distribution(attempt_df: pd.DataFrame):
     plt.xticks(rotation=45, ha='right')
     
     plt.tight_layout()
-    save_current_figure("graph_i_distributed_tag_distribution.png")
+    save_current_figure("graph_distributed_tag_distribution.png")
 
 # Bar Graph: Measure # of failed attempts in C++ vs Python
 def plot_graph_failed_attempts(attempt_df: pd.DataFrame):
@@ -931,9 +931,38 @@ def plot_graph_c_failed_vs_error_type(attempt_df: pd.DataFrame):
     plt.xticks(rotation=0)
     save_current_figure("graph_c_failed_vs_error_type.png")
 
+# d. HEATMAP: Measure # of failed attempts vs distributed tag type in C++ vs Python
+def plot_graph_d_failed_vs_tag_language(attempt_df: pd.DataFrame):
+    """
+    Measures the # of failed attempts, segmented by distributed_tag and language.
+    """
+    # 1. Filter for only failed attempts
+    df_fails = attempt_df[attempt_df['result'] == 'failed'].copy()
+    
+    # 2. Pivot the data to create a matrix
+    # Index = Tag, Columns = Language
+    matrix = df_fails.groupby(['distributed_tag', 'language']).size().unstack(fill_value=0)
+    
+    # 3. Create Heatmap
+    plt.figure(figsize=(10, 6))
+    sns.heatmap(
+        matrix, 
+        annot=True,      # Show the actual numbers
+        fmt='d',         # Integer formatting
+        cmap='Reds',     # Red intensity represents failure count
+        cbar_kws={'label': 'Number of Failed Attempts'}
+    )
+    
+    plt.title("Failure Frequency: Distributed Tag vs. Language")
+    plt.xlabel("Programming Language")
+    plt.ylabel("Distributed Tag")
+    plt.yticks(rotation=0)
+    
+    plt.tight_layout()
+    save_current_figure("graph_d_failed_vs_tag_language.png")
 
-# d. HEATMAP: Failed attempts vs Lines of Code (LOC)
-def plot_graph_d_failed_vs_loc(attempt_df: pd.DataFrame):
+# HEATMAP: Failed attempts vs Lines of Code (LOC)
+def plot_graph_failed_vs_loc(attempt_df: pd.DataFrame):
     """
     Measures # of failed attempts vs binned Lines of Code.
     """
@@ -953,10 +982,10 @@ def plot_graph_d_failed_vs_loc(attempt_df: pd.DataFrame):
     plt.title("Failed Attempts by Lines of Code (LOC)")
     plt.ylabel("LOC Range")
     plt.xticks(rotation=0)
-    save_current_figure("graph_d_failed_vs_loc.png")
+    save_current_figure("graph_failed_vs_loc.png")
 
-# e. HEATMAP: Failed attempts vs Number of Tags
-def plot_graph_e_failed_vs_tags(attempt_df: pd.DataFrame):
+# HEATMAP: Failed attempts vs Number of Tags
+def plot_graph_failed_vs_tags(attempt_df: pd.DataFrame):
     """
     Measures # of failed attempts vs the number of tags assigned to the problem.
     """
@@ -973,68 +1002,16 @@ def plot_graph_e_failed_vs_tags(attempt_df: pd.DataFrame):
     plt.title("Failed Attempts by Number of Tags")
     plt.ylabel("Number of Tags")
     plt.xticks(rotation=0)
-    save_current_figure("graph_e_failed_vs_tags.png")
+    save_current_figure("graph_failed_vs_tags.png")
 
 # Your precedence list
 TAG_PRECEDENCE = ['String', 'Array', 'Linked List', 'Binary Tree', 'Heap (Priority Queue)']
 
-def get_unique_tag(tags):
-    """
-    Returns the highest-precedence tag found.
-    Note: Due to 'reversed()', 'Heap' is highest priority, 'Array' is lowest.
-    """
-    if tags is None: return None
-    if isinstance(tags, float) and pd.isna(tags): return None
-
-    # Normalize tags into a set
-    if isinstance(tags, str):
-        tag_set = {t.strip() for t in tags.split(",")}
-    else:
-        tag_set = set(tags)
-
-    # Check from highest precedence to lowest
-    for tag in reversed(TAG_PRECEDENCE):
-        if tag in tag_set:
-            return tag
-    return None
-
-def plot_graph_f_tag_distribution(problems_df: pd.DataFrame):
-    """
-    Measures the frequency distribution of the 'Primary Tag' per problem.
-    """
-    # 1. Prepare data
-    df_plot = problems_df.copy()
-    
-    # Ensure we only count unique problems (if ID exists twice for Python/C++)
-    df_plot = df_plot.drop_duplicates(subset=['id'])
-    
-    # 2. Map the primary tag using your function
-    df_plot['primary_tag'] = df_plot['tags'].apply(get_unique_tag)
-    
-    # 3. Drop problems that didn't match any of our priority tags (optional)
-    df_plot = df_plot.dropna(subset=['primary_tag'])
-    
-    # 4. Count and Plot
-    # We sort by the order in TAG_PRECEDENCE so the graph is predictable
-    counts = df_plot['primary_tag'].value_counts().reindex(TAG_PRECEDENCE, fill_value=0)
-    
-    plt.figure(figsize=(10, 6))
-    counts.plot(kind='bar', color='salmon', edgecolor='black')
-    
-    plt.title("Distribution of Problems by Primary Category")
-    plt.xlabel("Primary Tag (Precedence Ordered)")
-    plt.ylabel("Number of Problems")
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    
-    # Save with the requested naming format
-    plt.savefig("graph_f_tag_distribution.png")
-    plt.close()
 # --------------------------------------------------
 # Main Orchestrator
 # --------------------------------------------------
 
-def plot_graph_j_difficulty_by_tag(attempt_df: pd.DataFrame):
+def plot_graph_difficulty_by_tag(attempt_df: pd.DataFrame):
     """
     Measures the distribution of Difficulty levels, grouped by the Distributed Tag.
     """
@@ -1060,7 +1037,7 @@ def plot_graph_j_difficulty_by_tag(attempt_df: pd.DataFrame):
     plt.legend(title='Difficulty')
     
     plt.tight_layout()
-    save_current_figure("graph_j_difficulty_by_tag.png")
+    save_current_figure("graph_difficulty_by_tag.png")
 
 def generate_graph_report(attempt_df, problems_df):
     """
@@ -1068,20 +1045,22 @@ def generate_graph_report(attempt_df, problems_df):
     """
 
     # Prove the dataframe distribution are correct
-    plot_graph_h_difficulty_distribution(attempt_df)
-    plot_graph_i_distributed_tag_distribution(attempt_df)
-    plot_graph_j_difficulty_by_tag(attempt_df)
+    plot_graph_difficulty_distribution(attempt_df)
+    plot_graph_distributed_tag_distribution(attempt_df)
+    plot_graph_difficulty_by_tag(attempt_df)
     
     plot_graph_failed_attempts(attempt_df)
-    #plot_graph_tag_distribution(problems_df)
-    plot_graph_f_tag_distribution(problems_df)
 
+    # Primary analysis
     plot_graph_a_failed_vs_passed(attempt_df)
     plot_graph_b_failed_vs_difficulty(attempt_df)
     plot_graph_bc_failures_difficulty_error(attempt_df)
     plot_graph_c_failed_vs_error_type(attempt_df)
-    plot_graph_d_failed_vs_loc(attempt_df)
-    plot_graph_e_failed_vs_tags(attempt_df)
+    plot_graph_d_failed_vs_tag_language(attempt_df)
+
+
+    plot_graph_failed_vs_loc(attempt_df)
+    plot_graph_failed_vs_tags(attempt_df)
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
 
