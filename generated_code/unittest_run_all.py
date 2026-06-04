@@ -904,10 +904,19 @@ def plot_graph_b_failed_vs_difficulty(attempt_df: pd.DataFrame):
     plt.title("Failures by Difficulty & Language")
     plt.xticks(rotation=0)
     save_current_figure("graph_b_failed_vs_difficulty.png")
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
 
-# bc. HEATMAP: Measure # of failures vs difficulty type vs error type in C++ vs Python
+# Define the order: Hard at index 0 (Top), Easy at index 2 (Bottom)
+DIFFICULTY_ORDER = ['Hard', 'Medium', 'Easy']
+
 def plot_graph_bc_failures_difficulty_error(attempt_df: pd.DataFrame):
-    failures = attempt_df[attempt_df['result'] == 'failed']
+    failures = attempt_df[attempt_df['result'] == 'failed'].copy()
+    
+    # Force categorical order
+    failures['difficulty'] = pd.Categorical(failures['difficulty'], categories=DIFFICULTY_ORDER, ordered=True)
+    
     # Create multi-index pivot
     matrix = failures.pivot_table(
         index=['difficulty', 'error_type'], 
@@ -915,6 +924,7 @@ def plot_graph_bc_failures_difficulty_error(attempt_df: pd.DataFrame):
         aggfunc='size', 
         fill_value=0
     )
+    
     plt.figure(figsize=(10, 10))
     sns.heatmap(matrix, annot=True, fmt='d', cmap='Purples', cbar_kws={'label': 'Failed Count'})
     plt.title("Failures: Difficulty & Error Type by Language")
@@ -924,9 +934,12 @@ def plot_graph_bc_failures_difficulty_error(attempt_df: pd.DataFrame):
 def plot_graph_bd_failures_difficulty_tag(attempt_df: pd.DataFrame):
     """
     Heatmap: Measures failed attempts cross-referencing Difficulty and Distributed Tag
-    separated by Language.
+    separated by Language, with Difficulty ordered Hard -> Easy.
     """
-    failures = attempt_df[attempt_df['result'] == 'failed']
+    failures = attempt_df[attempt_df['result'] == 'failed'].copy()
+    
+    # Force categorical order
+    failures['difficulty'] = pd.Categorical(failures['difficulty'], categories=DIFFICULTY_ORDER, ordered=True)
     
     # Create multi-index pivot
     matrix = failures.pivot_table(
@@ -935,9 +948,6 @@ def plot_graph_bd_failures_difficulty_tag(attempt_df: pd.DataFrame):
         aggfunc='size', 
         fill_value=0
     )
-    
-    # Optional: If you want to force specific difficulty order, you can sort the index
-    # Note: reindexing a MultiIndex pivot is complex; standard pivot sort is usually sufficient.
     
     plt.figure(figsize=(12, 10))
     sns.heatmap(matrix, annot=True, fmt='d', cmap='YlGnBu', cbar_kws={'label': 'Failed Count'})
