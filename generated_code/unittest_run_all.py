@@ -710,6 +710,7 @@ def generate_attempts_dataframe(merged_results: list) -> pd.DataFrame:
                     "examples_count": problem["examples_count"],
                     "constraints_count": problem["constraints_count"],
                     # Keep tags as a list or join to a string, DO NOT EXPLODE YET
+                    "distributed_tag": problem.get("distributed_tag", "Unknown"),
                     "tags": problem["tags"], 
                     "attempt_number": attempt["attempt_number"],
                     "result": attempt["result"],
@@ -753,6 +754,7 @@ def generate_problem_dataframe(merged_results: list) -> pd.DataFrame:
                 "difficulty": problem["difficulty"],
                 "examples_count": problem["examples_count"],
                 "constraints_count": problem["constraints_count"],
+                "distributed_tag": problem.get("distributed_tag", "Unknown"),
                 "tags": problem["tags"], # Keep as list
                 "eventually_passed": stored_passed_count > 0,
                 "first_try_success": first_try_success,
