@@ -1003,8 +1003,6 @@ def plot_graph_failure_pinpoint_matrix(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed'].copy()
     
     # 2. Create the Faceted Catplot
-    # We use sharey=False because error counts will vary wildly (e.g., Syntax errors 
-    # are usually more common than Memory errors)
     g = sns.catplot(
         data=failures,
         x='difficulty',
@@ -1023,11 +1021,17 @@ def plot_graph_failure_pinpoint_matrix(attempt_df: pd.DataFrame):
     # 3. Formatting
     g.set_titles("{row_name} | {col_name}")
     g.set_axis_labels("Difficulty", "Failure Count")
-    plt.subplots_adjust(top=0.9)
-    g.fig.suptitle('Failure Pinpoint Matrix: Error Type vs Tag vs Difficulty vs Language')
+    
+    # THE FIX: 
+    # Use tight_layout with a 'rect' parameter.
+    # The format is [left, bottom, right, top]. 
+    # This reserves the top 5% (0.95) for the title.
+    g.fig.tight_layout(rect=[0, 0, 1, 0.95])
+    
+    # Now set the title. Since we reserved space, it shouldn't overlap.
+    #g.fig.suptitle('Failure Pinpoint Matrix: Error Type vs Tag vs Difficulty vs Language')
     
     save_current_figure("graph_failure_pinpoint_matrix.png")
-
 
 
 # HEATMAP: Failed attempts vs Lines of Code (LOC)
