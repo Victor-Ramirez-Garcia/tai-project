@@ -1130,6 +1130,45 @@ TAG_PRECEDENCE = ['String', 'Array', 'Linked List', 'Binary Tree', 'Heap (Priori
 # Main Orchestrator
 # --------------------------------------------------
 
+def plot_graph_m_examples_distribution(problems_df: pd.DataFrame):
+    """
+    Measures the distribution of the number of examples provided in each problem.
+    """
+    plt.figure(figsize=(8, 6))
+    
+    sns.countplot(
+        data=problems_df, 
+        x='examples_count', 
+        color='mediumpurple', 
+        edgecolor='black'
+    )
+    
+    plt.title("Distribution of Examples Count per Problem")
+    plt.xlabel("Number of Examples")
+    plt.ylabel("Number of Problems")
+    
+    plt.tight_layout()
+    save_current_figure("graph_m_examples_distribution.png")
+
+def plot_graph_n_constraints_distribution(problems_df: pd.DataFrame):
+    """
+    Measures the distribution of the number of constraints per problem.
+    """
+    plt.figure(figsize=(8, 6))
+    
+    sns.countplot(
+        data=problems_df, 
+        x='constraints_count', 
+        color='darkorange', 
+        edgecolor='black'
+    )
+    
+    plt.title("Distribution of Constraints Count per Problem")
+    plt.xlabel("Number of Constraints")
+    plt.ylabel("Number of Problems")
+    
+    plt.tight_layout()
+    save_current_figure("graph_n_constraints_distribution.png")
 def plot_graph_difficulty_by_tag(attempt_df: pd.DataFrame):
     """
     Measures the distribution of Difficulty levels, grouped by the Distributed Tag.
@@ -1184,7 +1223,9 @@ def generate_graph_report(attempt_df, problems_df):
     # Final analysis (Complete zoom in)
     plot_graph_failure_pinpoint_matrix(attempt_df)
 
-
+    # Extras
+    plot_graph_m_examples_distribution(problems_df)
+    plot_graph_n_constraints_distribution(problems_df)
     plot_graph_failed_vs_loc(attempt_df)
     plot_graph_failed_vs_tags(attempt_df)
 
