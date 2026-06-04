@@ -816,6 +816,52 @@ def save_current_figure(filename: str) -> None:
     plt.savefig(GRAPH_OUTPUT_DIR / filename)
     plt.close()
 
+def plot_graph_h_difficulty_distribution(attempt_df: pd.DataFrame):
+    """
+    Measures the frequency of 'Easy', 'Medium', and 'Hard' attempts.
+    """
+    plt.figure(figsize=(8, 6))
+    
+    # We define the order explicitly so the x-axis logic follows difficulty level,
+    # rather than just alphabetical order.
+    difficulty_order = ['Easy', 'Medium', 'Hard']
+    
+    sns.countplot(
+        data=attempt_df, 
+        x='difficulty', 
+        order=difficulty_order,
+        palette='viridis',
+        edgecolor='black'
+    )
+    
+    plt.title("Distribution of Attempt Difficulty")
+    plt.xlabel("Difficulty Level")
+    plt.ylabel("Number of Attempts")
+    
+    save_current_figure("graph_h_difficulty_distribution.png")
+
+def plot_graph_i_distributed_tag_distribution(attempt_df: pd.DataFrame):
+    """
+    Measures how often each 'distributed_tag' appears in your attempts.
+    """
+    plt.figure(figsize=(10, 6))
+    
+    # Using a countplot to see if the tag distribution is balanced
+    sns.countplot(
+        data=attempt_df, 
+        x='distributed_tag', 
+        palette='magma',
+        edgecolor='black'
+    )
+    
+    plt.title("Distribution of Attempts by Distributed Tag")
+    plt.xlabel("Tag Category")
+    plt.ylabel("Number of Attempts")
+    plt.xticks(rotation=45, ha='right')
+    
+    plt.tight_layout()
+    save_current_figure("graph_i_distributed_tag_distribution.png")
+
 # Bar Graph: Measure # of failed attempts in C++ vs Python
 def plot_graph_failed_attempts(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed']
@@ -988,10 +1034,43 @@ def plot_graph_f_tag_distribution(problems_df: pd.DataFrame):
 # Main Orchestrator
 # --------------------------------------------------
 
+def plot_graph_j_difficulty_by_tag(attempt_df: pd.DataFrame):
+    """
+    Measures the distribution of Difficulty levels, grouped by the Distributed Tag.
+    """
+    plt.figure(figsize=(12, 7))
+    
+    # 1. Define specific orders to ensure logical reading
+    difficulty_order = ['Easy', 'Medium', 'Hard']
+    
+    # 2. Use countplot with 'hue' to group by difficulty
+    sns.countplot(
+        data=attempt_df, 
+        x='distributed_tag', 
+        hue='difficulty', 
+        hue_order=difficulty_order,
+        palette={'Easy': 'green', 'Medium': 'orange', 'Hard': 'red'},
+        edgecolor='black'
+    )
+    
+    plt.title("Attempt Distribution: Difficulty Levels per Distributed Tag")
+    plt.xlabel("Distributed Tag Category")
+    plt.ylabel("Number of Attempts")
+    plt.xticks(rotation=45, ha='right')
+    plt.legend(title='Difficulty')
+    
+    plt.tight_layout()
+    save_current_figure("graph_j_difficulty_by_tag.png")
+
 def generate_graph_report(attempt_df, problems_df):
     """
     Categorized execution of all plotting functions.
     """
+
+    # Prove the dataframe distribution are correct
+    plot_graph_h_difficulty_distribution(attempt_df)
+    plot_graph_i_distributed_tag_distribution(attempt_df)
+    plot_graph_j_difficulty_by_tag(attempt_df)
     
     plot_graph_failed_attempts(attempt_df)
     #plot_graph_tag_distribution(problems_df)
