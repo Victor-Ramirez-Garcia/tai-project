@@ -897,13 +897,31 @@ def plot_graph_a_failed_vs_passed(attempt_df: pd.DataFrame):
 
 # b. HEATMAP: Measure # of failed attempts vs difficulty type in C++ vs Python
 def plot_graph_b_failed_vs_difficulty(attempt_df: pd.DataFrame):
-    failures = attempt_df[attempt_df['result'] == 'failed']
-    matrix = failures.pivot_table(index='difficulty', columns='language', aggfunc='size', fill_value=0)
+    """
+    Heatmap: Measures failed attempts vs difficulty, sorted Hard -> Easy.
+    """
+    failures = attempt_df[attempt_df['result'] == 'failed'].copy()
+    
+    # Force categorical order: Hard (top) to Easy (bottom)
+    failures['difficulty'] = pd.Categorical(
+        failures['difficulty'], 
+        categories=['Hard', 'Medium', 'Easy'], 
+        ordered=True
+    )
+    
+    matrix = failures.pivot_table(
+        index='difficulty', 
+        columns='language', 
+        aggfunc='size', 
+        fill_value=0
+    )
+    
     plt.figure(figsize=(8, 6))
     sns.heatmap(matrix, annot=True, fmt='d', cmap='Reds', cbar_kws={'label': 'Failed Count'})
     plt.title("Failures by Difficulty & Language")
     plt.xticks(rotation=0)
     save_current_figure("graph_b_failed_vs_difficulty.png")
+
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
