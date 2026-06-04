@@ -921,6 +921,33 @@ def plot_graph_bc_failures_difficulty_error(attempt_df: pd.DataFrame):
     plt.xticks(rotation=0)
     save_current_figure("graph_bc_failures_difficulty_error.png")
 
+def plot_graph_bd_failures_difficulty_tag(attempt_df: pd.DataFrame):
+    """
+    Heatmap: Measures failed attempts cross-referencing Difficulty and Distributed Tag.
+    """
+    df_fails = attempt_df[attempt_df['result'] == 'failed'].copy()
+    matrix = df_fails.groupby(['difficulty', 'distributed_tag']).size().unstack(fill_value=0)
+    
+    # Ensure specific order for difficulty
+    matrix = matrix.reindex(['Easy', 'Medium', 'Hard'], axis=0)
+    
+    plt.figure(figsize=(10, 6))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='YlGnBu')
+    plt.title("Failure Clusters: Difficulty vs. Distributed Tag")
+    save_current_figure("graph_bd_failures_difficulty_tag.png")
+
+def plot_graph_cd_failures_error_tag(attempt_df: pd.DataFrame):
+    """
+    Heatmap: Measures failed attempts cross-referencing Error Type and Distributed Tag.
+    """
+    df_fails = attempt_df[attempt_df['result'] == 'failed'].copy()
+    matrix = df_fails.groupby(['error_type', 'distributed_tag']).size().unstack(fill_value=0)
+    
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='PuRd')
+    plt.title("Failure Clusters: Error Type vs. Distributed Tag")
+    save_current_figure("graph_cd_failures_error_tag.png")
+
 # c. HEATMAP: Measure # of failed attempts vs error type in C++ vs Python
 def plot_graph_c_failed_vs_error_type(attempt_df: pd.DataFrame):
     failures = attempt_df[attempt_df['result'] == 'failed']
@@ -1101,6 +1128,8 @@ def generate_graph_report(attempt_df, problems_df):
 
     # Secondary analysis (Zoomed in)
     plot_graph_bc_failures_difficulty_error(attempt_df)
+    plot_graph_bd_failures_difficulty_tag(attempt_df)
+    plot_graph_cd_failures_error_tag(attempt_df)
 
     # Final analysis (Complete zoom in)
     plot_graph_failure_pinpoint_matrix(attempt_df)
