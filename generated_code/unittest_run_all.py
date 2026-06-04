@@ -930,22 +930,31 @@ import pandas as pd
 DIFFICULTY_ORDER = ['Hard', 'Medium', 'Easy']
 
 def plot_graph_bc_failures_difficulty_error(attempt_df: pd.DataFrame):
+    """
+    Heatmap: Measures failed attempts cross-referencing Error Type and Difficulty.
+    Primary Sort: Error Type (Alphabetical)
+    Secondary Sort: Difficulty (Hard -> Medium -> Easy)
+    """
     failures = attempt_df[attempt_df['result'] == 'failed'].copy()
     
-    # Force categorical order
-    failures['difficulty'] = pd.Categorical(failures['difficulty'], categories=DIFFICULTY_ORDER, ordered=True)
+    # Ensure difficulty retains its custom sort order
+    failures['difficulty'] = pd.Categorical(
+        failures['difficulty'], 
+        categories=['Hard', 'Medium', 'Easy'], 
+        ordered=True
+    )
     
-    # Create multi-index pivot
+    # Create multi-index pivot: Error Type primary, Difficulty secondary
     matrix = failures.pivot_table(
-        index=['difficulty', 'error_type'], 
+        index=['error_type', 'difficulty'], 
         columns='language', 
         aggfunc='size', 
         fill_value=0
     )
     
-    plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(10, 12)) # Increased height to account for expanded error type groups
     sns.heatmap(matrix, annot=True, fmt='d', cmap='Purples', cbar_kws={'label': 'Failed Count'})
-    plt.title("Failures: Difficulty & Error Type by Language")
+    plt.title("Failures: Error Type (Alphabetical) & Difficulty by Language")
     plt.xticks(rotation=0)
     save_current_figure("graph_bc_failures_difficulty_error.png")
 
