@@ -1099,10 +1099,10 @@ def generate_graph_report(attempt_df, problems_df):
     plot_graph_c_failed_vs_error_type(attempt_df)
     plot_graph_d_failed_vs_tag_language(attempt_df)
 
-    # Zoomed in
+    # Secondary analysis (Zoomed in)
     plot_graph_bc_failures_difficulty_error(attempt_df)
 
-    # Complete zoom in
+    # Final analysis (Complete zoom in)
     plot_graph_failure_pinpoint_matrix(attempt_df)
 
 
