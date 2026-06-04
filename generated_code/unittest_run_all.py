@@ -952,24 +952,30 @@ def plot_graph_bc_failures_difficulty_error(attempt_df: pd.DataFrame):
 def plot_graph_bd_failures_difficulty_tag(attempt_df: pd.DataFrame):
     """
     Heatmap: Measures failed attempts cross-referencing Difficulty and Distributed Tag
-    separated by Language, with Difficulty ordered Hard -> Easy.
+    separated by Language. Sorted primarily by Tag (A-Z) and secondarily by Difficulty.
     """
     failures = attempt_df[attempt_df['result'] == 'failed'].copy()
     
-    # Force categorical order
-    failures['difficulty'] = pd.Categorical(failures['difficulty'], categories=DIFFICULTY_ORDER, ordered=True)
+    # 1. Force categorical order so Hard (top) stays at the top within each tag
+    failures['difficulty'] = pd.Categorical(
+        failures['difficulty'], 
+        categories=['Hard', 'Medium', 'Easy'], 
+        ordered=True
+    )
     
-    # Create multi-index pivot
+    # 2. Create multi-index pivot 
+    # Swapping the order: distributed_tag is now the primary index (A-Z)
     matrix = failures.pivot_table(
-        index=['difficulty', 'distributed_tag'], 
+        index=['distributed_tag', 'difficulty'], 
         columns='language', 
         aggfunc='size', 
         fill_value=0
     )
     
-    plt.figure(figsize=(12, 10))
+    plt.figure(figsize=(12, 14)) # Increased height to accommodate more grouped labels
     sns.heatmap(matrix, annot=True, fmt='d', cmap='YlGnBu', cbar_kws={'label': 'Failed Count'})
-    plt.title("Failures: Difficulty & Distributed Tag by Language")
+    
+    plt.title("Failures: Distributed Tag (Alphabetical) & Difficulty by Language")
     plt.xticks(rotation=0)
     save_current_figure("graph_bd_failures_difficulty_tag.png")
 
