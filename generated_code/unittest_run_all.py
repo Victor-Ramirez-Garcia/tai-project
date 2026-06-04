@@ -923,29 +923,47 @@ def plot_graph_bc_failures_difficulty_error(attempt_df: pd.DataFrame):
 
 def plot_graph_bd_failures_difficulty_tag(attempt_df: pd.DataFrame):
     """
-    Heatmap: Measures failed attempts cross-referencing Difficulty and Distributed Tag.
+    Heatmap: Measures failed attempts cross-referencing Difficulty and Distributed Tag
+    separated by Language.
     """
-    df_fails = attempt_df[attempt_df['result'] == 'failed'].copy()
-    matrix = df_fails.groupby(['difficulty', 'distributed_tag']).size().unstack(fill_value=0)
+    failures = attempt_df[attempt_df['result'] == 'failed']
     
-    # Ensure specific order for difficulty
-    matrix = matrix.reindex(['Easy', 'Medium', 'Hard'], axis=0)
+    # Create multi-index pivot
+    matrix = failures.pivot_table(
+        index=['difficulty', 'distributed_tag'], 
+        columns='language', 
+        aggfunc='size', 
+        fill_value=0
+    )
     
-    plt.figure(figsize=(10, 6))
-    sns.heatmap(matrix, annot=True, fmt='d', cmap='YlGnBu')
-    plt.title("Failure Clusters: Difficulty vs. Distributed Tag")
+    # Optional: If you want to force specific difficulty order, you can sort the index
+    # Note: reindexing a MultiIndex pivot is complex; standard pivot sort is usually sufficient.
+    
+    plt.figure(figsize=(12, 10))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='YlGnBu', cbar_kws={'label': 'Failed Count'})
+    plt.title("Failures: Difficulty & Distributed Tag by Language")
+    plt.xticks(rotation=0)
     save_current_figure("graph_bd_failures_difficulty_tag.png")
 
 def plot_graph_cd_failures_error_tag(attempt_df: pd.DataFrame):
     """
-    Heatmap: Measures failed attempts cross-referencing Error Type and Distributed Tag.
+    Heatmap: Measures failed attempts cross-referencing Error Type and Distributed Tag
+    separated by Language.
     """
-    df_fails = attempt_df[attempt_df['result'] == 'failed'].copy()
-    matrix = df_fails.groupby(['error_type', 'distributed_tag']).size().unstack(fill_value=0)
+    failures = attempt_df[attempt_df['result'] == 'failed']
     
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(matrix, annot=True, fmt='d', cmap='PuRd')
-    plt.title("Failure Clusters: Error Type vs. Distributed Tag")
+    # Create multi-index pivot
+    matrix = failures.pivot_table(
+        index=['error_type', 'distributed_tag'], 
+        columns='language', 
+        aggfunc='size', 
+        fill_value=0
+    )
+    
+    plt.figure(figsize=(12, 10))
+    sns.heatmap(matrix, annot=True, fmt='d', cmap='PuRd', cbar_kws={'label': 'Failed Count'})
+    plt.title("Failures: Error Type & Distributed Tag by Language")
+    plt.xticks(rotation=0)
     save_current_figure("graph_cd_failures_error_tag.png")
 
 # c. HEATMAP: Measure # of failed attempts vs error type in C++ vs Python
