@@ -130,8 +130,8 @@ r"make: \*\*\*", r"cmake error", r"permission denied",
         r"expected ';'", 
         r"expected '\)'", 
         r"unbalanced parenthesis",
-        r"expected '\}'",
-        r"expected expression" # Added back here, but only after Dependency is checked
+        r"expected '\}'"
+        #r"expected expression" # Added back here, but only after Dependency is checked
     ],
     "Memory/Pointer": [
         r"MemoryError", r"RecursionError", r"Segmentation fault", 
@@ -151,8 +151,8 @@ r"Failure", r"FAILED", r"Expected equality", r"Value of:",
 }
 ERROR_PRIORITY_ORDER = [
     "Memory/Pointer",     # Includes RecursionError, Segfault
-    "Syntax Error",
     "Dependency/Definition",
+    "Syntax Error",
     "Infrastructure/Build",
     "Logic/Boundary",
     "Arithmetic",
@@ -1080,28 +1080,33 @@ def plot_graph_failure_pinpoint_matrix(attempt_df: pd.DataFrame):
     save_current_figure("graph_failure_pinpoint_matrix.png")
 
 
-# HEATMAP: Failed attempts vs Lines of Code (LOC)
-def plot_graph_failed_vs_loc(attempt_df: pd.DataFrame):
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def plot_graph_o_loc_vs_failure_by_language(attempt_df: pd.DataFrame):
     """
-    Measures # of failed attempts vs binned Lines of Code.
+    Box plot comparing the distribution of Lines of Code (LOC) 
+    between Passed vs Failed attempts, segmented by Language.
     """
-    failures = attempt_df[attempt_df['result'] == 'failed'].copy()
+    plt.figure(figsize=(10, 6))
     
-    # Create LOC bins (0-50, 50-100, 100-200, etc.)
-    # You can adjust these bins based on your specific codebase size
-    bins = [0, 50, 100, 200, 500, 1000, 5000]
-    labels = ['0-50', '51-100', '101-200', '201-500', '501-1000', '1000+']
-    failures['loc_bin'] = pd.cut(failures['loc'], bins=bins, labels=labels)
+    # We use a boxplot to see the median, quartiles, and outliers of LOC
+    sns.boxplot(
+        data=attempt_df,
+        x='result',
+        y='loc',
+        hue='language',
+        palette={'python': 'blue', 'cpp': 'red'},
+        showfliers=True # This shows outliers (very long attempts) as individual dots
+    )
     
-    # Pivot for Heatmap
-    matrix = failures.pivot_table(index='loc_bin', columns='language', aggfunc='size', fill_value=0)
+    plt.title("Distribution of Lines of Code (LOC): Passed vs. Failed Attempts")
+    plt.xlabel("Attempt Outcome")
+    plt.ylabel("Lines of Code (LOC)")
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
     
-    plt.figure(figsize=(8, 6))
-    sns.heatmap(matrix, annot=True, fmt='d', cmap='OrRd', cbar_kws={'label': 'Failed Count'})
-    plt.title("Failed Attempts by Lines of Code (LOC)")
-    plt.ylabel("LOC Range")
-    plt.xticks(rotation=0)
-    save_current_figure("graph_failed_vs_loc.png")
+    plt.tight_layout()
+    save_current_figure("graph_o_loc_vs_failure.png")
 
 # HEATMAP: Failed attempts vs Number of Tags
 def plot_graph_failed_vs_tags(attempt_df: pd.DataFrame):
@@ -1226,7 +1231,7 @@ def generate_graph_report(attempt_df, problems_df):
     # Extras
     plot_graph_m_examples_distribution(problems_df)
     plot_graph_n_constraints_distribution(problems_df)
-    plot_graph_failed_vs_loc(attempt_df)
+    plot_graph_o_loc_vs_failure_by_language(attempt_df)
     plot_graph_failed_vs_tags(attempt_df)
 
     print(f"All reports saved to: {GRAPH_OUTPUT_DIR}")
