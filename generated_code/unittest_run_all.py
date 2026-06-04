@@ -104,6 +104,8 @@ TIMEOUT_ERROR = "Timeout Failure"
 RUN_TIME_ERROR = "Runtime Error"
 ASSERTION_FAILURE = "Assertion Failure"
 
+
+
 # Order these keys in the order you want to check them (Highest priority first)
 ERROR_MAPPINGS = {
     "Infrastructure/Build": [
@@ -178,6 +180,8 @@ def get_unified_error_type(output: str, returncode: int = 0) -> str:
 
 def get_lines_of_code(file_path: str) -> int:
     """
+# Tags and their corresponding problem ids for later analysis and visualization
+DISTRIBUTED_TAGS = [ "Array", "String", "Linked List", "Heap (Priority Queue)", "Binary Tree" ]
     Counts the number of non-empty lines in a file.
     Works for any text-based source code file (.py, .cpp, .h, etc.)
     """
@@ -193,6 +197,40 @@ def get_lines_of_code(file_path: str) -> int:
     except Exception as e:
         print(f"Could not read file {file_path}: {e}")
         return 0
+
+# Tags and their corresponding problem ids for later analysis and visualization
+DISTRIBUTED_TAGS = [ "Array", "String", "Linked List", "Binary Tree", "Heap (Priority Queue)"]
+def insert_distributed_tags_into_library():
+    """
+    Inserts distributed tags into the leetcode_library.json file.
+    """
+
+    file_path = "../problem_extraction/leetcode_library.json"
+    try:
+        # 1. READ: Open in 'r' mode to get the data
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+            
+        # 2. MODIFY: Loop through data
+        for i, entry in enumerate(data):
+            # Calculate tag index: 
+            # (i // 4) moves to the next tag every 4 entries
+            # % len(...) ensures it wraps back to 0 when it reaches the end of the list
+            tag_index = (i // 4) % len(DISTRIBUTED_TAGS)
+            entry["distributed_tag"] = DISTRIBUTED_TAGS[tag_index]
+
+        # 3. WRITE: Open in 'w' mode to save the updated data
+        with open(file_path, 'w') as f:
+            json.dump(data, f, indent=4)
+            
+        print(f"Successfully processed {len(data)} entries in {file_path}")
+        
+    except FileNotFoundError:
+        print(f"Error: The file {file_path} was not found.")
+    except json.JSONDecodeError:
+        print("Error: Failed to decode JSON. Check your file format.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
 # Helper to load library metadata
 def get_metadata(problem_id):
@@ -594,6 +632,7 @@ def merge_test_results(python_results_source: str, cpp_results_source) -> int:
             "difficulty": metadata_source.get("difficulty"),
             "examples_count": len(metadata_source.get("examples")),
             "constraints_count": len(metadata_source.get("constraints")),
+            "distributed_tag": metadata_source.get("distributed_tag", "Unknown"),
             "tags": metadata_source.get("tags", []),
 
             "python": {
@@ -888,6 +927,61 @@ def plot_graph_e_failed_vs_tags(attempt_df: pd.DataFrame):
     plt.xticks(rotation=0)
     save_current_figure("graph_e_failed_vs_tags.png")
 
+# Your precedence list
+TAG_PRECEDENCE = ['String', 'Array', 'Linked List', 'Binary Tree', 'Heap (Priority Queue)']
+
+def get_unique_tag(tags):
+    """
+    Returns the highest-precedence tag found.
+    Note: Due to 'reversed()', 'Heap' is highest priority, 'Array' is lowest.
+    """
+    if tags is None: return None
+    if isinstance(tags, float) and pd.isna(tags): return None
+
+    # Normalize tags into a set
+    if isinstance(tags, str):
+        tag_set = {t.strip() for t in tags.split(",")}
+    else:
+        tag_set = set(tags)
+
+    # Check from highest precedence to lowest
+    for tag in reversed(TAG_PRECEDENCE):
+        if tag in tag_set:
+            return tag
+    return None
+
+def plot_graph_f_tag_distribution(problems_df: pd.DataFrame):
+    """
+    Measures the frequency distribution of the 'Primary Tag' per problem.
+    """
+    # 1. Prepare data
+    df_plot = problems_df.copy()
+    
+    # Ensure we only count unique problems (if ID exists twice for Python/C++)
+    df_plot = df_plot.drop_duplicates(subset=['id'])
+    
+    # 2. Map the primary tag using your function
+    df_plot['primary_tag'] = df_plot['tags'].apply(get_unique_tag)
+    
+    # 3. Drop problems that didn't match any of our priority tags (optional)
+    df_plot = df_plot.dropna(subset=['primary_tag'])
+    
+    # 4. Count and Plot
+    # We sort by the order in TAG_PRECEDENCE so the graph is predictable
+    counts = df_plot['primary_tag'].value_counts().reindex(TAG_PRECEDENCE, fill_value=0)
+    
+    plt.figure(figsize=(10, 6))
+    counts.plot(kind='bar', color='salmon', edgecolor='black')
+    
+    plt.title("Distribution of Problems by Primary Category")
+    plt.xlabel("Primary Tag (Precedence Ordered)")
+    plt.ylabel("Number of Problems")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    
+    # Save with the requested naming format
+    plt.savefig("graph_f_tag_distribution.png")
+    plt.close()
 # --------------------------------------------------
 # Main Orchestrator
 # --------------------------------------------------
@@ -898,6 +992,9 @@ def generate_graph_report(attempt_df, problems_df):
     """
     
     plot_graph_failed_attempts(attempt_df)
+    #plot_graph_tag_distribution(problems_df)
+    plot_graph_f_tag_distribution(problems_df)
+
     plot_graph_a_failed_vs_passed(attempt_df)
     plot_graph_b_failed_vs_difficulty(attempt_df)
     plot_graph_bc_failures_difficulty_error(attempt_df)
@@ -941,6 +1038,8 @@ def main():
     # 4. Define an optional boolean flag to not run cpp and python unittests (True if present, False if absent)
     parser.add_argument("-a", "--analysis_only", action="store_true", help="Skip creation of unittest results to start analysis")
     args = parser.parse_args()
+
+    insert_distributed_tags_into_library()
  
     if args.analysis_only:
         print("Skipping to analysis...")

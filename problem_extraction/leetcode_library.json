@@ -17,7 +17,8 @@
         "starter_code": {
             "python": "class Solution:\n    def findDegrees(self, matrix: list[list[int]]) -> list[int]:\n        ",
             "cpp": "class Solution {\npublic:\n    vector<int> findDegrees(vector<vector<int>>& matrix) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "3846",
@@ -35,7 +36,8 @@
         "starter_code": {
             "python": "class Solution:\n    def minOperations(self, nums: List[int], k: int) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int minOperations(vector<int>& nums, int k) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "605",
@@ -59,7 +61,8 @@
         "starter_code": {
             "python": "class Solution:\n    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:\n        ",
             "cpp": "class Solution {\npublic:\n    bool canPlaceFlowers(vector<int>& flowerbed, int n) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "2020",
@@ -81,7 +84,8 @@
         "starter_code": {
             "python": "class Solution:\n    def canBeIncreasing(self, nums: List[int]) -> bool:\n        ",
             "cpp": "class Solution {\npublic:\n    bool canBeIncreasing(vector<int>& nums) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "3379",
@@ -99,7 +103,8 @@
         "starter_code": {
             "python": "class Solution:\n    def scoreOfString(self, s: str) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int scoreOfString(string s) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "2137",
@@ -123,7 +128,8 @@
         "starter_code": {
             "python": "class Solution:\n    def finalValueAfterOperations(self, operations: List[str]) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int finalValueAfterOperations(vector<string>& operations) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "2532",
@@ -146,7 +152,8 @@
         "starter_code": {
             "python": "class Solution:\n    def equalFrequency(self, word: str) -> bool:\n        ",
             "cpp": "class Solution {\npublic:\n    bool equalFrequency(string word) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "3684",
@@ -167,7 +174,8 @@
         "starter_code": {
             "python": "class Solution:\n    def hasMatch(self, s: str, p: str) -> bool:\n        ",
             "cpp": "class Solution {\npublic:\n    bool hasMatch(string s, string p) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "1411",
@@ -190,7 +198,8 @@
         "starter_code": {
             "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def getDecimalValue(self, head: Optional[ListNode]) -> int:\n        ",
             "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    int getDecimalValue(ListNode* head) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "908",
@@ -212,7 +221,8 @@
         "starter_code": {
             "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
             "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* middleNode(ListNode* head) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "141",
@@ -237,7 +247,8 @@
         "starter_code": {
             "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.next = None\n\nclass Solution:\n    def hasCycle(self, head: Optional[ListNode]) -> bool:\n        ",
             "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode(int x) : val(x), next(NULL) {}\n * };\n */\nclass Solution {\npublic:\n    bool hasCycle(ListNode *head) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "203",
@@ -261,7 +272,8 @@
         "starter_code": {
             "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:\n        ",
             "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* removeElements(ListNode* head, int val) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "975",
@@ -287,7 +299,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int rangeSumBST(TreeNode* root, int low, int high) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "1498",
@@ -313,7 +326,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.left = None\n#         self.right = None\n\nclass Solution:\n    def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}\n * };\n */\n\nclass Solution {\npublic:\n    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "671",
@@ -337,7 +351,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int findSecondMinimumValue(TreeNode* root) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "572",
@@ -364,7 +379,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    bool isSubtree(TreeNode* root, TreeNode* subRoot) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "3555",
@@ -385,7 +401,8 @@
         "starter_code": {
             "python": "class Solution:\n    def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:\n        ",
             "cpp": "class Solution {\npublic:\n    vector<int> getFinalState(vector<int>& nums, int k, int multiplier) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "3226",
@@ -410,7 +427,8 @@
         "starter_code": {
             "python": "class Solution:\n    def numberGame(self, nums: List[int]) -> List[int]:\n        ",
             "cpp": "class Solution {\npublic:\n    vector<int> numberGame(vector<int>& nums) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "2204",
@@ -436,7 +454,8 @@
         "starter_code": {
             "python": "class Solution:\n    def maxSubsequence(self, nums: List[int], k: int) -> List[int]:\n        ",
             "cpp": "class Solution {\npublic:\n    vector<int> maxSubsequence(vector<int>& nums, int k) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "2412",
@@ -461,7 +480,8 @@
         "starter_code": {
             "python": "class Solution:\n    def fillCups(self, amount: List[int]) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int fillCups(vector<int>& amount) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "1895",
@@ -485,7 +505,8 @@
         "starter_code": {
             "python": "class Solution:\n    def minOperations(self, boxes: str) -> List[int]:\n        ",
             "cpp": "class Solution {\npublic:\n    vector<int> minOperations(string boxes) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "2265",
@@ -510,7 +531,8 @@
         "starter_code": {
             "python": "class Solution:\n    def pivotArray(self, nums: List[int], pivot: int) -> List[int]:\n        ",
             "cpp": "class Solution {\npublic:\n    vector<int> pivotArray(vector<int>& nums, int pivot) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "3877",
@@ -534,7 +556,8 @@
         "starter_code": {
             "python": "class Solution:\n    def score(self, cards: List[str], x: str) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int score(vector<string>& cards, char x) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "3915",
@@ -554,7 +577,8 @@
         "starter_code": {
             "python": "class Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    long long maxProduct(vector<int>& nums) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "4087",
@@ -573,7 +597,8 @@
         "starter_code": {
             "python": "class Solution:\n    def maxDistinct(self, s: str) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int maxDistinct(string s) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "1807",
@@ -597,7 +622,8 @@
         "starter_code": {
             "python": "class Solution:\n    def minPartitions(self, n: str) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int minPartitions(string n) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "4220",
@@ -615,7 +641,8 @@
         "starter_code": {
             "python": "class Solution:\n    def minOperations(self, s: str) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int minOperations(string s) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "4265",
@@ -635,7 +662,8 @@
         "starter_code": {
             "python": "class Solution:\n    def longestBalanced(self, s: str) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int longestBalanced(string s) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "2903",
@@ -658,7 +686,8 @@
         "starter_code": {
             "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def insertGreatestCommonDivisors(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
             "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* insertGreatestCommonDivisors(ListNode* head) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "2299",
@@ -682,7 +711,8 @@
         "starter_code": {
             "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def mergeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:\n        ",
             "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeNodes(ListNode* head) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "2374",
@@ -708,7 +738,8 @@
         "starter_code": {
             "python": "class Solution:\n    def totalSteps(self, nums: List[int]) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int totalSteps(vector<int>& nums) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "838",
@@ -733,7 +764,8 @@
         "starter_code": {
             "python": "class MyLinkedList:\n\n    def __init__(self):\n        \n\n    def get(self, index: int) -> int:\n        \n\n    def addAtHead(self, val: int) -> None:\n        \n\n    def addAtTail(self, val: int) -> None:\n        \n\n    def addAtIndex(self, index: int, val: int) -> None:\n        \n\n    def deleteAtIndex(self, index: int) -> None:\n        \n\n\n# Your MyLinkedList object will be instantiated and called as such:\n# obj = MyLinkedList()\n# param_1 = obj.get(index)\n# obj.addAtHead(val)\n# obj.addAtTail(val)\n# obj.addAtIndex(index,val)\n# obj.deleteAtIndex(index)",
             "cpp": "class MyLinkedList {\npublic:\n    MyLinkedList() {\n        \n    }\n    \n    int get(int index) {\n        \n    }\n    \n    void addAtHead(int val) {\n        \n    }\n    \n    void addAtTail(int val) {\n        \n    }\n    \n    void addAtIndex(int index, int val) {\n        \n    }\n    \n    void deleteAtIndex(int index) {\n        \n    }\n};\n\n/**\n * Your MyLinkedList object will be instantiated and called as such:\n * MyLinkedList* obj = new MyLinkedList();\n * int param_1 = obj->get(index);\n * obj->addAtHead(val);\n * obj->addAtTail(val);\n * obj->addAtIndex(index,val);\n * obj->deleteAtIndex(index);\n */"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "1114",
@@ -758,7 +790,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def bstToGst(self, root: Optional[TreeNode]) -> Optional[TreeNode]:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    TreeNode* bstToGst(TreeNode* root) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "2347",
@@ -781,7 +814,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def averageOfSubtree(self, root: TreeNode) -> int:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int averageOfSubtree(TreeNode* root) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "98",
@@ -806,7 +840,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def isValidBST(self, root: Optional[TreeNode]) -> bool:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    bool isValidBST(TreeNode* root) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "687",
@@ -830,7 +865,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def longestUnivaluePath(self, root: Optional[TreeNode]) -> int:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int longestUnivaluePath(TreeNode* root) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "451",
@@ -857,7 +893,8 @@
         "starter_code": {
             "python": "class Solution:\n    def frequencySort(self, s: str) -> str:\n        ",
             "cpp": "class Solution {\npublic:\n    string frequencySort(string s) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "1917",
@@ -882,7 +919,8 @@
         "starter_code": {
             "python": "class Solution:\n    def maxAverageRatio(self, classes: List[List[int]], extraStudents: int) -> float:\n        ",
             "cpp": "class Solution {\npublic:\n    double maxAverageRatio(vector<vector<int>>& classes, int extraStudents) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "2418",
@@ -909,7 +947,8 @@
         "starter_code": {
             "python": "class Solution:\n    def minSumSquareDiff(self, nums1: List[int], nums2: List[int], k1: int, k2: int) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    long long minSumSquareDiff(vector<int>& nums1, vector<int>& nums2, int k1, int k2) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "3354",
@@ -934,7 +973,8 @@
         "starter_code": {
             "python": "class Solution:\n    def minimizeStringValue(self, s: str) -> str:\n        ",
             "cpp": "class Solution {\npublic:\n    string minimizeStringValue(string s) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "1022",
@@ -961,7 +1001,8 @@
         "starter_code": {
             "python": "class Solution:\n    def uniquePathsIII(self, grid: List[List[int]]) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int uniquePathsIII(vector<vector<int>>& grid) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "1381",
@@ -995,7 +1036,8 @@
         "starter_code": {
             "python": "class Solution:\n    def maxScoreWords(self, words: List[str], letters: List[str], score: List[int]) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int maxScoreWords(vector<string>& words, vector<char>& letters, vector<int>& score) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "3777",
@@ -1015,7 +1057,8 @@
         "starter_code": {
             "python": "class Solution:\n    def maxProduct(self, nums: List[int], k: int, limit: int) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int maxProduct(vector<int>& nums, int k, int limit) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "3556",
@@ -1035,7 +1078,8 @@
         "starter_code": {
             "python": "class Solution:\n    def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:\n        ",
             "cpp": "class Solution {\npublic:\n    vector<int> getFinalState(vector<int>& nums, int k, int multiplier) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Array"
     },
     {
         "id": "1093",
@@ -1060,7 +1104,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def recoverFromPreorder(self, traversal: str) -> Optional[TreeNode]:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    TreeNode* recoverFromPreorder(string traversal) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "2079",
@@ -1085,7 +1130,8 @@
         "starter_code": {
             "python": "class Solution:\n    def deleteDuplicateFolder(self, paths: List[List[str]]) -> List[List[str]]:\n        ",
             "cpp": "class Solution {\npublic:\n    vector<vector<string>> deleteDuplicateFolder(vector<vector<string>>& paths) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "3774",
@@ -1106,7 +1152,8 @@
         "starter_code": {
             "python": "class Solution:\n    def hasSameDigits(self, s: str) -> bool:\n        ",
             "cpp": "class Solution {\npublic:\n    bool hasSameDigits(string s) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "3813",
@@ -1128,7 +1175,8 @@
         "starter_code": {
             "python": "class Solution:\n    def smallestPalindrome(self, s: str, k: int) -> str:\n        ",
             "cpp": "class Solution {\npublic:\n    string smallestPalindrome(string s, int k) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "String"
     },
     {
         "id": "25",
@@ -1151,7 +1199,8 @@
         "starter_code": {
             "python": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:\n        ",
             "cpp": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* reverseKGroup(ListNode* head, int k) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "1337",
@@ -1174,7 +1223,8 @@
         "starter_code": {
             "python": "class Skiplist:\n\n    def __init__(self):\n        \n\n    def search(self, target: int) -> bool:\n        \n\n    def add(self, num: int) -> None:\n        \n\n    def erase(self, num: int) -> bool:\n        \n\n\n# Your Skiplist object will be instantiated and called as such:\n# obj = Skiplist()\n# param_1 = obj.search(target)\n# obj.add(num)\n# param_3 = obj.erase(num)",
             "cpp": "class Skiplist {\npublic:\n    Skiplist() {\n        \n    }\n    \n    bool search(int target) {\n        \n    }\n    \n    void add(int num) {\n        \n    }\n    \n    bool erase(int num) {\n        \n    }\n};\n\n/**\n * Your Skiplist object will be instantiated and called as such:\n * Skiplist* obj = new Skiplist();\n * bool param_1 = obj->search(target);\n * obj->add(num);\n * bool param_3 = obj->erase(num);\n */"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "3772",
@@ -1198,7 +1248,8 @@
         "starter_code": {
             "python": "class Solution:\n    def minimumPairRemoval(self, nums: List[int]) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int minimumPairRemoval(vector<int>& nums) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "432",
@@ -1224,7 +1275,8 @@
         "starter_code": {
             "python": "class AllOne:\n\n    def __init__(self):\n        \n\n    def inc(self, key: str) -> None:\n        \n\n    def dec(self, key: str) -> None:\n        \n\n    def getMaxKey(self) -> str:\n        \n\n    def getMinKey(self) -> str:\n        \n\n\n# Your AllOne object will be instantiated and called as such:\n# obj = AllOne()\n# obj.inc(key)\n# obj.dec(key)\n# param_3 = obj.getMaxKey()\n# param_4 = obj.getMinKey()",
             "cpp": "class AllOne {\npublic:\n    AllOne() {\n        \n    }\n    \n    void inc(string key) {\n        \n    }\n    \n    void dec(string key) {\n        \n    }\n    \n    string getMaxKey() {\n        \n    }\n    \n    string getMinKey() {\n        \n    }\n};\n\n/**\n * Your AllOne object will be instantiated and called as such:\n * AllOne* obj = new AllOne();\n * obj->inc(key);\n * obj->dec(key);\n * string param_3 = obj->getMaxKey();\n * string param_4 = obj->getMinKey();\n */"
-        }
+        },
+        "distributed_tag": "Linked List"
     },
     {
         "id": "2597",
@@ -1247,7 +1299,8 @@
         "starter_code": {
             "python": "class Solution:\n    def cycleLengthQueries(self, n: int, queries: List[List[int]]) -> List[int]:\n        ",
             "cpp": "class Solution {\npublic:\n    vector<int> cycleLengthQueries(int n, vector<vector<int>>& queries) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "297",
@@ -1273,7 +1326,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode(object):\n#     def __init__(self, x):\n#         self.val = x\n#         self.left = None\n#         self.right = None\n\nclass Codec:\n\n    def serialize(self, root):\n        \"\"\"Encodes a tree to a single string.\n        \n        :type root: TreeNode\n        :rtype: str\n        \"\"\"\n        \n\n    def deserialize(self, data):\n        \"\"\"Decodes your encoded data to tree.\n        \n        :type data: str\n        :rtype: TreeNode\n        \"\"\"\n        \n\n# Your Codec object will be instantiated and called as such:\n# ser = Codec()\n# deser = Codec()\n# ans = deser.deserialize(ser.serialize(root))",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}\n * };\n */\nclass Codec {\npublic:\n\n    // Encodes a tree to a single string.\n    string serialize(TreeNode* root) {\n        \n    }\n\n    // Decodes your encoded data to tree.\n    TreeNode* deserialize(string data) {\n        \n    }\n};\n\n// Your Codec object will be instantiated and called as such:\n// Codec ser, deser;\n// TreeNode* ans = deser.deserialize(ser.serialize(root));"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "2060",
@@ -1301,7 +1355,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def canMerge(self, trees: List[TreeNode]) -> Optional[TreeNode]:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    TreeNode* canMerge(vector<TreeNode*>& trees) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "124",
@@ -1325,7 +1380,8 @@
         "starter_code": {
             "python": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def maxPathSum(self, root: Optional[TreeNode]) -> int:\n        ",
             "cpp": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int maxPathSum(TreeNode* root) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Binary Tree"
     },
     {
         "id": "2681",
@@ -1350,7 +1406,8 @@
         "starter_code": {
             "python": "class Solution:\n    def putMarbles(self, weights: List[int], k: int) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    long long putMarbles(vector<int>& weights, int k) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "1485",
@@ -1379,7 +1436,8 @@
         "starter_code": {
             "python": "class Solution:\n    def minCost(self, grid: List[List[int]]) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int minCost(vector<vector<int>>& grid) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "4007",
@@ -1400,7 +1458,8 @@
         "starter_code": {
             "python": "class Solution:\n    def maxTotalValue(self, nums: List[int], k: int) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    long long maxTotalValue(vector<int>& nums, int k) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     },
     {
         "id": "420",
@@ -1425,6 +1484,7 @@
         "starter_code": {
             "python": "class Solution:\n    def strongPasswordChecker(self, password: str) -> int:\n        ",
             "cpp": "class Solution {\npublic:\n    int strongPasswordChecker(string password) {\n        \n    }\n};"
-        }
+        },
+        "distributed_tag": "Heap (Priority Queue)"
     }
 ]
